@@ -3,3 +3,4 @@
 .DS_Store
 *.png
 *.jpg
+__pycache__
