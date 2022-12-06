@@ -8,12 +8,32 @@ here = pathlib.Path(__file__).parent.resolve()
 
 
 class xrayset():
-    def __init__(self, name, id, voltage, sheets, w=1024, h=1024):
+    """Set of Xray images
+    """
+    def __init__(
+        self,
+        name: str,
+        id: int,
+        voltage: int,
+        sheets: int,
+        height=1024,
+        width=1024
+    ):
+        """init
+
+        Args:
+            name (str): Volume name (ex: phantom)
+            id (int): Volume id (ex: 1)
+            voltage (int): Volume voltage (ex: 60, 120)
+            sheets (int): Number of sheets (ex: 200, 450)
+            height (int, optional): height of Xray images. Defaults to 1024.
+            width (int, optional): width of Xray images. Defaults to 1024.
+        """
         self.name = name
         self.id = id
         self.voltage = voltage
-        self.weight = w
-        self.height = h
+        self.weight = width
+        self.height = height
         self.sheets = sheets
         self.raw_data = np.empty(sheets, dtype=object)
         for i in notebook_tqdm(range(0, sheets)):
@@ -22,7 +42,12 @@ class xrayset():
         for i in range(0, len(self.img)):
             self.img[i] = self.img[i].astype("uint8")
 
-    def load(self, num):
+    def load(self, num: int):
+        """Load data from picture
+
+        Args:
+            num (int): Xray number
+        """
         file = (here / f"{self.name}" / f"{self.id:03d}"
                 / f"{self.voltage}" / f"{num:04d}.img")
 
@@ -36,6 +61,14 @@ class xrayset():
         self.raw_data[num] = img
 
     def filter(self, data):
+        """Filter for Xray images
+
+        Args:
+            data (_type_): Input data
+
+        Returns:
+            _type_: Filtered data
+        """
         data *= 255
         data /= 50000
         data *= -1
