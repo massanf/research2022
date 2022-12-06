@@ -1,0 +1,5 @@
+.vscode
+*.img
+.DS_Store
+*.png
+*.jpg
