@@ -48,7 +48,7 @@ class xrayset():
         Args:
             num (int): Xray number
         """
-        file = (here / f"{self.name}" / f"{self.id:03d}"
+        file = (here / "data" / f"{self.name}" / f"{self.id:03d}"
                 / f"{self.voltage}" / f"{num:04d}.img")
 
         with open(file, 'rb') as f:

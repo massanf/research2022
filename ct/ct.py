@@ -1,23 +1,40 @@
+import pathlib
+import pydicom
 import numpy as np
-from PIL import Image
+import glob
+from tqdm.autonotebook import tqdm as notebook_tqdm
 
-# print numpy array in full
-# np.set_printoptions(threshold=sys.maxsize)
+# filename = 'ct_no_tumor_phantom_raw/001/1-001-0%s.img' % f'{i:03}'
+# filename = script_dir / Path('../train_dcm') / Path(volname) /
+#  Path(edition) / Path('%s.dcm' % f'{i:03}')
+here = pathlib.Path(__file__).parent.resolve()
 
-# set width and height
 
-w, h = 1024, 1024
+class ctset():
+    def __init__(self, name: str):
+        self.name = name
+        self.sheets = len(glob.glob(str(here / "data"
+                                    / f"{self.name}" / "*.dcm")))
+        self.raw_data = np.empty(self.sheets, dtype=object)
+        self.img = np.empty(self.sheets, dtype=object)
+        for i in notebook_tqdm(range(0, self.sheets)):
+            self.load(i)
+        self.raw_data = sorted(self.raw_data,
+                               key=lambda x: x.ImagePositionPatient[2])
+        for i in range(0, self.sheets):
+            self.img[i] = 255 - self.raw_data[i].pixel_array.astype('uint8')
 
-for i in range(1, 200):
-    if i % 10 != 0:
-        continue
+    def load(self, num: int):
+        file = here / "data" / f"{self.name}" / f"{num:04d}.dcm"
+        self.raw_data[num] = pydicom.dcmread(file)
+        # self.img[num] = self.raw_data[num].pixel_array.astype('uint8')
+        # self.img[num] = 255 - self.img[num]
 
-    filename = 'x_no_tumor_phantom_raw/001/Img_0%s_060_300_1024x1024.img' % f'{i:03}'
+    def get(self, num: int):
+        return self.img[num]
 
-    with open(filename, 'rb') as f: 
-        # Seek backwards from end of file by 2 bytes per pixel 
-        f.seek(-w*h*2, 2) 
-        img = np.fromfile(f, dtype=np.uint16).reshape((h,w))
-    # print(max(np.ravel(np.array(img))))
-    # Image.fromarray(img).save('result.png')
-    Image.fromarray((img>>4).astype(np.uint8)).save('x_no_tumor_phantom_2d_proj/2D_projection_%s.jpg' % (int(i/10) - 1)) 
+
+# ds = pydicom.dcmread(filename)
+# data = ds.pixel_array
+
+# print(data)
