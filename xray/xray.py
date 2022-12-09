@@ -9,6 +9,15 @@ here = pathlib.Path(__file__).parent.resolve()
 
 class xrayset():
     """Set of Xray images
+
+    example:
+        from xray import xray
+        x = xray.xrayset(
+            name="phantom",
+            id=1,
+            sheets=450,
+            voltage=120
+        )
     """
     def __init__(
         self,

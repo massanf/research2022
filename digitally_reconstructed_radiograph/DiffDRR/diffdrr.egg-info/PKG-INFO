@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: diffdrr
+Version: 0.1.0
+Summary: Auto-differentiable digitally reconstructed radiographs in PyTorch.
+Author: Vivek Gopalakrishnan
+License: MIT
