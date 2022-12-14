@@ -4,7 +4,7 @@ from tqdm.autonotebook import tqdm as notebook_tqdm
 # import imageio.v2 as imageio
 # from PIL import Image
 
-here = pathlib.Path(__file__).parent.resolve()
+here = pathlib.Path(__file__).parent.parent.resolve()
 
 
 class xrayset():
@@ -22,7 +22,6 @@ class xrayset():
     def __init__(
         self,
         name: str,
-        id: int,
         voltage: int,
         sheets: int,
         height=1024,
@@ -39,7 +38,6 @@ class xrayset():
             width (int, optional): width of Xray images. Defaults to 1024.
         """
         self.name = name
-        self.id = id
         self.voltage = voltage
         self.weight = width
         self.height = height
@@ -57,8 +55,8 @@ class xrayset():
         Args:
             num (int): Xray number
         """
-        file = (here / "data" / f"{self.name}" / f"{self.id:03d}"
-                / f"{self.voltage}" / f"{num:04d}.img")
+        file = (here / "data" / f"{self.name}" / "xray" /
+                f"{self.voltage}" / f"{num:04d}.img")
 
         with open(file, 'rb') as f:
             # Seek backwards from end of file by 2 bytes per pixel
