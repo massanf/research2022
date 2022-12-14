@@ -9,6 +9,7 @@ from .utils.backend import get_device
 from .utils.camera import Detector
 from .visualization import plot_camera, plot_volume
 
+
 class DRR(nn.Module):
     def __init__(
         self,
@@ -19,7 +20,7 @@ class DRR(nn.Module):
         width=None,
         dely=None,
         projector="siddon",
-        device="cpu",
+        device="cpu"
     ):
         """
         Class for generating DRRs.

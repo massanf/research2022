@@ -1,7 +1,7 @@
 #!/bin/sh
-#SBATCH -p v
+#SBATCH -p p
 #SBATCH -t 24:0:00
-#SBATCH --gres=gpu:8
+#SBATCH --gres=gpu
 export PATH=/home/app/cuda/bin:$PATH
 export LD_LIBRARY_PATH=/home/app/cuda/lib64:$LD_LIBRARY_PATH
 

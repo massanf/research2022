@@ -44,7 +44,7 @@ for l in range(0, args.vol):
         drr = DRR(volume, spacing, width=300, height=300,  delx=1.0e-2, device="cuda")
 
         # for each angle
-        for i in range (0, num_views):
+        for i in range(0, num_views):
             count += 1
             # create output image
             detector_kwargs = {

@@ -2,7 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 import argparse
+import torch
 from PIL import Image, ImageEnhance
+import imageio.v2 as imageio
 
 import os
 from pathlib import Path
@@ -26,63 +28,68 @@ print("", flush=True)
 print("=== create_drr.py ===", flush=True)
 count = 0
 
-for l in range(0, args.vol):
-    volname = 'vol%d' % l
-    for k in range(0, rotate_num):
-        edition = str(k)
 
-        # create output folder
-        (script_dir / Path('../document_drr') / Path(volname) / Path(edition)).mkdir(parents=True, exist_ok=True)
+volname = 'vol0'
+edition = '0'
 
-        # Read in the volume
-        volume, spacing = read_dicom(script_dir / Path('../ct/data') / Path(volname))
+# create output folder
+(script_dir / Path('../document_drr') / Path(volname)).mkdir(parents=True, exist_ok=True)
 
-        spacing = [0.247937, 0.5, 0.247937]
+# Read in the volume
+volume, spacing = read_dicom(script_dir / Path('../ct/data') / Path(volname))
 
-        # Get parameters for the detector
-        bx, by, bz = np.array(volume.shape) * np.array(spacing) / 2
+spacing = [0.247937, 0.5, 0.247937]
 
-        # define the model
-        drr = DRR(volume, spacing, width=300, height=300,  delx=1.0e-2, device="cuda")
+# Get parameters for the detector
+bx, by, bz = np.array(volume.shape) * np.array(spacing) / 2
 
-        # for each angle
-        for i in range (0, num_views):
-            count += 1
-            # create output image
-            detector_kwargs = {
-                "sdr"   : 100.0,
-                "theta" : 0,
-                "phi"   : 2 * np.pi * i / num_views,
-                # "gamma" : -np.pi / 2,
-                "gamma" : np.pi,
-                "bx"    : bx,
-                "by"    : by - 20,
-                "bz"    : bz,
-            }
+# define the model
+drr = DRR(volume, spacing, width=300, height=300,  delx=1.0e-2, device="cuda")
 
-            # Make the DRR image
-            img = drr(**detector_kwargs)
+num_views = 1
 
-            # save img
-            fig = plt.figure(figsize=(10, 10))
-            ax = plt.Axes(fig, [0., 0., 1., 1.])
-            fig.add_axes(ax)
-            ax = plot_drr(img, ax=ax)
-            fig.savefig(script_dir / Path('../document_drr') / Path(volname) / Path(edition) / Path(str((i+18)%200) + '.jpg'))
-            plt.close(fig)
+# for each angle
+for i in range(0, num_views):
+    # create output image
+    detector_kwargs = {
+        "sdr": 100.0,
+        "theta": 0,
+        "phi": 2 * np.pi * i / num_views,
+        # "gamma" : -np.pi / 2,
+        "gamma": np.pi,
+        "bx": bx,
+        "by": by - 20,
+        "bz": bz,
+    }
 
-            im = Image.open(script_dir / Path('../document_drr') / Path(volname) / Path(edition) / Path(str((i+18)%200) + '.jpg'))
+    # Make the DRR image
+    img_tensor = drr(**detector_kwargs)
 
-            enhancer = ImageEnhance.Contrast(im)  
-            im = enhancer.enhance(0.5)
+    img = img_tensor.to('cpu').detach().numpy().copy()
 
-            enhancer2 = ImageEnhance.Brightness(im)
-            im = enhancer2.enhance(1.2)
+    # save img
+    # fig = plt.figure(figsize=(10, 10))
+    # ax = plt.Axes(fig, [0., 0., 1., 1.])
+    # fig.add_axes(ax)
+    # ax = plot_drr(img, ax=ax)
 
-            # im = im.crop((170, 220, 830, 880))
-            # im = im.crop((170, 140, 830, 800))
+    imageio.imsave(f"{i}.png", img)
+    torch.cuda.empty_cache()
+    # fig.savefig(script_dir / Path('../document_drr') / Path(volname) / Path(str((i+18)%200) + '.jpg'))
+    # plt.close(fig)
 
-            im.save(script_dir / Path('../document_drr') / Path(volname) / Path(edition) / Path(str((i+18)%200) + '.jpg'), quality=95)
+    # im = Image.open(script_dir / Path('../document_drr') / Path(volname) / Path(str((i+18)%200) + '.jpg'))
 
-            # print("DRR: ", i, "/", num_views * rotate_num * args.vol)
-            print("drr:", count, "/", num_views * rotate_num * args.vol, "(", int((count / (num_views * rotate_num * args.vol)) * 100), "% )", flush=True)
+    # enhancer = ImageEnhance.Contrast(im)
+    # im = enhancer.enhance(0.5)
+
+    # enhancer2 = ImageEnhance.Brightness(im)
+    # im = enhancer2.enhance(1.2)
+
+    # im = im.crop((170, 220, 830, 880))
+    # im = im.crop((170, 140, 830, 800))
+
+    # im.save(script_dir / Path('../document_drr') / Path(volname) / Path(str((i + 18) % 200) + '.jpg'), quality=95)
+
+    # print("DRR: ", i, "/", num_views * rotate_num * args.vol)
+    print("drr:", count, "/", num_views * rotate_num * args.vol, "(", int((count / (num_views * rotate_num * args.vol)) * 100), "% )", flush=True)
