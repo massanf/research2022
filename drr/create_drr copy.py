@@ -36,7 +36,7 @@ edition = '0'
 (script_dir / Path('../document_drr') / Path(volname)).mkdir(parents=True, exist_ok=True)
 
 # Read in the volume
-volume, spacing = read_dicom(script_dir / Path('../ct/data') / Path(volname))
+volume, spacing = read_dicom(script_dir / Path('../data') / Path(volname) / Path("ct"))
 
 spacing = [0.247937, 0.5, 0.247937]
 
