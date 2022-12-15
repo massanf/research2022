@@ -1,25 +1,34 @@
-import cv2
 import imageio.v2 as imageio
-import numpy as np
-from filtered_back_projection.tompy import fbp
-from raw_xray import xray
+import fbp.tompy as fbp
+from xray import xray
+from ct import ct
+from drr import drr
 
-x = xray.patient(
-        name="phantom",
-        id=1,
-        n=450,
-        voltage=120
-    )
+xrayset = xray.xrayset(
+    name="phantom",
+    sheets=450,
+    voltage=120
+)
 
-# x.save(0, "test2.png")
+rec = fbp.reconstruction(
+    xrayset,
+    height=300,
+    adjust_alpha=4.,
+    adjust_beta=-120.,
+    rotate=211
+)
 
-# sino = np.zeros((100, np.shape(x.data[0])[0]))
-# for row in range(0, 100):
-#     sino[row] = x.data[row][900]
+ctset = ct.ctset(name="vol0")
 
-# # sino = cv2.resize(sino, dsize=(100, 200), interpolation=cv2.INTER_CUBIC)
-# sino = cv2.rotate(sino, cv2.ROTATE_90_CLOCKWISE)
+d = drr.drrset(
+    ctset,
+    num_views=450,
+    zm=0.5,
+    height=400,
+    width=400,
+    zoffset=-25,
+    sdr=150
+)
 
-# f = fbp(height=1024, width=1024)
-# f.from_img(sino)
-# imageio.imsave("testaaa.png", f.reconstruction)
+for i in range(0, 450):
+    imageio.imsave(f"drr_tests/drr{i}.png", d.img[i])

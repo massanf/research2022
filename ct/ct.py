@@ -3,6 +3,7 @@ import pydicom
 import numpy as np
 import glob
 from tqdm.autonotebook import tqdm as notebook_tqdm
+from scipy.ndimage import zoom
 
 # filename = 'ct_no_tumor_phantom_raw/001/1-001-0%s.img' % f'{i:03}'
 # filename = script_dir / Path('../train_dcm') / Path(volname) /
@@ -33,8 +34,26 @@ class ctset():
     def get(self, num: int):
         return self.img[num]
 
+    def get_volume(self, zm=1):
+        ds = self.raw_data[0]
 
-# ds = pydicom.dcmread(filename)
-# data = ds.pixel_array
+        nx, ny = ds.pixel_array.shape
+        nz = len(self.raw_data)
 
-# print(data)
+        delX, delY = ds.PixelSpacing
+        delX, delY = float(delX), float(delY)
+        volume = np.zeros((nx, nz, ny))
+
+        delZs = []
+
+        for idx in range(0, len(self.raw_data)):
+            delZs.append(self.raw_data[idx].ImagePositionPatient[2])
+            volume[:, idx, :] = self.img[idx]
+
+        delZs = np.diff(delZs)
+        delZ = float(np.abs(np.unique(delZs)[0]))
+
+        spacing = [delX / zm, delZ / zm, delY / zm]
+
+        volume = zoom(volume, (zm, zm, zm), order=0, mode='nearest')
+        return volume, spacing

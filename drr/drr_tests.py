@@ -1,16 +1,22 @@
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib.animation as animation
+# import matplotlib.animation as animation
 import argparse
 import torch
-from PIL import Image, ImageEnhance
+# from PIL import Image, ImageEnhance
 import imageio.v2 as imageio
 
-import os
 from pathlib import Path
+import sys
+currentdir = Path(__file__).resolve().parent
+sys.path.append(str(currentdir)+"/..")
+from ct import ct
 
-from diffdrr import DRR, load_example_ct, read_dicom
-from diffdrr.visualization import plot_drr
+import os
+
+# from diffdrr import DRR, load_example_ct, read_dicom
+from DiffDRR.diffdrr.drr import DRR
+# from diffdrr.visualization import plot_drr
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--rotate_num', type=int, default=4, help='')
@@ -36,9 +42,11 @@ edition = '0'
 (script_dir / Path('../document_drr') / Path(volname)).mkdir(parents=True, exist_ok=True)
 
 # Read in the volume
-volume, spacing = read_dicom(script_dir / Path('../data') / Path(volname) / Path("ct"))
+# volume, spacing = read_dicom(script_dir / Path('../data') / Path(volname) / Path("ct"))
 
-spacing = [0.247937, 0.5, 0.247937]
+c = ct.ctset(name="vol0")
+
+volume, spacing = c.get_volume(0.5)
 
 # Get parameters for the detector
 bx, by, bz = np.array(volume.shape) * np.array(spacing) / 2
