@@ -41,7 +41,7 @@ class reconstruction():
         angle=30,
         sidepad=0,
         toppad=0,
-        rotate=211
+        rotate=0
     ):
         """init
 
@@ -135,7 +135,7 @@ class reconstruction():
         Returns:
             numpy array: sinogram
         """
-        n = int(self.x.sheets / 2)
+        n = int(len(self.x.img) / 2)
         w = np.shape(self.x.img[0])[0]
         new_sino = np.zeros(
             (n + 2 * self.toppad, w + 2 * self.sidepad),
@@ -145,7 +145,7 @@ class reconstruction():
             for col in range(0, w):
                 a = int((row - self.start) % n)
                 b = int(row - int(self.angle * col / w))
-                new_sino[a][col] = self.x.img[b][sheet_number][col]
+                new_sino[a][self.sidepad + col] = self.x.img[b][sheet_number][col]
         new_sino = np.rot90(new_sino)
         return new_sino
 

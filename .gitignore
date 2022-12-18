@@ -6,3 +6,4 @@
 *.dcm
 *.pyc
 __pycache__
+*.gif
