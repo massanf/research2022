@@ -24,7 +24,10 @@ class drrset():
         zoffset=0,
         pad=0,
         delx=1e-2,
-        sdr=100
+        sdr=100,
+        theta=0,
+        phi=0,
+        gamma=0
     ):
         """Generates DRR dataset
 
@@ -59,7 +62,7 @@ class drrset():
             spacing,
             width=width,
             height=height,
-            delx=delx,
+            delx=delx,s
             device="cuda"
         )
 
@@ -68,10 +71,10 @@ class drrset():
         for view in notebook_tqdm(range(0, self.num_views)):
             detector_kwargs = {
                 "sdr": sdr,
-                "theta": 0,
-                "phi": 2 * np.pi * view / self.num_views,
+                "theta": theta,
+                "phi": 2 * np.pi * view / self.num_views + phi,
                 # "gamma" : -np.pi / 2,
-                "gamma": np.pi,
+                "gamma": np.pi + gamma,
                 "bx": self.bx,
                 "by": self.by + zoffset,
                 "bz": self.bz,
