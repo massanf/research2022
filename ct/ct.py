@@ -18,8 +18,14 @@ class ctset():
                                         / "ct" / "*.dcm")))
         self.raw_data = np.empty(self.sheets, dtype=object)
         self.img = np.empty(self.sheets, dtype=object)
-        for i in notebook_tqdm(range(0, self.sheets)):
-            self.raw_data[i] = self.load(i)
+        # for i in notebook_tqdm(range(0, self.sheets)):
+        # self.raw_data[i] = self.load(i)
+        for idx, file in enumerate(glob.glob(str(here / "data"
+                                   / f"{self.name}" / "ct" / "*.dcm"))):
+            self.raw_data[idx] = self.load(file)
+        for datum in self.raw_data:
+            if not hasattr(datum, "ImagePositionPatient"):
+                datum = self.raw_data[0]
         self.raw_data = sorted(self.raw_data,
                                key=lambda x: x.ImagePositionPatient[2])
 
@@ -34,8 +40,8 @@ class ctset():
                 self.img[i] *= 255.
                 self.img[i] = self.img[i].astype('uint8')
 
-    def load(self, num: int):
-        file = here / "data" / f"{self.name}" / "ct" / f"{num:04d}.dcm"
+    def load(self, file: str):
+        # file = here / "data" / f"{self.name}" / "ct" / f"{num:04d}.dcm"
         # self.raw_data[num] = pydicom.dcmread(file)
         return pydicom.dcmread(file)
         # self.img[num] = self.raw_data[num].pixel_array.astype('uint8')
@@ -51,8 +57,8 @@ class ctset():
         delX, delY = ds.PixelSpacing
         delX, delY = float(delX), float(delY)
         Zs = []
-        for idx in range(0, len(self.raw_data)):
-            Zs.append(self.raw_data[idx].ImagePositionPatient[2])
+        for datum in self.raw_data:
+            Zs.append(datum.ImagePositionPatient[2])
 
         Zs = np.unique(Zs)
         delZ = Zs[0]
