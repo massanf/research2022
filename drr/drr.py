@@ -1,7 +1,7 @@
 import numpy as np
 import sys
 import torch
-import cv2
+import gc
 
 from pathlib import Path
 from drr.DiffDRR.diffdrr.drr import DRR
@@ -19,15 +19,23 @@ class drrset():
         ctset,
         num_views: int,
         zm=0.5,
-        height=300,
-        width=300,
-        zoffset=0,
+        height=500,
+        width=500,
+        zoffset=-50,
         pad=0,
-        delx=1e-2,
-        sdr=100,
+        delx=6e-3,
+        sdr=500,
         theta=0,
         phi=0,
-        gamma=0
+        gamma=0,
+        # cropstartx=100,
+        # cropstarty=150,
+        # cropheight=400,
+        # cropwidth=400
+        cropstartx=75,
+        cropstarty=120,
+        cropheight=350,
+        cropwidth=350
     ):
         """Generates DRR dataset
 
@@ -47,8 +55,12 @@ class drrset():
         self.width = width
         self.ctset = ctset
         self.num_views = num_views
+        self.output_height = cropheight
+        self.output_width = cropwidth
 
         volume, spacing = ctset.get_volume(zm, pad=pad)
+
+        # print(spacing)
 
         # spacing = [0.247937, 1.0, 0.247937]
 
@@ -56,39 +68,41 @@ class drrset():
         self.bx, self.by, self.bz = (np.array(volume.shape) *
                                      np.array(spacing) / 2)
 
-        # define the model
-        self.drr = DRR(
-            volume,
-            spacing,
-            width=width,
-            height=height,
-            delx=delx,s
-            device="cuda"
-        )
-
         self.img = np.empty(self.num_views, dtype=object)
 
         for view in notebook_tqdm(range(0, self.num_views)):
+            a = 2 * np.pi * view / self.num_views
             detector_kwargs = {
                 "sdr": sdr,
                 "theta": theta,
-                "phi": 2 * np.pi * view / self.num_views + phi,
-                # "gamma" : -np.pi / 2,
-                "gamma": np.pi + gamma,
+                "phi": a + phi,
+                "gamma": gamma,
                 "bx": self.bx,
                 "by": self.by + zoffset,
                 "bz": self.bz,
             }
 
+            # define the model
+            drr = DRR(
+                volume,
+                spacing,
+                width=width,
+                height=height,
+                delx=delx,
+                device="cuda"
+            )
+
             # Make the DRR image
-            img_tensor = self.drr(**detector_kwargs)
+            img_tensor = drr(**detector_kwargs)
             img = img_tensor.to('cpu').detach().numpy().copy()
             img /= np.max(img)
             img *= 255
-            # img = cv2.resize(img, (1024, 1024))
 
-            self.img[view] = img.astype("uint8")
+            self.img[view] = (img.astype("uint8")
+                              [cropstarty:cropstarty + cropheight,
+                               cropstartx:cropstartx + cropwidth])
 
-            img = None
-            img_tensor = None
+            del img
+            del img_tensor
+            del drr
             torch.cuda.empty_cache()

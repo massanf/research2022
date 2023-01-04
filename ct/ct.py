@@ -14,24 +14,46 @@ here = pathlib.Path(__file__).parent.parent.resolve()
 class ctset():
     def __init__(self, name: str, type):
         self.name = name
-        self.sheets = len(glob.glob(str(here / "data" / f"{self.name}"
-                                        / "ct" / "*.dcm")))
-        self.raw_data = np.empty(self.sheets, dtype=object)
-        self.img = np.empty(self.sheets, dtype=object)
+        self.zrange = [5000, -5000]
+        # self.sheets = len(glob.glob(str(here / "data" / f"{self.name}"
+        # / "ct" / "*.dcm")))
         # for i in notebook_tqdm(range(0, self.sheets)):
         # self.raw_data[i] = self.load(i)
+        self.raw_data = []
+
         for idx, file in enumerate(glob.glob(str(here / "data"
-                                   / f"{self.name}" / "ct" / "*.dcm"))):
-            self.raw_data[idx] = self.load(file)
+                                   / f"{self.name}" / "ct" / "*"))):
+            self.raw_data.append(self.load(file))
+        # for idx, datum in enumerate(self.raw_data):
+        #     if not hasattr(datum, "ImagePositionPatient"):
+        #         print(idx)
+        #         datum = self.raw_data[0]
+
+        self.raw_data = ([datum for datum in self.raw_data
+                          if hasattr(datum, "ImagePositionPatient")])
+
+        # get position (exclude first and last)
+        z_list = []
         for datum in self.raw_data:
-            if not hasattr(datum, "ImagePositionPatient"):
-                datum = self.raw_data[0]
+            z_list.append(datum.ImagePositionPatient[2])
+        z_list = sorted(z_list)
+        z_list = np.unique(z_list)
+        self.zrange[0] = z_list[1]
+        self.zrange[1] = z_list[len(z_list) - 2]
+
+        self.sheets = len(self.raw_data)
+
+        # self.raw_data = np.empty(self.sheets, dtype=object)
+        self.img = np.empty(self.sheets, dtype=object)
+
         self.raw_data = sorted(self.raw_data,
                                key=lambda x: x.ImagePositionPatient[2])
+        self.raw_data = np.flip(self.raw_data,)
 
         if type == "uint8":
             for i in range(0, self.sheets):
-                self.img[i] = 255 - self.raw_data[i].pixel_array.astype('uint8')
+                self.img[i] = self.raw_data[i].pixel_array.astype('uint8')
+                self.img[i] = 255 - self.img[i]
 
         if type == "float32":
             for i in range(0, self.sheets):
@@ -50,8 +72,12 @@ class ctset():
     def get(self, num: int):
         return self.img[num]
 
+    def pos(self, num: int):
+        base = (self.zrange[0] + self.zrange[1]) / 2
+        return self.raw_data[num].ImagePositionPatient[2] - base
+
     def get_volume(self, zm=1, pad=0):
-        ds = self.raw_data[0]
+        ds = self.raw_data[int(len(self.raw_data) / 2)]
 
         # get spacing
         delX, delY = ds.PixelSpacing

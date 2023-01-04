@@ -7,6 +7,7 @@ import imageio.v2 as imageio
 # import matplotlib.pyplot as plt
 from PIL import Image
 from scipy.fftpack import fft, ifft, fftfreq
+from tqdm.autonotebook import tqdm as notebook_tqdm
 from scipy.interpolate import interp1d
 # from gui import imagename
 from skimage.transform import rotate
@@ -15,12 +16,12 @@ from xray import xray
 here = pathlib.Path(__file__).parent.resolve()
 
 
-class reconstruction():
+class fbpset():
     """Reconstruct FBP from xrayset class
 
     example:
         import filtered_back_projection.tompy as fbp
-        rec = fbp.reconstruction(
+        rec = fbp.fbpset(
             x,
             height=300,
             adjust_alpha=4.,
@@ -60,14 +61,15 @@ class reconstruction():
             rotate (int, optional): for image post processing. Defaults to 211.
         """
         self.x = xray
+        self.num = self.x.output_height
         self.height = height
         if width == 0:
             self.width = height
         else:
             self.width = width
 
-        self.data = np.empty(self.x.height, dtype=object)
-        self.loaded = np.full(self.x.height, False)
+        self.data = np.empty(self.num, dtype=object)
+        self.loaded = np.full(self.num, False)
 
         self.start = start
         self.angle = angle
@@ -78,6 +80,10 @@ class reconstruction():
         self.adjust_beta = adjust_beta
 
         self.rotate = rotate
+
+        for idx in notebook_tqdm(range(len(self.x.img[0]))):
+            # for idx in range(5):
+            self.generate(idx)
 
     def get(self, sheet_number: int) -> np.array:
         """Get FBP result image.
@@ -144,8 +150,9 @@ class reconstruction():
         for row in range(self.start, self.start + n):
             for col in range(0, w):
                 a = int((row - self.start) % n)
-                b = int(row - int(self.angle * col / w))
-                new_sino[a][self.sidepad + col] = self.x.img[b][sheet_number][col]
+                b = int(row - int(self.angle * col / w)) % len(self.x.img)
+                new_sino[a][self.sidepad + col] = (self.x.img[b][sheet_number]
+                                                   [col])
         new_sino = np.rot90(new_sino)
         return new_sino
 
