@@ -7,7 +7,7 @@ from torch.utils.data import Dataset, DataLoader
 class ct_dataset(Dataset):
     def __init__(self, mode, load_mode, saved_path, test_patient, patch_n=None, patch_size=None, transform=None):
         assert mode in ['train', 'test'], "mode is 'train' or 'test'"
-        assert load_mode in [0,1], "load_mode is 0 or 1"
+        assert load_mode in [0, 1], "load_mode is 0 or 1"
 
         input_path = sorted(glob(os.path.join(saved_path, '*_input.npy')))
         target_path = sorted(glob(os.path.join(saved_path, '*_target.npy')))
@@ -19,13 +19,13 @@ class ct_dataset(Dataset):
         if mode == 'train':
             input_ = [f for f in input_path if test_patient not in f]
             target_ = [f for f in target_path if test_patient not in f]
-            if load_mode == 0: # batch data load
+            if load_mode == 0:  # batch data load
                 self.input_ = input_
                 self.target_ = target_
-            else: # all data load
+            else:  # all data load
                 self.input_ = [np.load(f) for f in input_]
                 self.target_ = [np.load(f) for f in target_]
-        else: # mode =='test'
+        else:  # mode =='test'
             input_ = [f for f in input_path if test_patient in f]
             target_ = [f for f in target_path if test_patient in f]
             if load_mode == 0:

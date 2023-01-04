@@ -2,6 +2,7 @@ import os
 import argparse
 import numpy as np
 import pydicom
+import patient.patient as patient
 
 
 def save_dataset(args):

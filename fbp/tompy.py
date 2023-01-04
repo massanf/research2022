@@ -7,7 +7,7 @@ import imageio.v2 as imageio
 # import matplotlib.pyplot as plt
 from PIL import Image
 from scipy.fftpack import fft, ifft, fftfreq
-from tqdm.autonotebook import tqdm as notebook_tqdm
+from tqdm.autonotebook import tqdm
 from scipy.interpolate import interp1d
 # from gui import imagename
 from skimage.transform import rotate
@@ -81,7 +81,7 @@ class fbpset():
 
         self.rotate = rotate
 
-        for idx in notebook_tqdm(range(len(self.x.img[0]))):
+        for idx in tqdm(range(len(self.x.img[0]))):
             # for idx in range(5):
             self.generate(idx)
 

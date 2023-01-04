@@ -1,7 +1,7 @@
 import numpy as np
 import sys
 import torch
-import gc
+# import gc
 
 from pathlib import Path
 from drr.DiffDRR.diffdrr.drr import DRR

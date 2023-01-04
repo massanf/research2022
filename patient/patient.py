@@ -2,8 +2,9 @@ import pathlib
 import numpy as np
 import pickle
 import cv2
-import math
-import random
+from skopt import gp_minimize
+from tqdm.autonotebook import tqdm
+import matplotlib.pyplot as plt
 import fbp.tompy as fbp
 from ct import ct
 from drr import drr
@@ -19,46 +20,47 @@ class patient():
         self.b = -1000
         self.resize_factor = 1
 
-        # if (datadir / name / (name + ".pickle")).exists():
-        #     self.load()
-        # else:
-        #     self.new_ct()
-
-        # self.new_ct()
-
         if (datadir / name / "ct.pickle").exists():
             with open(datadir / name / "ct.pickle", 'rb') as handle:
                 self.ct = pickle.load(handle)
         else:
-            self.new_ct()
+            self.generate_ct()
 
         if (datadir / name / "drr.pickle").exists():
             with open(datadir / name / "drr.pickle", 'rb') as handle:
                 self.drr = pickle.load(handle)
         else:
-            self.new_drr()
+            self.generate_drr()
 
         if (datadir / name / "fbp.pickle").exists():
             with open(datadir / name / "fbp.pickle", 'rb') as handle:
                 self.fbp = pickle.load(handle)
         else:
-            self.new_fbp()
+            self.generate_fbp()
 
-    def new_ct(self):
+        if (datadir / name / "resize.pickle").exists():
+            with open(datadir / name / "resize.pickle", 'rb') as handle:
+                self.resize_factor = pickle.load(handle)
+        else:
+            self.calculate_resize()
+
+    # generators ----------
+
+    def generate_ct(self):
         print("Creating new CTset")
         self.ct = ct.ctset(name=self.name, type="float32")
         with open(datadir / self.name / "ct.pickle", 'wb') as handle:
             pickle.dump(self.ct, handle, protocol=pickle.HIGHEST_PROTOCOL)
         self.new_drr()
 
-    def new_drr(self):
+    def generate_drr(self):
         print("Creating new DRRset")
         self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
         with open(datadir / self.name / "drr.pickle", 'wb') as handle:
             pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
         self.new_fbp()
 
-    def new_fbp(self):
+    def generate_fbp(self):
         print("Creating new FBPset")
         self.fbp = fbp.fbpset(
             self.drr,
@@ -68,11 +70,39 @@ class patient():
         )
         with open(datadir / self.name / "fbp.pickle", 'wb') as handle:
             pickle.dump(self.fbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        self.calculate_resize()
 
-    def get_equiv(self, num, resize_factor=0):
+    def calculate_resize(self, base=150, plot=True):
+        print("Calculating resize factor")
+
+        def loss(x):
+            return self.get_equiv(base, resize_factor=x[0])[1]
+
+        n_calls = 50
+        self.result = gp_minimize(
+            loss,
+            [(1.0, 2.0)],
+            n_calls=n_calls,
+            callback=[self.tqdm_skopt(total=n_calls)]
+        )
+        self.resize_factor = self.result.x[0]
+        with open(datadir / self.name / "resize.pickle", 'wb') as handle:
+            pickle.dump(self.resize_factor, handle,
+                        protocol=pickle.HIGHEST_PROTOCOL)
+        if plot:
+            plt.scatter(self.result.x_iters, self.result.func_vals, s=1.0)
+            plt.title("Resize factor")
+            plt.xlabel("resize_factor")
+            plt.ylabel("Average pixel value difference")
+            plt.show()
+
+    # helpers --------
+
+    def get_equiv(self, num, resize_factor=0, plot=False):
         if resize_factor == 0:
             resize_factor = self.resize_factor
         ttl = np.sum(np.full(np.shape(self.ct.img[0]), 255))
+        history = []
         min_sum = 53106966000
         min_sum_idx = 0
         for idx in range(len(self.fbp.x.img[0])):
@@ -80,19 +110,48 @@ class patient():
                          self.hist_match(self.get_resized_fbp(int(idx),
                                          resize_factor=resize_factor),
                          self.ct.img[num]))) / ttl
+            history.append(now)
             if min_sum > now:
                 min_sum = now
                 min_sum_idx = idx
-        print(min_sum_idx, min_sum, resize_factor)
+        # print(min_sum_idx, min_sum, resize_factor)
         # print(min_sum / np.sum(np.full(np.shape(self.ct.img[0]), 255)))
+        if plot:
+            plt.title("Position matching")
+            plt.xlabel("FBP position")
+            plt.ylabel("Average pixel value difference")
+            plt.plot(history)
         return (min_sum_idx, min_sum)
 
     def get_equiv_fbp(self, num):
         return self.get_resized_fbp(self.get_equiv(num)[0])
 
-    def adjust(self, img, alpha=1.0, beta=0.0):
-        dst = alpha * img + beta
-        return np.clip(dst, 0, 255).astype(np.uint8)
+    def get_resized_fbp(self, num, resize_factor=0):
+        if resize_factor == 0:
+            resize_factor = self.resize_factor
+        img = self.fbp.get(num)
+        scaled = int(np.shape(img)[0] * resize_factor)
+        img = cv2.resize(img, (scaled, scaled))
+        out = np.shape(self.ct.img[0])[0]
+        new_img = np.zeros(np.shape(self.ct.img[0]))
+
+        if out > scaled:
+            start = int((out - scaled) / 2)
+            new_img[start:start + scaled, start:start + scaled] = img
+        else:
+            start = int((scaled - out) / 2)
+            # print(start, out)
+            new_img = img[start:start + out, start:start + out]
+        return new_img
+
+    # utils ---------
+
+    class tqdm_skopt(object):
+        def __init__(self, **kwargs):
+            self._bar = tqdm(**kwargs)
+
+        def __call__(self, res):
+            self._bar.update()
 
     def hist_match(self, source, template):
         """
@@ -136,41 +195,3 @@ class patient():
         interp_t_values = np.interp(s_quantiles, t_quantiles, t_values)
 
         return interp_t_values[bin_idx].reshape(oldshape)
-
-    def get_resized_fbp(self, num, resize_factor=0):
-        if resize_factor == 0:
-            resize_factor = self.resize_factor
-        img = self.fbp.get(num)
-        scaled = int(np.shape(img)[0] * resize_factor)
-        img = cv2.resize(img, (scaled, scaled))
-        out = np.shape(self.ct.img[0])[0]
-        new_img = np.zeros(np.shape(self.ct.img[0]))
-
-        if out > scaled:
-            start = int((out - scaled) / 2)
-            new_img[start:start + scaled, start:start + scaled] = img
-        else:
-            start = int((scaled - out) / 2)
-            # print(start, out)
-            new_img = img[start:start + out, start:start + out]
-        return new_img
-
-    # def save(self):
-    #     if self.m == -1000 or self.b == -1000:
-    #         print("Failed to save. Position not set.")
-    #     else:
-    #         with open(datadir / self.name /
-    #                   (self.name + ".pickle"), 'wb') as handle:
-    #             pickle.dump(self, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-    # def load(self):
-    #     with open(datadir / self.name /
-    #               (self.name + ".pickle"), 'rb') as handle:
-    #         loaded = pickle.load(handle)
-    #     self.ct = loaded.ct
-    #     self.drr = loaded.drr
-    #     self.fbp = loaded.fbp
-    #     self.m = loaded.m
-    #     self.b = loaded.b
-    #     self.name = loaded.name
-    #     self.num_views = loaded.num_views
