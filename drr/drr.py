@@ -1,11 +1,12 @@
-import numpy as np
+import cupy as np
 import sys
 import torch
 # import gc
 
 from pathlib import Path
 from drr.DiffDRR.diffdrr.drr import DRR
-from tqdm.autonotebook import tqdm as notebook_tqdm
+# from tqdm import tqdm
+from tqdm.notebook import tqdm
 # from skimage.transform import resize
 
 here = Path(__file__).resolve().parent
@@ -70,7 +71,7 @@ class drrset():
 
         self.img = np.empty(self.num_views, dtype=object)
 
-        for view in notebook_tqdm(range(0, self.num_views), desc="DRR", leave=False):
+        for view in tqdm(range(0, self.num_views), desc="DRR", leave=False):
             a = 2 * np.pi * view / self.num_views
             detector_kwargs = {
                 "sdr": sdr,

@@ -1,6 +1,7 @@
 import pydicom
 from pathlib import Path
-import numpy as np
+# import numpy as np
+import cupy as np
 from scipy.ndimage import rotate
 import argparse
 import os

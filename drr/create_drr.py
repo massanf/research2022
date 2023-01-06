@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-import numpy as np
+# import numpy as np
+import cupy as np
 import matplotlib.animation as animation
 import argparse
 from PIL import Image

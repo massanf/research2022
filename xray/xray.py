@@ -1,6 +1,6 @@
 import numpy as np
 import pathlib
-from tqdm.autonotebook import tqdm as notebook_tqdm
+from tqdm import tqdm_notebook as tqdm
 # import imageio.v2 as imageio
 # from PIL import Image
 
@@ -43,7 +43,7 @@ class xrayset():
         self.height = height
         self.sheets = sheets
         self.raw_data = np.empty(sheets, dtype=object)
-        for i in notebook_tqdm(range(0, sheets)):
+        for i in tqdm(range(0, sheets)):
             self.load(i)
         self.img = self.filter(self.raw_data)
         for i in range(0, len(self.img)):

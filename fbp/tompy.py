@@ -2,12 +2,12 @@ from __future__ import division
 # import scipy
 import cv2
 import pathlib
-import numpy as np
+import cupy as np
 import imageio.v2 as imageio
 # import matplotlib.pyplot as plt
 from PIL import Image
 from scipy.fftpack import fft, ifft, fftfreq
-from tqdm.autonotebook import tqdm
+from tqdm import tqdm
 from scipy.interpolate import interp1d
 # from gui import imagename
 from skimage.transform import rotate

@@ -2,7 +2,7 @@ import os
 # import argparse
 import numpy as np
 import glob
-from tqdm.autonotebook import tqdm
+from tqdm import tqdm
 
 from patient import patient
 

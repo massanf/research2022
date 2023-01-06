@@ -1,8 +1,9 @@
 import pathlib
 import pydicom
+import cupy as cp
 import numpy as np
 import glob
-from tqdm.autonotebook import tqdm as notebook_tqdm
+# from tqdm import tqdm_notebook as tqdm
 from scipy.ndimage import zoom
 
 # filename = 'ct_no_tumor_phantom_raw/001/1-001-0%s.img' % f'{i:03}'
@@ -37,14 +38,14 @@ class ctset():
         for datum in self.raw_data:
             z_list.append(datum.ImagePositionPatient[2])
         z_list = sorted(z_list)
-        z_list = np.unique(z_list)
+        z_list = cp.unique(z_list)
         self.zrange[0] = z_list[1]
         self.zrange[1] = z_list[len(z_list) - 2]
 
         self.sheets = len(self.raw_data)
 
-        # self.raw_data = np.empty(self.sheets, dtype=object)
-        self.img = np.empty(self.sheets, dtype=object)
+        # self.raw_data = cp.empty(self.sheets, dtype=object)
+        self.img = cp.empty(self.sheets, dtype=object)
 
         self.raw_data = sorted(self.raw_data,
                                key=lambda x: x.ImagePositionPatient[2])
@@ -57,7 +58,8 @@ class ctset():
 
         if type == "float32":
             for i in range(0, self.sheets):
-                self.img[i] = self.raw_data[i].pixel_array.astype('float32')
+                self.img[i] = cp.array(self.raw_data[i]
+                                       .pixel_array.astype('float32'))
                 self.img[i] /= 4095.
                 self.img[i] *= 255.
                 self.img[i] = self.img[i].astype('uint8')
@@ -86,17 +88,17 @@ class ctset():
         for datum in self.raw_data:
             Zs.append(datum.ImagePositionPatient[2])
 
-        Zs = np.unique(Zs)
+        Zs = cp.unique(Zs)
         delZ = Zs[0]
 
         delZs = Zs
-        delZs = np.diff(delZs)
+        delZs = cp.diff(delZs)
         delZ = delZs[0]
 
         # define output shape
         nx, ny = ds.pixel_array.shape
         nz = len(Zs) + 2 * pad
-        volume = np.zeros((nx, nz, ny))
+        volume = cp.zeros((nx, nz, ny))
 
         # create volume
         for idx in range(0, pad):

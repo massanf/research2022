@@ -1,9 +1,10 @@
 import pathlib
-import numpy as np
+import cupy as np
 import pickle
 import cv2
 from skopt import gp_minimize
-from tqdm.autonotebook import tqdm
+# from tqdm import tqdm
+from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 import fbp.tompy as fbp
