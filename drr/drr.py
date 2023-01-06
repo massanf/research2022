@@ -70,7 +70,7 @@ class drrset():
 
         self.img = np.empty(self.num_views, dtype=object)
 
-        for view in notebook_tqdm(range(0, self.num_views)):
+        for view in notebook_tqdm(range(0, self.num_views), desc="DRR", leave=True):
             a = 2 * np.pi * view / self.num_views
             detector_kwargs = {
                 "sdr": sdr,

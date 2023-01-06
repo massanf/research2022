@@ -10,9 +10,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from prep import printProgressBar
-from networks import RED_CNN
-from measure import compute_measure
+from red_cnn.prep import printProgressBar
+from red_cnn.networks import RED_CNN
+from red_cnn.measure import compute_measure
 
 
 class Solver(object):

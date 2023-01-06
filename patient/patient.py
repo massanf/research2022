@@ -5,15 +5,17 @@ import cv2
 from skopt import gp_minimize
 from tqdm.autonotebook import tqdm
 import matplotlib.pyplot as plt
+
 import fbp.tompy as fbp
 from ct import ct
 from drr import drr
 
 datadir = pathlib.Path("data")
+graphdir = pathlib.Path("graphs")
 
 
 class patient():
-    def __init__(self, name, num_views):
+    def __init__(self, name, num_views=450):
         self.name = name
         self.num_views = num_views
         self.m = -1000
@@ -47,21 +49,20 @@ class patient():
     # generators ----------
 
     def generate_ct(self):
-        print("Creating new CTset")
+        # print("Creating new CTset")
         self.ct = ct.ctset(name=self.name, type="float32")
         with open(datadir / self.name / "ct.pickle", 'wb') as handle:
             pickle.dump(self.ct, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        self.new_drr()
+        self.generate_drr()
 
     def generate_drr(self):
-        print("Creating new DRRset")
+        # print("Creating new DRRset")
         self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
         with open(datadir / self.name / "drr.pickle", 'wb') as handle:
             pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        self.new_fbp()
+        self.generate_fbp()
 
     def generate_fbp(self):
-        print("Creating new FBPset")
         self.fbp = fbp.fbpset(
             self.drr,
             height=500,
@@ -73,7 +74,7 @@ class patient():
         self.calculate_resize()
 
     def calculate_resize(self, base=150, plot=True):
-        print("Calculating resize factor")
+        # print("Calculating resize factor")
 
         def loss(x):
             return self.get_equiv(base, resize_factor=x[0])[1]
@@ -81,9 +82,10 @@ class patient():
         n_calls = 50
         self.result = gp_minimize(
             loss,
-            [(1.0, 2.0)],
+            [(0.8, 2.0)],
             n_calls=n_calls,
-            callback=[self.tqdm_skopt(total=n_calls)]
+            callback=[self.tqdm_skopt(total=n_calls,
+                      desc="Resize", leave=True)]
         )
         self.resize_factor = self.result.x[0]
         with open(datadir / self.name / "resize.pickle", 'wb') as handle:
@@ -94,7 +96,8 @@ class patient():
             plt.title("Resize factor")
             plt.xlabel("resize_factor")
             plt.ylabel("Average pixel value difference")
-            plt.show()
+            plt.savefig(graphdir / f"{self.name}_resize.png")
+            plt.cla()
 
     # helpers --------
 
@@ -142,6 +145,7 @@ class patient():
             start = int((scaled - out) / 2)
             # print(start, out)
             new_img = img[start:start + out, start:start + out]
+        new_img = new_img.astype('int16')
         return new_img
 
     # utils ---------

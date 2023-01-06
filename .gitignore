@@ -9,3 +9,8 @@ __pycache__
 *.gif
 *.pickle
 **/data
+*.npy
+*.rar
+*.ckpt
+out.txt
+nohup.out

@@ -81,7 +81,7 @@ class fbpset():
 
         self.rotate = rotate
 
-        for idx in tqdm(range(len(self.x.img[0]))):
+        for idx in tqdm(range(len(self.x.img[0])), desc="FBP", leave=True):
             # for idx in range(5):
             self.generate(idx)
 
@@ -112,14 +112,14 @@ class fbpset():
         sinogram = self.create_sino(sheet_number)
         sinogram = cv2.resize(sinogram, (self.height, self.width))
 
-        imageio.imsave(here / "sino.png", sinogram)
+        # imageio.imsave(here / "sino.png", sinogram)
 
         theta = np.linspace(0., 180., max(self.height, self.width),
                             endpoint=False)
         reconstruction_fbp = self.iradon_transform(
             sinogram,
             theta=theta,
-            interpolation='cubic').astype("float32")
+            interpolation='linear').astype("float32")
         reconstruction_fbp -= np.min(reconstruction_fbp.flatten())
         reconstruction_fbp /= np.max(reconstruction_fbp.flatten())
         reconstruction_fbp *= 256

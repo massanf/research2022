@@ -1,8 +1,8 @@
 import os
 import argparse
 from torch.backends import cudnn
-from loader import get_loader
-from solver import Solver
+from red_cnn.loader import get_loader
+from red_cnn.solver import Solver
 
 
 def main(args):
@@ -40,10 +40,11 @@ if __name__ == "__main__":
 
     parser.add_argument('--mode', type=str, default='train')
     parser.add_argument('--load_mode', type=int, default=0)
-    parser.add_argument('--data_path', type=str, default='./AAPM-Mayo-CT-Challenge/')
-    parser.add_argument('--saved_path', type=str, default='./npy_img/')
-    parser.add_argument('--save_path', type=str, default='./save/')
-    parser.add_argument('--test_patient', type=str, default='L506')
+    # parser.add_argument('--data_path', type=str, default='./AAPM-Mayo-CT-Challenge/')
+    # parser.add_argument('--saved_path', type=str, default='./npy_img/')
+    parser.add_argument('--saved_path', type=str, default='./red_cnn/npy_img/')
+    parser.add_argument('--save_path', type=str, default='./red_cnn/save/')
+    parser.add_argument('--test_patient', type=str, default='sample1002')
     parser.add_argument('--result_fig', type=bool, default=True)
 
     parser.add_argument('--norm_range_min', type=float, default=-1024.0)
