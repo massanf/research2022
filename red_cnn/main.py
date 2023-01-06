@@ -1,41 +1,93 @@
 import os
 import argparse
+import types
 from torch.backends import cudnn
 from red_cnn.loader import get_loader
 from red_cnn.solver import Solver
 
 
-def main(args):
+def main(
+    device: str,
+    mode='train',
+    load_mode=0,
+    saved_path='./red_cnn/npy_img/',
+    save_path='./red_cnn/save/',
+    test_patient='sample1002',
+    result_fig=True,
+    norm_range_min=-1024.0,
+    norm_range_max=3072.0,
+    trunc_min=-160.0,
+    trunc_max=240.0,
+    transform=False,
+    patch_n=10,
+    patch_size=64,
+    batch_size=16,
+    num_epochs=100,
+    print_iters=20,
+    decay_iters=3000,
+    save_iters=1000,
+    test_iters=1000,
+    lr=1e-5,
+    num_workers=7,
+    multi_gpu=False
+):
     cudnn.benchmark = True
 
-    if not os.path.exists(args.save_path):
-        os.makedirs(args.save_path)
-        print('Create path : {}'.format(args.save_path))
+    args = types.SimpleNamespace()
 
-    if args.result_fig:
-        fig_path = os.path.join(args.save_path, 'fig')
+    args.device = device
+    args.mode = mode
+    args.load_mode = load_mode
+    args.saved_path = saved_path
+    args.save_path = save_path
+    args.test_patient = test_patient
+    args.result_fig = result_fig
+    args.norm_range_min = norm_range_min
+    args.norm_range_max = norm_range_max
+    args.trunc_min = trunc_min
+    args.trunc_max = trunc_max
+    args.transform = transform
+    args.patch_n = patch_n
+    args.patch_size = patch_size
+    args.batch_size = batch_size
+    args.num_epochs = num_epochs
+    args.print_iters = print_iters
+    args.decay_iters = decay_iters
+    args.save_iters = save_iters
+    args.test_iters = test_iters
+    args.lr = lr
+    args.num_workers = num_workers
+    args.multi_gpu = multi_gpu
+
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+        print('Create path : {}'.format(save_path))
+
+    if result_fig:
+        fig_path = os.path.join(save_path, 'fig')
         if not os.path.exists(fig_path):
             os.makedirs(fig_path)
             print('Create path : {}'.format(fig_path))
 
-    data_loader = get_loader(mode=args.mode,
-                             load_mode=args.load_mode,
-                             saved_path=args.saved_path,
-                             test_patient=args.test_patient,
-                             patch_n=(args.patch_n if args.mode=='train' else None),
-                             patch_size=(args.patch_size if args.mode=='train' else None),
-                             transform=args.transform,
-                             batch_size=(args.batch_size if args.mode=='train' else 1),
-                             num_workers=args.num_workers)
+    data_loader = get_loader(mode=mode,
+                             load_mode=load_mode,
+                             saved_path=saved_path,
+                             test_patient=test_patient,
+                             patch_n=(patch_n if mode=='train' else None),
+                             patch_size=(patch_size if mode=='train' else None),
+                             transform=transform,
+                             batch_size=(batch_size if mode=='train' else 1),
+                             num_workers=num_workers)
 
     solver = Solver(args, data_loader)
-    if args.mode == 'train':
+    if mode == 'train':
         solver.train()
-    elif args.mode == 'test':
+    elif mode == 'test':
         solver.test()
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
+def __init__(args=None):
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--mode', type=str, default='train')
@@ -70,5 +122,5 @@ if __name__ == "__main__":
     parser.add_argument('--num_workers', type=int, default=7)
     parser.add_argument('--multi_gpu', type=bool, default=False)
 
-    args = parser.parse_args()
+    args = parser.parse_args(args)
     main(args)

@@ -1,22 +1,34 @@
 import os
-import argparse
+# import argparse
 import numpy as np
-from tqdm import tqdm
+import glob
+from tqdm.autonotebook import tqdm
 
 from patient import patient
 
 
-def save_dataset(args):
-    if not os.path.exists(args.save_path):
-        os.makedirs(args.save_path)
-        print('Create path : {}'.format(args.save_path))
+def save_dataset(
+    save_path='./red_cnn/npy_img/',
+    norm_range_min=-1024.0,
+    norm_range_max=3072.0
+):
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+        print('Create path : {}'.format(save_path))
 
-    patient_list = args.patient_list
-    use_range = [50, 220]
-    for p_ind, pat in tqdm(enumerate(patient_list)):
-        p = patient.patient(name=pat)
-        for img in tqdm(range(use_range[0], use_range[1])):
+    use_range = [80, 220]
+    vols = glob.glob("./data/*")
+    for pat in tqdm((vols), desc="Patient"):
+        pat_name = pat.split("/")[-1]
+        if "__" in pat_name:
+            continue
+        p = patient.patient(name=pat_name)
+        for img in tqdm(range(use_range[0], use_range[1]),
+                        desc=pat_name, leave=False):
             for io in ['input', 'target']:
+                f_name = '{}_{}_{}.npy'.format(pat_name, img, io)
+                if os.path.exists(os.path.join(save_path, f_name)):
+                    continue
                 if io == 'target':
                     f_px = p.ct.img[img]
                 elif io == 'input':
@@ -24,61 +36,31 @@ def save_dataset(args):
 
                 f = normalize_(
                     f_px,
-                    args.norm_range_min,
-                    args.norm_range_max
+                    norm_range_min,
+                    norm_range_max
                 )
 
-                f_name = '{}_{}_{}.npy'.format(pat, img, io)
-                np.save(os.path.join(args.save_path, f_name), f)
-
-        # printProgressBar(p_ind, len(patient_list),
-                        #  prefix="save image ..",
-                        #  suffix='Complete', length=25)
-        # print(' ')
+                f_name = '{}_{}_{}.npy'.format(pat_name, img, io)
+                np.save(os.path.join(save_path, f_name), f)
 
 
 def normalize_(image, MIN_B=-1024.0, MAX_B=3072.0):
     image = (image - MIN_B) / (MAX_B - MIN_B)
     return image
 
+# # if __name__ == "__main__":
+# def prep(
+#     save_path='./red_cnn/npy_img/',
+#     norm_range_min=-1024.0,
+#     norm_range_max=3072.0
+# ):
+#     # parser.add_argument('--data_path', type=str,
+#     # default='./AAPM-Mayo-CT-Challenge/')
+#     # parser.add_argument('--save_path', type=str, default='./red_cnn/npy_img/')
 
-def printProgressBar(iteration, total, prefix='', suffix='',
-                     decimals=1, length=100, fill=' '):
-    # referred from https://gist.github.com/snakers4/
-    # 91fa21b9dda9d055a02ecd23f24fbc3d
-    percent = (("{0:." + str(decimals) + "f}")
-               .format(100 * (iteration / float(total))))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '=' * (length - filledLength)
-    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end='\r')
-    if iteration == total:
-        print()
+#     # parser.add_argument('--test_patient', type=str, default='L506')
+#     # parser.add_argument('--mm', type=int, default=3)
+#     # parser.add_argument('--norm_range_min', type=float, default=-1024.0)
+#     # parser.add_argument('--norm_range_max', type=float, default=3072.0)
 
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-
-    # parser.add_argument('--data_path', type=str,
-    # default='./AAPM-Mayo-CT-Challenge/')
-    parser.add_argument('--save_path', type=str, default='./red_cnn/npy_img/')
-
-    # parser.add_argument('--test_patient', type=str, default='L506')
-    # parser.add_argument('--mm', type=int, default=3)
-    parser.add_argument('--norm_range_min', type=float, default=-1024.0)
-    parser.add_argument('--norm_range_max', type=float, default=3072.0)
-
-    args = parser.parse_args()
-    args.patient_list = [
-        "sample1000",
-        "sample1001",
-        "sample1002",
-        "sample1003",
-        "sample1004",
-        "sample1005",
-        "sample1006",
-        "sample1007",
-        "sample1008",
-        "sample1009",
-        "sample1010",
-    ]
-    save_dataset(args)
+#     save_dataset(args)

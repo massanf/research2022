@@ -81,7 +81,7 @@ class fbpset():
 
         self.rotate = rotate
 
-        for idx in tqdm(range(len(self.x.img[0])), desc="FBP", leave=True):
+        for idx in tqdm(range(len(self.x.img[0])), desc="FBP", leave=False):
             # for idx in range(5):
             self.generate(idx)
 

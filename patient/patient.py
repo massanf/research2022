@@ -85,7 +85,7 @@ class patient():
             [(0.8, 2.0)],
             n_calls=n_calls,
             callback=[self.tqdm_skopt(total=n_calls,
-                      desc="Resize", leave=True)]
+                      desc="Resize", leave=False)]
         )
         self.resize_factor = self.result.x[0]
         with open(datadir / self.name / "resize.pickle", 'wb') as handle:
