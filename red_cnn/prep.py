@@ -17,7 +17,7 @@ def save_dataset(
         os.makedirs(save_path)
         print('Create path : {}'.format(save_path))
 
-    use_range = [80, 220]
+    use_range = [130, 220]
     vols = glob.glob("./data/*")
     for pat in tqdm((vols), desc="Patient"):
         pat_name = pat.split("/")[-1]

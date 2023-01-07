@@ -118,7 +118,7 @@ class Solver(object):
         for epoch in tqdm(range(1, self.num_epochs), leave=False):
             self.REDCNN.train(True)
 
-            for iter_, (x, y) in enumerate(tqdm(self.data_loader)):
+            for iter_, (x, y) in enumerate(tqdm(self.data_loader, leave=False)):
                 total_iters += 1
 
                 # add 1 channel
