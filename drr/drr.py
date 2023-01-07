@@ -1,4 +1,5 @@
-import cupy as np
+import cupy as cp
+import numpy as np
 import sys
 import torch
 # import gc
@@ -66,13 +67,14 @@ class drrset():
         # spacing = [0.247937, 1.0, 0.247937]
 
         # Get parameters for the detector
-        self.bx, self.by, self.bz = (np.array(volume.shape) *
+        self.bx, self.by, self.bz = (cp.shape(volume) *
                                      np.array(spacing) / 2)
 
-        self.img = np.empty(self.num_views, dtype=object)
+        # self.img = cp.empty(self.num_views, dtype=object)
+        self.img = []
 
         for view in tqdm(range(0, self.num_views), desc="DRR", leave=False):
-            a = 2 * np.pi * view / self.num_views
+            a = 2 * cp.pi * view / self.num_views
             detector_kwargs = {
                 "sdr": sdr,
                 "theta": theta,
@@ -95,13 +97,13 @@ class drrset():
 
             # Make the DRR image
             img_tensor = drr(**detector_kwargs)
-            img = img_tensor.to('cpu').detach().numpy().copy()
-            img /= np.max(img)
+            img = cp.array(img_tensor.to('cpu').detach().numpy().copy())
+            img /= cp.max(img)
             img *= 255
 
-            self.img[view] = (img.astype("uint8")
-                              [cropstarty:cropstarty + cropheight,
-                               cropstartx:cropstartx + cropwidth])
+            self.img.append(img.astype("uint8")
+                            [cropstarty:cropstarty + cropheight,
+                             cropstartx:cropstartx + cropwidth])
 
             del img
             del img_tensor

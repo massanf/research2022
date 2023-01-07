@@ -45,11 +45,11 @@ class ctset():
         self.sheets = len(self.raw_data)
 
         # self.raw_data = cp.empty(self.sheets, dtype=object)
-        self.img = cp.empty(self.sheets, dtype=object)
+        self.img = []
 
         self.raw_data = sorted(self.raw_data,
                                key=lambda x: x.ImagePositionPatient[2])
-        self.raw_data = np.flip(self.raw_data,)
+        self.raw_data = np.flip(self.raw_data)
 
         if type == "uint8":
             for i in range(0, self.sheets):
@@ -58,8 +58,8 @@ class ctset():
 
         if type == "float32":
             for i in range(0, self.sheets):
-                self.img[i] = cp.array(self.raw_data[i]
-                                       .pixel_array.astype('float32'))
+                a = cp.array(self.raw_data[i].pixel_array.astype('float32'))
+                self.img.append(a)
                 self.img[i] /= 4095.
                 self.img[i] *= 255.
                 self.img[i] = self.img[i].astype('uint8')
@@ -93,7 +93,7 @@ class ctset():
 
         delZs = Zs
         delZs = cp.diff(delZs)
-        delZ = delZs[0]
+        delZ = float(delZs[0])
 
         # define output shape
         nx, ny = ds.pixel_array.shape
@@ -119,5 +119,7 @@ class ctset():
 
         spacing = [delX / zm, delZ / zm, delY / zm]
 
-        volume = zoom(volume, (zm, zm, zm), order=0, mode='nearest')
+        volume = zoom(cp.asnumpy(volume), (zm, zm, zm),
+                      order=0, mode='nearest')
+        volume = cp.asarray(volume)
         return volume, spacing

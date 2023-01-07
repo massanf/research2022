@@ -1,6 +1,7 @@
 import os
 # import argparse
 import numpy as np
+import cupy as cp
 import glob
 from tqdm import tqdm
 
@@ -30,9 +31,9 @@ def save_dataset(
                 if os.path.exists(os.path.join(save_path, f_name)):
                     continue
                 if io == 'target':
-                    f_px = p.ct.img[img]
+                    f_px = cp.asnumpy(p.ct.img[img])
                 elif io == 'input':
-                    f_px = p.get_equiv_fbp(img)
+                    f_px = cp.asnumpy(p.get_equiv_fbp(img))
 
                 f = normalize_(
                     f_px,
