@@ -132,7 +132,8 @@ class patient():
         return (min_sum_idx, min_sum)
 
     def get_equiv_fbp(self, num):
-        return self.get_resized_fbp(self.get_equiv(num)[0])
+        img = self.get_resized_fbp(self.get_equiv(num)[0])
+        return self.hist_match(img, self.ct.img[num])
 
     def get_resized_fbp(self, num, resize_factor=0):
         if resize_factor == 0:

@@ -7,7 +7,7 @@ import torch
 from pathlib import Path
 from drr.DiffDRR.diffdrr.drr import DRR
 # from tqdm import tqdm
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 # from skimage.transform import resize
 
 here = Path(__file__).resolve().parent

@@ -5,12 +5,13 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import OrderedDict
+from tqdm import tqdm
+import datetime
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from red_cnn.prep import printProgressBar
 from red_cnn.networks import RED_CNN
 from red_cnn.measure import compute_measure
 
@@ -107,22 +108,24 @@ class Solver(object):
         f.savefig(os.path.join(self.save_path, 'fig', 'result_{}.png'.format(fig_name)))
         plt.close()
 
-
     def train(self):
         train_losses = []
         total_iters = 0
-        start_time = time.time()
-        for epoch in range(1, self.num_epochs):
+        dt_now = datetime.datetime.now()
+        logpath = f"./logs/log_{dt_now.strftime('%b%d_%H:%M:%S')}.txt"
+        with open(logpath, "a") as f:
+            f.write("STEP,EPOCH,EPOCH TOTAL,ITER,ITER_TOTAL,LOSS\n")
+        for epoch in tqdm(range(1, self.num_epochs), leave=False):
             self.REDCNN.train(True)
 
-            for iter_, (x, y) in enumerate(self.data_loader):
+            for iter_, (x, y) in enumerate(tqdm(self.data_loader)):
                 total_iters += 1
 
                 # add 1 channel
                 x = x.unsqueeze(0).float().to(self.device)
                 y = y.unsqueeze(0).float().to(self.device)
 
-                if self.patch_size: # patch training
+                if self.patch_size:  # patch training
                     x = x.view(-1, 1, self.patch_size, self.patch_size)
                     y = y.view(-1, 1, self.patch_size, self.patch_size)
 
@@ -137,10 +140,14 @@ class Solver(object):
 
                 # print
                 if total_iters % self.print_iters == 0:
-                    print("STEP [{}], EPOCH [{}/{}], ITER [{}/{}] \nLOSS: {:.8f}, TIME: {:.1f}s".format(total_iters, epoch, 
-                                                                                                        self.num_epochs, iter_+1, 
-                                                                                                        len(self.data_loader), loss.item(), 
-                                                                                                        time.time() - start_time))
+                    # print("STEP [{}], EPOCH [{}/{}], ITER [{}/{}] \nLOSS: {:.8f}, TIME: {:.1f}s".format(total_iters, epoch, 
+                    #                                                                                     self.num_epochs, iter_+1, 
+                    #                                                                                     len(self.data_loader), loss.item(), 
+                    #                            
+                    # wi                                                         time.time() - start_time))
+                    with open(logpath, "a") as f:
+                        f.write(f"{total_iters},{epoch},{self.num_epochs},{iter_+1},{len(self.data_loader)},{loss.item():.8f}\n")
+
                 # learning rate decay
                 if total_iters % self.decay_iters == 0:
                     self.lr_decay()
@@ -161,40 +168,43 @@ class Solver(object):
         pred_psnr_avg, pred_ssim_avg, pred_rmse_avg = 0, 0, 0
 
         with torch.no_grad():
-            for i, (x, y) in enumerate(self.data_loader):
-                shape_ = x.shape[-1]
-                x = x.unsqueeze(0).float().to(self.device)
-                y = y.unsqueeze(0).float().to(self.device)
+            with tqdm(total=len(self.data_loader), desc=self.mode) as pbar:
+                for i, (x, y) in enumerate(self.data_loader):
+                    shape_ = x.shape[-1]
+                    x = x.unsqueeze(0).float().to(self.device)
+                    y = y.unsqueeze(0).float().to(self.device)
 
-                pred = self.REDCNN(x)
+                    pred = self.REDCNN(x)
 
-                # denormalize, truncate
-                x = self.trunc(self.denormalize_(x.view(shape_, shape_).cpu().detach()))
-                y = self.trunc(self.denormalize_(y.view(shape_, shape_).cpu().detach()))
-                pred = self.trunc(self.denormalize_(pred.view(shape_, shape_).cpu().detach()))
+                    # denormalize, truncate
+                    x = self.trunc(self.denormalize_(x.view(shape_, shape_).cpu().detach()))
+                    y = self.trunc(self.denormalize_(y.view(shape_, shape_).cpu().detach()))
+                    pred = self.trunc(self.denormalize_(pred.view(shape_, shape_).cpu().detach()))
 
-                data_range = self.trunc_max - self.trunc_min
+                    data_range = self.trunc_max - self.trunc_min
 
-                original_result, pred_result = compute_measure(x, y, pred, data_range)
-                ori_psnr_avg += original_result[0]
-                ori_ssim_avg += original_result[1]
-                ori_rmse_avg += original_result[2]
-                pred_psnr_avg += pred_result[0]
-                pred_ssim_avg += pred_result[1]
-                pred_rmse_avg += pred_result[2]
+                    original_result, pred_result = compute_measure(x, y, pred, data_range)
+                    ori_psnr_avg += original_result[0]
+                    ori_ssim_avg += original_result[1]
+                    ori_rmse_avg += original_result[2]
+                    pred_psnr_avg += pred_result[0]
+                    pred_ssim_avg += pred_result[1]
+                    pred_rmse_avg += pred_result[2]
 
-                # save result figure
-                if self.result_fig:
-                    self.save_fig(x, y, pred, i, original_result, pred_result)
+                    # save result figure
+                    if self.result_fig:
+                        self.save_fig(x, y, pred, i, original_result, pred_result)
 
-                printProgressBar(i, len(self.data_loader),
-                                 prefix="Compute measurements ..",
-                                 suffix='Complete', length=25)
-            print('\n')
-            print('Original === \nPSNR avg: {:.4f} \nSSIM avg: {:.4f} \nRMSE avg: {:.4f}'.format(ori_psnr_avg/len(self.data_loader), 
-                                                                                            ori_ssim_avg/len(self.data_loader), 
-                                                                                            ori_rmse_avg/len(self.data_loader)))
-            print('\n')
-            print('Predictions === \nPSNR avg: {:.4f} \nSSIM avg: {:.4f} \nRMSE avg: {:.4f}'.format(pred_psnr_avg/len(self.data_loader), 
-                                                                                                  pred_ssim_avg/len(self.data_loader), 
-                                                                                                  pred_rmse_avg/len(self.data_loader)))
+                    pbar.update(1)
+                    # printProgressBar(i, len(self.data_loader),
+                    #                  prefix="Compute measurements ..",
+                    #                  suffix='Complete', length=25)
+                    
+                print('\n')
+                print('Original === \nPSNR avg: {:.4f} \nSSIM avg: {:.4f} \nRMSE avg: {:.4f}'.format(ori_psnr_avg/len(self.data_loader), 
+                                                                                                ori_ssim_avg/len(self.data_loader), 
+                                                                                                ori_rmse_avg/len(self.data_loader)))
+                print('\n')
+                print('Predictions === \nPSNR avg: {:.4f} \nSSIM avg: {:.4f} \nRMSE avg: {:.4f}'.format(pred_psnr_avg/len(self.data_loader), 
+                                                                                                    pred_ssim_avg/len(self.data_loader), 
+                                                                                                    pred_rmse_avg/len(self.data_loader)))
