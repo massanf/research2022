@@ -4,6 +4,7 @@ import cupy as cp
 # import numpy as np
 import pickle
 import cv2
+import os
 # from cupyx.scipy.ndimage import resize
 from skopt import gp_minimize
 # from tqdm import tqdm
@@ -14,8 +15,9 @@ import fbp.tompy as fbp
 from ct import ct
 from drr import drr
 
-datadir = pathlib.Path("data")
-graphdir = pathlib.Path("graphs")
+research = pathlib.Path(__file__).resolve().parent.parent
+datadir = research / pathlib.Path("data")
+graphdir = research / pathlib.Path("graphs")
 
 
 class patient():

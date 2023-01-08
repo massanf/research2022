@@ -1,0 +1,204 @@
+{
+    "os": "Linux-5.15.0-53-generic-x86_64-with-glibc2.35",
+    "python": "3.10.8",
+    "heartbeatAt": "2023-01-08T08:32:26.457207",
+    "startedAt": "2023-01-08T08:32:25.891030",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix",
+        "commit": "da39a525eb793614807db4330cfe9b2157bbe33a"
+    },
+    "email": "trombiano1@gmail.com",
+    "root": "/home/mfujita/Documents/research/pix2pix",
+    "host": "ibalab-server4",
+    "username": "mfujita",
+    "executable": "/home/mfujita/anaconda3/envs/pix2pix/bin/python",
+    "cpu_count": 16,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 3.698843750000001,
+        "min": 2200.0,
+        "max": 3400.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3.883,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.044,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.959,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.977,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.924,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.043,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.019,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.015,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.923,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.022,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.916,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.997,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.82,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.032,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.03,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.991,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.688,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.973,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.935,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 3.4,
+            "min": 2200.0,
+            "max": 3400.0
+        },
+        {
+            "current": 4.011,
+            "min": 2200.0,
+            "max": 3400.0
+        }
+    ],
+    "disk": {
+        "total": 915.3232879638672,
+        "used": 548.1088600158691
+    },
+    "gpu": "NVIDIA GeForce RTX 3080 Ti",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3080 Ti",
+            "memory_total": 12884901888
+        }
+    ],
+    "memory": {
+        "total": 62.68182373046875
+    }
+}

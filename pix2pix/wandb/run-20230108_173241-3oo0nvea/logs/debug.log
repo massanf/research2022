@@ -1,0 +1,25 @@
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_setup.py:_flush():68] Configure stats pid to 2032237
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_setup.py:_flush():68] Loading settings from /home/mfujita/.config/wandb/settings
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_setup.py:_flush():68] Loading settings from /home/mfujita/Documents/research/pix2pix/wandb/settings
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_setup.py:_flush():68] Loading settings from environment variables: {'_require_service': 'True'}
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_setup.py:_flush():68] Inferring run settings from compute environment: {'program_relpath': 'test.py', 'program': '/home/mfujita/Documents/research/pix2pix/test.py'}
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_init.py:_log_setup():476] Logging user logs to /home/mfujita/Documents/research/pix2pix/wandb/run-20230108_173241-3oo0nvea/logs/debug.log
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_init.py:_log_setup():477] Logging internal logs to /home/mfujita/Documents/research/pix2pix/wandb/run-20230108_173241-3oo0nvea/logs/debug-internal.log
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_init.py:init():516] calling init triggers
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_init.py:init():519] wandb.init called with sweep_config: {}
+config: {'dataroot': './datasets/facades', 'name': 'facades_pix2pix', 'gpu_ids': [0], 'checkpoints_dir': './checkpoints', 'model': 'pix2pix', 'input_nc': 3, 'output_nc': 3, 'ngf': 64, 'ndf': 64, 'netD': 'basic', 'netG': 'unet_256', 'n_layers_D': 3, 'norm': 'batch', 'init_type': 'normal', 'init_gain': 0.02, 'no_dropout': False, 'dataset_mode': 'aligned', 'direction': 'BtoA', 'serial_batches': True, 'num_threads': 0, 'batch_size': 1, 'load_size': 256, 'crop_size': 256, 'max_dataset_size': inf, 'preprocess': 'resize_and_crop', 'no_flip': True, 'display_winsize': 256, 'epoch': 'latest', 'load_iter': 0, 'verbose': False, 'suffix': '', 'use_wandb': True, 'wandb_project_name': 'CycleGAN-and-pix2pix', 'results_dir': './results/', 'aspect_ratio': 1.0, 'phase': 'test', 'eval': False, 'num_test': 50, 'isTrain': False, 'display_id': -1}
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_init.py:init():569] starting backend
+2023-01-08 17:32:41,236 INFO    MainThread:2032237 [wandb_init.py:init():573] setting up manager
+2023-01-08 17:32:41,238 INFO    MainThread:2032237 [backend.py:_multiprocessing_setup():102] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2023-01-08 17:32:41,239 INFO    MainThread:2032237 [wandb_init.py:init():580] backend started and connected
+2023-01-08 17:32:41,241 INFO    MainThread:2032237 [wandb_init.py:init():658] updated telemetry
+2023-01-08 17:32:41,244 INFO    MainThread:2032237 [wandb_init.py:init():693] communicating run to backend with 60 second timeout
+2023-01-08 17:32:41,672 INFO    MainThread:2032237 [wandb_run.py:_on_init():2006] communicating current version
+2023-01-08 17:32:41,704 INFO    MainThread:2032237 [wandb_run.py:_on_init():2010] got version response 
+2023-01-08 17:32:41,704 INFO    MainThread:2032237 [wandb_init.py:init():728] starting run threads in backend
+2023-01-08 17:32:46,716 INFO    MainThread:2032237 [wandb_run.py:_console_start():1986] atexit reg
+2023-01-08 17:32:46,716 INFO    MainThread:2032237 [wandb_run.py:_redirect():1844] redirect: SettingsConsole.WRAP_RAW
+2023-01-08 17:32:46,717 INFO    MainThread:2032237 [wandb_run.py:_redirect():1909] Wrapping output streams.
+2023-01-08 17:32:46,717 INFO    MainThread:2032237 [wandb_run.py:_redirect():1931] Redirects installed.
+2023-01-08 17:32:46,717 INFO    MainThread:2032237 [wandb_init.py:init():765] run started, returning control to user process
+2023-01-08 17:33:00,364 WARNING MsgRouterThr:2032237 [router.py:message_loop():77] message_loop has been closed
