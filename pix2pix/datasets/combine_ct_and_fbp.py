@@ -43,7 +43,7 @@ def prep(fold_AB):
     # if not args.no_multiprocessing:
     #     pool = Pool()
 
-    patients = glob.glob("./../data/*")
+    patients = glob.glob("./data/*")
 
     n_train = int(len(patients) * 0.7)
     n_val = int(len(patients) * 0.2)

@@ -120,15 +120,17 @@ class patient():
                          self.hist_match(self.get_resized_fbp(int(idx),
                                          resize_factor=resize_factor),
                          self.ct.img[num]))) / ttl
-            history.append(now)
+            history.append(float(now))
             if min_sum > now:
                 min_sum = float(now)
                 min_sum_idx = idx
         # print(min_sum_idx, min_sum, resize_factor)
         # print(min_sum / cp.sum(cp.full(cp.shape(self.ct.img[0]), 255)))
         if plot:
-            plt.title("Position matching")
-            plt.xlabel("FBP position")
+            plt.style.use('dark_background')
+            plt.figure(figsize=(6, 4), dpi=360)
+            plt.title("Position")
+            plt.xlabel("FBP Position")
             plt.ylabel("Average pixel value difference")
             plt.plot(history)
         return (min_sum_idx, min_sum)

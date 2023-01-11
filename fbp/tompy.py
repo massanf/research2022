@@ -49,7 +49,8 @@ class fbpset():
         angle=30,
         sidepad=0,
         toppad=0,
-        rotate=0
+        rotate=0,
+        load_all=True
     ):
         """init
 
@@ -76,7 +77,7 @@ class fbpset():
             self.width = width
 
         # self.data = cp.empty(self.num, dtype=object)
-        self.data = []
+        self.data = [None] * self.num
         self.loaded = cp.full(self.num, False)
 
         self.start = start
@@ -89,9 +90,11 @@ class fbpset():
 
         self.rotate = rotate
 
-        for idx in tqdm(range(len(self.x.img[0])), desc="FBP", leave=False):
-            # for idx in range(5):
-            self.generate(idx)
+        if load_all:
+            for idx in tqdm(range(len(self.x.img[0])), desc="FBP",
+                            leave=False):
+                # for idx in range(5):
+                self.generate(idx)
 
     def get(self, sheet_number: int) -> cp.array:
         """Get FBP result image.
@@ -148,7 +151,8 @@ class fbpset():
         #  flags=cv2.INTER_LINEAR)
         rec_img = rotate(cp_img, self.rotate, reshape=False)
 
-        self.data.append(cp.array(rec_img))
+        # self.data.append(cp.array(rec_img))
+        self.data[sheet_number] = cp.array(rec_img)
         self.loaded[sheet_number] = True
 
     def create_sino(self, sheet_number: int):

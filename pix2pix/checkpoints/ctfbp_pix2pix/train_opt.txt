@@ -4,12 +4,12 @@
           checkpoints_dir: ./checkpoints                 
            continue_train: False                         
                 crop_size: 256                           
-                 dataroot: ./datasets/facades            	[default: None]
+                 dataroot: ./datasets/ctfbp              	[default: None]
              dataset_mode: aligned                       
-                direction: BtoA                          	[default: AtoB]
+                direction: AtoB                          
               display_env: main                          
              display_freq: 400                           
-               display_id: 1                             
+               display_id: -1                            	[default: 1]
             display_ncols: 4                             
              display_port: 8097                          
            display_server: http://localhost              
@@ -33,7 +33,7 @@
                  n_epochs: 100                           
            n_epochs_decay: 100                           
                n_layers_D: 3                             
-                     name: facades_pix2pix               	[default: experiment_name]
+                     name: ctfbp_pix2pix                 	[default: experiment_name]
                       ndf: 64                            
                      netD: basic                         
                      netG: unet_256                      
