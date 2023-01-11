@@ -6,6 +6,7 @@ import pathlib
 import cupy as cp
 from cupyx.scipy.ndimage import affine_transform
 # from cupy import resize
+import imageio.v2 as imageio
 from cupyx.scipy.fftpack import fft, ifft
 from cupyx.scipy.fft import fftfreq
 
@@ -126,7 +127,7 @@ class fbpset():
         # sinogram = affine_transform(sinogram, )
         sinogram = cp.array(sinogram)
 
-        # imageio.imsave(here / "sino.png", sinogram)
+        imageio.imsave(here / "sino.png", cp.asnumpy(sinogram))
 
         theta = cp.linspace(0., 180., max(self.height, self.width),
                             endpoint=False)

@@ -3,7 +3,7 @@ import cupy as cp
 import pathlib
 import imageio.v2 as imageio
 from tqdm import tqdm_notebook as tqdm
-# import imageio.v2 as imageio
+import imageio.v3 as imageio
 from PIL import Image
 import cv2
 
@@ -31,7 +31,7 @@ class xrayset():
         width=0,
         output_height=0,
         output_width=0,
-        sample="xray/colorsample.gif"
+        sample="xray/colorsample.jpg"
     ):
         """init
 
@@ -65,41 +65,72 @@ class xrayset():
         self.sheets = sheets
         # self.output_height = height
         # self.output_width = width
-        self.raw_data = np.empty(sheets, dtype=object)
+        # self.raw_data = cp.empty(sheets, dtype=object)
+        self.raw_data = [None] * sheets
+        # self.raw_data = []
         for i in tqdm(range(0, sheets)):
             self.load(i, sample)
         self.img = self.raw_data
         print(self.output_height, self.output_width)
         for i in range(0, len(self.img)):
-            self.img[i] = cv2.resize(self.img[i].astype("uint8"),
-                                     (self.output_height, self.output_width))
+            self.img[i] = cp.array(
+                            cv2.resize(
+                                cp.asnumpy(self.img[i]).astype("uint8"),
+                                (self.output_height, self.output_width)
+                            )
+                        )
             self.img[i] = self.img[i].astype("uint8")
 
         # cut out black
-        imgs = np.stack(self.img)
-        oldshape = np.shape(imgs)
-        imgs = np.ravel(imgs)
-        for idx, px in enumerate(tqdm(imgs)):
+        imgs = cp.stack(self.img)
+        oldshape = cp.shape(imgs)
+        imgs = cp.ravel(imgs)
+
+        def filter(px):
             if px < 40:
-                imgs[idx] -= px
+                return -px
             elif px < 60:
-                imgs[idx] -= - 2 * (px - 40) + 40
-        imgs = np.reshape(imgs, oldshape)
+                return - 2 * (px - 40) + 40
+
+        for c in tqdm(range(0, 61)):
+            imgs[cp.all(imgs < c)] = filter(c)
+
+        # for idx, px in enumerate(tqdm(imgs)):
+        #     if px < 40:
+        #         imgs[idx] -= px
+        #     elif px < 60:
+        #         imgs[idx] -= - 2 * (px - 40) + 40
+        imgs = cp.reshape(imgs, oldshape)
 
         # add border
-        # imgs = [cv2.copyMakeBorder(img, 60, 60, 60, 60,
-                                #    cv2.BORDER_CONSTANT,
-                                #    value=0) for img in imgs]
-        self.img = [cv2.resize(cp.asnumpy(img),
-                               (height, height)) for img in imgs]
+        imgs = [cv2.copyMakeBorder(cp.asnumpy(img),
+                60, 60, 60, 60, cv2.BORDER_CONSTANT,
+                value=0) for img in imgs]
+        self.img = [cp.array(cv2.resize(cp.asnumpy(img),
+                             (height, height))) for img in imgs]
 
         # histogram match
-        self.img_np = []
-        template = np.array(Image.open(sample).convert('L')).astype('float32')
+        self.img_cp = []
+        # template = cp.array(imageio.imread(sample,
+        #                     index=None)).astype('float32')
+
+        loVal = 110
         for idx, img in enumerate(self.img):
-            self.img_np.append(self.hist_match(img, template))
-        for idx, img in enumerate(self.img_np):
-            self.img[idx] = np.array(img)
+            print(img)
+            new_img = img.astype("float64")
+            new_img = ((new_img - loVal) * 255.0 / (255 - loVal))
+            print(new_img)
+            new_img[new_img < 0] = 0
+            print(new_img)
+            new_img[new_img > 255] = 0
+            print(img)
+            new_img = new_img.astype(np.uint8)
+            # print(new_img)
+            self.img_cp.append(cp.array(new_img))
+            # self.img_cp.append(img)
+
+        for idx, img in enumerate(self.img_cp):
+            self.img[idx] = cp.array(img)
 
     def load(self, num: int, sample):
         """Load data from picture
@@ -113,9 +144,9 @@ class xrayset():
         with open(file, 'rb') as f:
             # Seek backwards from end of file by 2 bytes per pixel
             f.seek(-self.width * self.height * 2, 2)
-            img = np.fromfile(
+            img = cp.fromfile(
                 f,
-                dtype=np.uint16
+                dtype=cp.uint16
             ).reshape((self.height, self.width)).astype("float32")
 
         img = self.filter(img)
@@ -149,38 +180,86 @@ class xrayset():
 
         Arguments:
         -----------
-            source: np.ndarray
+            source: cp.ndarray
                 Image to transform; the histogram is computed over the
                 flattened array
-            template: np.ndarray
+            template: cp.ndarray
                 Template image; can have different dimensions to source
         Returns:
         -----------
-            matched: np.ndarray
+            matched: cp.ndarray
                 The transformed output image
         """
 
         oldshape = source.shape
         source = source.ravel()
-        print(source)
         template = template.ravel()
 
         # get the set of unique pixel values and their corresponding
         # indices and counts
-        s_values, bin_idx, s_counts = np.unique(source, return_inverse=True,
+        s_values, bin_idx, s_counts = cp.unique(source, return_inverse=True,
                                                 return_counts=True)
-        t_values, t_counts = np.unique(template, return_counts=True)
+        t_values, t_counts = cp.unique(template, return_counts=True)
+
+        s_counts[0] = 0
+        t_counts[0] = 0
 
         # take the cumsum of the counts and normalize by the number of
         # pixels to get the empirical cumulative distribution functions
         # for the source and template images (maps pixel value --> quantile)
-        s_quantiles = np.cumsum(s_counts).astype(np.float64)
+        s_quantiles = cp.cumsum(s_counts).astype(cp.float64)
         s_quantiles /= s_quantiles[-1]
-        t_quantiles = np.cumsum(t_counts).astype(np.float64)
+        t_quantiles = cp.cumsum(t_counts).astype(cp.float64)
         t_quantiles /= t_quantiles[-1]
 
         # interpolate linearly to find the pixel values in the template image
         # that correspond most closely to the quantiles in the source image
-        interp_t_values = np.interp(s_quantiles, t_quantiles, t_values)
+        interp_t_values = cp.interp(s_quantiles, t_quantiles, t_values)
 
         return interp_t_values[bin_idx].reshape(oldshape)
+
+    def color_transfer(self, source, target):
+        # convert the images from the RGB to L*ab* color space, being
+        # sure to utilizing the floating point data type (note: OpenCV
+        # expects floats to be 32-bit, so use that instead of 64-bit)
+        source = cv2.cvtColor(source, cv2.COLOR_BGR2LAB).astype("float32")
+        target = cv2.cvtColor(target, cv2.COLOR_BGR2LAB).astype("float32")
+
+        # compute color statistics for the source and target images
+        (lMeanSrc, lStdSrc, aMeanSrc, aStdSrc, bMeanSrc, bStdSrc) = self.image_stats(source)
+        (lMeanTar, lStdTar, aMeanTar, aStdTar, bMeanTar, bStdTar) = self.image_stats(target)
+        # subtract the means from the target image
+        (l, a, b) = cv2.split(target)
+        l -= lMeanTar
+        a -= aMeanTar
+        b -= bMeanTar
+        # scale by the standard deviations
+        l = (lStdTar / lStdSrc) * l
+        a = (aStdTar / aStdSrc) * a
+        b = (bStdTar / bStdSrc) * b
+        # add in the source mean
+        l += lMeanSrc
+        a += aMeanSrc
+        b += bMeanSrc
+        # clip the pixel intensities to [0, 255] if they fall outside
+        # this range
+        l = np.clip(l, 0, 255)
+        a = np.clip(a, 0, 255)
+        b = np.clip(b, 0, 255)
+        # merge the channels together and convert back to the RGB color
+        # space, being sure to utilize the 8-bit unsigned integer data
+        # type
+        transfer = cv2.merge([l, a, b])
+        transfer = cv2.cvtColor(transfer.astype("uint8"), cv2.COLOR_LAB2BGR)
+
+        # return the color transferred image
+        return transfer
+
+    def image_stats(self, image):
+        # compute the mean and standard deviation of each channel
+        (l, a, b) = cv2.split(image)
+        (lMean, lStd) = (l.mean(), l.std())
+        (aMean, aStd) = (a.mean(), a.std())
+        (bMean, bStd) = (b.mean(), b.std())
+        # return the color statistics
+        return (lMean, lStd, aMean, aStd, bMean, bStd)
