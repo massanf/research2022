@@ -61,23 +61,38 @@ class patient():
             pickle.dump(self.ct, handle, protocol=pickle.HIGHEST_PROTOCOL)
         self.generate_drr()
 
-    def generate_drr(self):
+    def generate_drr(
+        self,
+        zm=0.5,
+        cropstartx=75,
+        cropstarty=120,
+        cropheight=350,
+        cropwidth=350,
+        delx=6e-3,
+        cont=True
+    ):
         # print("Creating new DRRset")
-        self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
+        self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views,
+                              cropstartx=cropstartx, cropstarty=cropstarty,
+                              cropheight=cropheight, cropwidth=cropwidth,
+                              delx=delx, zm=zm)
         with open(datadir / self.name / "drr.pickle", 'wb') as handle:
             pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        self.generate_fbp()
+        if cont:
+            self.generate_fbp()
 
-    def generate_fbp(self):
+    def generate_fbp(self, load_all=True, cont=True):
         self.fbp = fbp.fbpset(
             self.drr,
             height=500,
             angle=75,
-            rotate=191
+            rotate=191,
+            load_all=load_all
         )
         with open(datadir / self.name / "fbp.pickle", 'wb') as handle:
             pickle.dump(self.fbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        self.calculate_resize()
+        if cont:
+            self.calculate_resize()
 
     def calculate_resize(self, base=150, plot=True):
         # print("Calculating resize factor")
@@ -88,7 +103,7 @@ class patient():
         n_calls = 50
         self.result = gp_minimize(
             loss,
-            [(0.8, 2.0)],
+            [(0.5, 2.0)],
             n_calls=n_calls,
             callback=[self.tqdm_skopt(total=n_calls,
                       desc="Resize", leave=False)]
@@ -137,7 +152,8 @@ class patient():
 
     def get_equiv_fbp(self, num):
         img = self.get_resized_fbp(self.get_equiv(num)[0])
-        return self.hist_match(img, self.ct.img[num])
+        # return self.hist_match(img, self.ct.img[num])
+        return img
 
     def get_resized_fbp(self, num, resize_factor=0):
         if resize_factor == 0:

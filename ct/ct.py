@@ -122,4 +122,5 @@ class ctset():
         volume = zoom(cp.asnumpy(volume), (zm, zm, zm),
                       order=0, mode='nearest')
         volume = cp.asarray(volume)
+        volume *= 1.5
         return volume, spacing

@@ -72,13 +72,20 @@ class xrayset():
             self.load(i, sample)
         self.img = self.raw_data
         print(self.output_height, self.output_width)
+        margin = 0
         for i in range(0, len(self.img)):
             self.img[i] = cp.array(
                             cv2.resize(
-                                cp.asnumpy(self.img[i]).astype("uint8"),
-                                (self.output_height, self.output_width)
+                                cp.asnumpy(self.img[i]).astype("float64"),
+                                (self.output_height + 2 * margin,
+                                 self.output_width + 2 * margin)
                             )
                         )
+            h, w = np.shape(self.img[i])
+            self.img[i] -= 30
+            self.img[i][margin:h - 2 * margin, margin:w - 2 * margin] += 30
+            self.img[i][self.img[i] < 0] = 0
+            self.img[i][self.img[i] > 255] = 255
             self.img[i] = self.img[i].astype("uint8")
 
         # cut out black
@@ -104,7 +111,7 @@ class xrayset():
 
         # add border
         imgs = [cv2.copyMakeBorder(cp.asnumpy(img),
-                60, 60, 60, 60, cv2.BORDER_CONSTANT,
+                120, 120, 120, 120, cv2.BORDER_CONSTANT,
                 value=0) for img in imgs]
         self.img = [cp.array(cv2.resize(cp.asnumpy(img),
                              (height, height))) for img in imgs]
@@ -114,20 +121,37 @@ class xrayset():
         # template = cp.array(imageio.imread(sample,
         #                     index=None)).astype('float32')
 
+        self.stat = []
         loVal = 110
+        cutoff = 60
         for idx, img in enumerate(self.img):
-            print(img)
             new_img = img.astype("float64")
+            h, w = np.shape(new_img)
             new_img = ((new_img - loVal) * 255.0 / (255 - loVal))
-            print(new_img)
             new_img[new_img < 0] = 0
-            print(new_img)
-            new_img[new_img > 255] = 0
-            print(img)
-            new_img = new_img.astype(np.uint8)
-            # print(new_img)
+            new_img[new_img > 255] = 255
             self.img_cp.append(cp.array(new_img))
-            # self.img_cp.append(img)
+            self.stat.append(cp.average(new_img[new_img > cutoff]))
+
+        for idx, img in enumerate(self.img):
+            img = img.astype("float64")
+            diff = cp.average(img[img > cutoff]) - 180
+            # img[img > cutoff] -= diff
+            # alp = diff / cp.average(img[img > cutoff])
+            # print(alp)
+            # img[img > cutoff] -= alp * img[img > cutoff]
+            img -= diff
+            img[img < 0] = 0
+            img = img.astype("uint8")
+            self.img_cp[idx] = img
+
+        self.std = cp.std(cp.stack(self.img)[cp.stack(self.img) > cutoff])
+        self.mean = cp.average(cp.stack(self.img)[cp.stack(self.img) > cutoff])
+
+        for idx, img in enumerate(self.img_cp):
+            new_img = img
+            new_img[img > cutoff] = (img[img > cutoff] - cp.average(img[img > cutoff])) / cp.std(img[img > cutoff]) * self.std + self.mean
+            self.img_cp[idx] = new_img
 
         for idx, img in enumerate(self.img_cp):
             self.img[idx] = cp.array(img)
@@ -233,7 +257,8 @@ class xrayset():
         l -= lMeanTar
         a -= aMeanTar
         b -= bMeanTar
-        # scale by the standard deviations
+        # scale by the standard deviations     
+
         l = (lStdTar / lStdSrc) * l
         a = (aStdTar / aStdSrc) * a
         b = (bStdTar / bStdSrc) * b
@@ -243,7 +268,7 @@ class xrayset():
         b += bMeanSrc
         # clip the pixel intensities to [0, 255] if they fall outside
         # this range
-        l = np.clip(l, 0, 255)
+        l = cp.clip(l, 0, 255)
         a = np.clip(a, 0, 255)
         b = np.clip(b, 0, 255)
         # merge the channels together and convert back to the RGB color
