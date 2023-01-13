@@ -3,7 +3,6 @@ import pydicom
 import cupy as cp
 import numpy as np
 import glob
-# from tqdm import tqdm_notebook as tqdm
 from scipy.ndimage import zoom
 
 # filename = 'ct_no_tumor_phantom_raw/001/1-001-0%s.img' % f'{i:03}'

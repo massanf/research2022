@@ -1,12 +1,14 @@
 import pathlib
 import cupy as cp
 # from cupy import resize
-# import numpy as np
+import numpy as np
 import pickle
 import cv2
-import os
+import math
 # from cupyx.scipy.ndimage import resize
 from skopt import gp_minimize
+from perlin_noise import PerlinNoise
+import hashlib
 # from tqdm import tqdm
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
@@ -40,11 +42,23 @@ class patient():
         else:
             self.generate_drr()
 
+        if (datadir / name / "posdrr.pickle").exists():
+            with open(datadir / name / "posdrr.pickle", 'rb') as handle:
+                self.posdrr = pickle.load(handle)
+        else:
+            self.generate_posdrr()
+
         if (datadir / name / "fbp.pickle").exists():
             with open(datadir / name / "fbp.pickle", 'rb') as handle:
                 self.fbp = pickle.load(handle)
         else:
             self.generate_fbp()
+
+        if (datadir / name / "posfbp.pickle").exists():
+            with open(datadir / name / "posfbp.pickle", 'rb') as handle:
+                self.posfbp = pickle.load(handle)
+        else:
+            self.generate_posfbp()
 
         if (datadir / name / "resize.pickle").exists():
             with open(datadir / name / "resize.pickle", 'rb') as handle:
@@ -53,7 +67,6 @@ class patient():
             self.calculate_resize()
 
     # generators ----------
-
     def generate_ct(self):
         # print("Creating new CTset")
         self.ct = ct.ctset(name=self.name, type="float32")
@@ -63,21 +76,31 @@ class patient():
 
     def generate_drr(
         self,
+        cont=True
+    ):
+        # print("Creating new DRRset")
+        self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
+        with open(datadir / self.name / "drr.pickle", 'wb') as handle:
+            pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        if cont:
+            self.generate_posdrr()
+
+    def generate_posdrr(
+        self,
         zm=0.5,
+        delx=6e-3,
         cropstartx=75,
         cropstarty=120,
         cropheight=350,
         cropwidth=350,
-        delx=6e-3,
         cont=True
     ):
-        # print("Creating new DRRset")
-        self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views,
-                              cropstartx=cropstartx, cropstarty=cropstarty,
-                              cropheight=cropheight, cropwidth=cropwidth,
-                              delx=delx, zm=zm)
-        with open(datadir / self.name / "drr.pickle", 'wb') as handle:
-            pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        self.posdrr = drr.drrset(ctset=self.ct, num_views=self.num_views,
+                                 cropstartx=cropstartx, cropstarty=cropstarty,
+                                 cropheight=cropheight, cropwidth=cropwidth,
+                                 delx=delx, zm=zm, adjust=False)
+        with open(datadir / self.name / "posdrr.pickle", 'wb') as handle:
+            pickle.dump(self.posdrr, handle, protocol=pickle.HIGHEST_PROTOCOL)
         if cont:
             self.generate_fbp()
 
@@ -91,6 +114,19 @@ class patient():
         )
         with open(datadir / self.name / "fbp.pickle", 'wb') as handle:
             pickle.dump(self.fbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        if cont:
+            self.generate_posfbp()
+
+    def generate_posfbp(self, load_all=True, cont=True):
+        self.posfbp = fbp.fbpset(
+            self.posdrr,
+            height=500,
+            angle=75,
+            rotate=191,
+            load_all=load_all
+        )
+        with open(datadir / self.name / "posfbp.pickle", 'wb') as handle:
+            pickle.dump(self.posfbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
         if cont:
             self.calculate_resize()
 
@@ -133,6 +169,7 @@ class patient():
         for idx in range(len(self.fbp.x.img[0])):
             now = cp.sum(cp.absolute(self.ct.img[num] -
                          self.hist_match(self.get_resized_fbp(int(idx),
+                                         pos=True,
                                          resize_factor=resize_factor),
                          self.ct.img[num]))) / ttl
             history.append(float(now))
@@ -151,14 +188,29 @@ class patient():
         return (min_sum_idx, min_sum)
 
     def get_equiv_fbp(self, num):
-        img = self.get_resized_fbp(self.get_equiv(num)[0])
+        img = self.get_resized_fbp(self.get_equiv(num)[0], noise=True)
         # return self.hist_match(img, self.ct.img[num])
         return img
 
-    def get_resized_fbp(self, num, resize_factor=0):
+    def get_resized_fbp(self, num, pos=False, noise=False, resize_factor=0):
         if resize_factor == 0:
             resize_factor = self.resize_factor
-        img = self.fbp.get(num)
+        if pos:
+            img = self.posfbp.get(num)
+        else:
+            img = self.fbp.get(num)
+
+        # add noise
+        if noise:
+            s = f"{self.name}_{num}"
+            seed = int(hashlib.sha1(s.encode("utf-8")).hexdigest(), 16)
+
+            smallnoise = self.getnoise(10, 0.1, height=512, seed=seed)
+            midnoise = self.getnoise(6, 0.125, height=512, seed=seed * 2)
+            bignoise = self.getnoise(2, 0.15, height=512, seed=seed * 3)
+            img *= smallnoise * midnoise * bignoise
+
+        # rescale
         scaled = int(cp.shape(img)[0] * resize_factor)
         img = cp.array(cv2.resize(cp.asnumpy(img), (scaled, scaled)))
         out = cp.shape(self.ct.img[0])[0]
@@ -225,3 +277,33 @@ class patient():
         interp_t_values = cp.interp(s_quantiles, t_quantiles, t_values)
 
         return interp_t_values[bin_idx].reshape(oldshape)
+
+    def circ(self, r, height, width):
+        f = cp.full((height, width), 1)
+        i = r
+        hh, hw = (height / 2, width / 2)
+        for x in range(0, height):
+            for y in range(0, width):
+                dist = math.sqrt((x - hh) * (x - hh) + (y - hw) * (y - hw))
+                if dist > i:
+                    f[x][y] = 0
+        return f
+
+    def getnoise(self, octaves, intensity, height=500, seed=1):
+        noise = PerlinNoise(octaves=octaves, seed=seed)
+        xpix, ypix = height, height
+        pic = ([[noise([i/xpix, j/ypix]) for j in range(xpix)]
+               for i in range(ypix)])
+
+        pic = np.stack(pic)
+        pic = cp.array(pic)
+        pic /= cp.max(pic)
+        pic *= self.circ(150, height, height)
+        pic *= intensity
+        pic += 1
+
+        for x in range(0, len(pic)):
+            for y in range(0, len(pic[x])):
+                pass
+
+        return cp.array(pic)

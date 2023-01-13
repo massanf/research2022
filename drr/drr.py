@@ -25,19 +25,21 @@ class drrset():
         width=500,
         zoffset=-50,
         pad=0,
-        delx=6e-3,
         sdr=500,
         theta=0,
         phi=0,
         gamma=0,
-        # cropstartx=100,
-        # cropstarty=150,
-        # cropheight=400,
-        # cropwidth=400
-        cropstartx=75,
-        cropstarty=120,
-        cropheight=350,
-        cropwidth=350
+        # delx=6e-3,
+        # cropstartx=75,
+        # cropstarty=120,
+        # cropheight=350,
+        # cropwidth=350,
+        delx=5e-3,
+        cropstartx=50,
+        cropstarty=80,
+        cropheight=400,
+        cropwidth=400,
+        adjust=True
     ):
         """Generates DRR dataset
 
@@ -71,7 +73,7 @@ class drrset():
                                      np.array(spacing) / 2)
 
         # self.img = cp.empty(self.num_views, dtype=object)
-        self.img = []
+        self.img = [None] * self.num_views
 
         for view in tqdm(range(0, self.num_views), desc="DRR", leave=False):
             a = 2 * cp.pi * view / self.num_views
@@ -101,11 +103,33 @@ class drrset():
             img /= cp.max(img)
             img *= 255
 
-            self.img.append(img.astype("uint8")
-                            [cropstarty:cropstarty + cropheight,
-                             cropstartx:cropstartx + cropwidth])
+            self.img[view] = (img.astype("uint8")
+                              [cropstarty:cropstarty + cropheight,
+                               cropstartx:cropstartx + cropwidth])
+
+            if adjust:
+                self.img[view] = self.f(self.img[view])
 
             del img
             del img_tensor
             del drr
             torch.cuda.empty_cache()
+
+    def filter(self, px):
+        if px < 40:
+            return -px
+        elif px < 60:
+            return - 2 * (px - 40) + 40
+
+    def f(self, img):
+        cutoff = 40
+        newimg = img.astype("float64")
+        for c in range(0, 61):
+            newimg[cp.all(newimg < c)] = self.filter(c)
+        newimg[newimg > cutoff] = ((newimg[newimg > cutoff] -
+                                    cp.average(newimg[newimg > cutoff])) /
+                                   cp.std(newimg[newimg > cutoff]) * 28.069 +
+                                   202.102)
+        newimg[newimg < 0] = 0
+        newimg[newimg > 255] = 255
+        return newimg.astype("uint8")
