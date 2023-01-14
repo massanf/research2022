@@ -21,8 +21,8 @@ class drrset():
         ctset,
         num_views: int,
         zm=0.5,
-        height=500,
-        width=500,
+        height=400,
+        width=400,
         zoffset=-50,
         pad=0,
         sdr=500,
@@ -35,8 +35,8 @@ class drrset():
         # cropheight=350,
         # cropwidth=350,
         delx=5e-3,
-        cropstartx=50,
-        cropstarty=80,
+        cropstartx=0,
+        cropstarty=0,
         cropheight=400,
         cropwidth=400,
         adjust=True
@@ -122,7 +122,7 @@ class drrset():
             return - 2 * (px - 40) + 40
 
     def f(self, img):
-        cutoff = 40
+        cutoff = 25
         newimg = img.astype("float64")
         for c in range(0, 61):
             newimg[cp.all(newimg < c)] = self.filter(c)

@@ -15,7 +15,7 @@ class ctset():
     def __init__(self, name: str, type):
         self.name = name
         self.zrange = [5000, -5000]
-        # self.sheets = len(glob.glob(str(here / "data" / f"{self.name}"
+            # self.sheets = len(glob.glob(str(here / "data" / f"{self.name}"
         # / "ct" / "*.dcm")))
         # for i in notebook_tqdm(range(0, self.sheets)):
         # self.raw_data[i] = self.load(i)

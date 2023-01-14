@@ -1,0 +1,23 @@
+  0%|          | 0/95 [00:00<?, ?it/s]
+4411403
+4411398
+4411433
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/mfujita/Documents/research/prepare.py", line 15, in <module>
+    p = patient.patient(name=vol)
+  File "/home/mfujita/Documents/research/patient/patient.py", line 44, in __init__
+    self.generate_drr()
+  File "/home/mfujita/Documents/research/patient/patient.py", line 83, in generate_drr
+    self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
+  File "/home/mfujita/Documents/research/drr/drr.py", line 101, in __init__
+    img_tensor = drr(**detector_kwargs)
+  File "/home/mfujita/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/mfujita/Documents/research/drr/DiffDRR/diffdrr/drr.py", line 91, in forward
+    drr = self.siddon.raytrace(source, rays)
+  File "/home/mfujita/Documents/research/drr/DiffDRR/diffdrr/projectors/siddon.py", line 77, in raytrace
+    voxels = self.get_voxel(alphamid, source, target)
+  File "/home/mfujita/Documents/research/drr/DiffDRR/diffdrr/projectors/siddon.py", line 62, in get_voxel
+    idxs = (
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 918.00 MiB (GPU 0; 11.76 GiB total capacity; 4.52 GiB already allocated; 922.31 MiB free; 5.14 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

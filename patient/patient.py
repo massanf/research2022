@@ -12,6 +12,7 @@ import hashlib
 # from tqdm import tqdm
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
+import imageio.v2 as imageio
 
 import fbp.tompy as fbp
 from ct import ct
@@ -88,9 +89,9 @@ class patient():
     def generate_posdrr(
         self,
         zm=0.5,
-        delx=6e-3,
-        cropstartx=75,
-        cropstarty=120,
+        delx=5e-3,
+        cropstartx=25,
+        cropstarty=50,
         cropheight=350,
         cropwidth=350,
         cont=True
@@ -144,7 +145,8 @@ class patient():
             callback=[self.tqdm_skopt(total=n_calls,
                       desc="Resize", leave=False)]
         )
-        self.resize_factor = self.result.x[0]
+        self.resize_factor = (self.result.x[0] *
+                              (((295. - 127.) / 400) / ((232. - 95.) / 350)))
         with open(datadir / self.name / "resize.pickle", 'wb') as handle:
             pickle.dump(self.resize_factor, handle,
                         protocol=pickle.HIGHEST_PROTOCOL)
@@ -166,11 +168,13 @@ class patient():
         history = []
         min_sum = 53106966000
         min_sum_idx = 0
-        for idx in range(len(self.fbp.x.img[0])):
+        pos_resize_factor = (resize_factor /
+                             (((295. - 127.) / 400) / ((232. - 95.) / 350)))
+        for idx in range(min(280, len(self.posfbp.x.img[0]))):
             now = cp.sum(cp.absolute(self.ct.img[num] -
                          self.hist_match(self.get_resized_fbp(int(idx),
                                          pos=True,
-                                         resize_factor=resize_factor),
+                                         resize_factor=pos_resize_factor),
                          self.ct.img[num]))) / ttl
             history.append(float(now))
             if min_sum > now:
@@ -185,6 +189,10 @@ class patient():
             plt.xlabel("FBP Position")
             plt.ylabel("Average pixel value difference")
             plt.plot(history)
+        x1, y1 = (95, 127)
+        x2, y2 = (232, 295)
+        # print(min_sum_idx)
+        min_sum_idx = int((y2 - y1) / (x2 - x1) * (min_sum_idx - x1) + y1)
         return (min_sum_idx, min_sum)
 
     def get_equiv_fbp(self, num):
@@ -205,10 +213,10 @@ class patient():
             s = f"{self.name}_{num}"
             seed = int(hashlib.sha1(s.encode("utf-8")).hexdigest(), 16)
 
-            smallnoise = self.getnoise(10, 0.1, height=512, seed=seed)
-            midnoise = self.getnoise(6, 0.125, height=512, seed=seed * 2)
-            bignoise = self.getnoise(2, 0.15, height=512, seed=seed * 3)
-            img *= smallnoise * midnoise * bignoise
+            smallnoise = self.getnoise(10, 0.05, height=500, seed=seed)
+            midnoise = self.getnoise(6, 0.075, height=500, seed=seed * 2)
+            bignoise = self.getnoise(2, 0.1, height=500, seed=seed * 3)
+            img = img * smallnoise * midnoise * bignoise
 
         # rescale
         scaled = int(cp.shape(img)[0] * resize_factor)
@@ -278,15 +286,20 @@ class patient():
 
         return interp_t_values[bin_idx].reshape(oldshape)
 
-    def circ(self, r, height, width):
-        f = cp.full((height, width), 1)
-        i = r
+    def circ(self, rin, rout, height, width):
+        f = cp.full((height, width), 1.)
+        i, o = (rin, rout)
         hh, hw = (height / 2, width / 2)
         for x in range(0, height):
             for y in range(0, width):
                 dist = math.sqrt((x - hh) * (x - hh) + (y - hw) * (y - hw))
-                if dist > i:
+                if dist > o:
                     f[x][y] = 0
+                elif dist < i:
+                    f[x][y] = 1
+                else:
+                    f[x][y] = 1 - (dist - i) / (o - i)
+                    # f[x][y] = 0.5
         return f
 
     def getnoise(self, octaves, intensity, height=500, seed=1):
@@ -298,12 +311,10 @@ class patient():
         pic = np.stack(pic)
         pic = cp.array(pic)
         pic /= cp.max(pic)
-        pic *= self.circ(150, height, height)
+        pic *= self.circ(150, 300, height, height)
         pic *= intensity
         pic += 1
 
-        for x in range(0, len(pic)):
-            for y in range(0, len(pic[x])):
-                pass
+        imageio.imsave("noise.png", cp.asnumpy(pic))
 
         return cp.array(pic)
