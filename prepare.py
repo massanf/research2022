@@ -36,6 +36,7 @@ try:
     main()
     slack()
 except KeyboardInterrupt:
+    slack("Stopped")
     raise
 except Exception as e:
     slack(e)

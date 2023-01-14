@@ -89,9 +89,9 @@ class patient():
     def generate_posdrr(
         self,
         zm=0.5,
-        delx=5e-3,
-        cropstartx=25,
-        cropstarty=50,
+        delx=6e-3,
+        cropstartx=75,
+        cropstarty=120,
         cropheight=350,
         cropwidth=350,
         cont=True
