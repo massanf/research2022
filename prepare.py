@@ -6,6 +6,7 @@ from tqdm.notebook import tqdm
 import json
 import socket
 import requests
+import sys
 # https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/6ACUZJ
 
 
@@ -21,20 +22,18 @@ def slack(line):
 
 
 def main():
-    for vol_path in tqdm(glob.glob("./data/*")):
-        if "__" in vol_path:
-            continue
-        vol = vol_path.split("/")[-1]
-        print(vol)
-        # print(vol)
-        p = patient.patient(name=vol)
-
+    # for vol_path in tqdm(glob.glob("./data/*")):
+    # if "__" in vol_path:
+        # continue
+    # vol = vol_path.split("/")[-1]
+    # print(vol)
+    # print(vol)
+    p = patient.patient(name=sys.argv[1])
     # imageio.mimsave(f"pics/drr.gif", p.drr.img)
 
 
 try:
     main()
-    slack()
 except KeyboardInterrupt:
     slack("Stopped")
     raise

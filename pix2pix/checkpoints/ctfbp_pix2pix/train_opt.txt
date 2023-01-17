@@ -6,10 +6,10 @@
                 crop_size: 256                           
                  dataroot: ./datasets/ctfbp              	[default: None]
              dataset_mode: aligned                       
-                direction: AtoB                          
+                direction: BtoA                          	[default: AtoB]
               display_env: main                          
              display_freq: 400                           
-               display_id: -1                            	[default: 1]
+               display_id: 1                             
             display_ncols: 4                             
              display_port: 8097                          
            display_server: http://localhost              

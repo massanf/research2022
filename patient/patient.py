@@ -13,7 +13,6 @@ import hashlib
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
 import imageio.v2 as imageio
-
 import fbp.tompy as fbp
 from ct import ct
 from drr import drr
@@ -131,11 +130,13 @@ class patient():
         if cont:
             self.calculate_resize()
 
-    def calculate_resize(self, base=150, plot=True):
+    def calculate_resize(self, base1=120, base2=150, base3=180, plot=True):
         # print("Calculating resize factor")
 
         def loss(x):
-            return self.get_equiv(base, resize_factor=x[0])[1]
+            return (self.get_equiv(base1, resize_factor=x[0])[1] +
+                    self.get_equiv(base2, resize_factor=x[0])[1] +
+                    self.get_equiv(base3, resize_factor=x[0])[1]) / 3
 
         n_calls = 50
         self.result = gp_minimize(
@@ -145,8 +146,9 @@ class patient():
             callback=[self.tqdm_skopt(total=n_calls,
                       desc="Resize", leave=False)]
         )
-        self.resize_factor = (self.result.x[0] *
-                              (((295. - 127.) / 400) / ((232. - 95.) / 350)))
+        # self.resize_factor = (self.result.x[0] *
+        #                       (((295. - 127.) / 400) / ((232. - 95.) / 350)))
+        self.resize_factor = self.result.x[0]
         with open(datadir / self.name / "resize.pickle", 'wb') as handle:
             pickle.dump(self.resize_factor, handle,
                         protocol=pickle.HIGHEST_PROTOCOL)
@@ -164,17 +166,18 @@ class patient():
     def get_equiv(self, num, resize_factor=0, plot=False):
         if resize_factor == 0:
             resize_factor = self.resize_factor
+
         ttl = cp.sum(cp.full(cp.shape(self.ct.img[0]), 255))
         history = []
         min_sum = 53106966000
         min_sum_idx = 0
-        pos_resize_factor = (resize_factor /
-                             (((295. - 127.) / 400) / ((232. - 95.) / 350)))
+        # pos_resize_factor = (resize_factor /
+        #                      (((295. - 127.) / 400) / ((232. - 95.) / 350)))
         for idx in range(min(280, len(self.posfbp.x.img[0]))):
             now = cp.sum(cp.absolute(self.ct.img[num] -
                          self.hist_match(self.get_resized_fbp(int(idx),
                                          pos=True,
-                                         resize_factor=pos_resize_factor),
+                                         resize_factor=resize_factor),
                          self.ct.img[num]))) / ttl
             history.append(float(now))
             if min_sum > now:
@@ -198,25 +201,33 @@ class patient():
     def get_equiv_fbp(self, num):
         img = self.get_resized_fbp(self.get_equiv(num)[0], noise=True)
         # return self.hist_match(img, self.ct.img[num])
+        s = f"{self.name}_{num}"
+        seed = int(hashlib.sha1(s.encode("utf-8")).hexdigest(), 16) % 10000
+        np.random.seed(seed)
+        cont = np.random.uniform(0.7, 1.3)
+        bright = np.random.uniform(-25, 25)
+        img = self.adjust(img, cont, bright)
         return img
 
     def get_resized_fbp(self, num, pos=False, noise=False, resize_factor=0):
         if resize_factor == 0:
             resize_factor = self.resize_factor
+
         if pos:
             img = self.posfbp.get(num)
         else:
             img = self.fbp.get(num)
+            resize_factor *= (((295. - 127.) / 400) / ((232. - 95.) / 350))
 
         # add noise
         if noise:
             s = f"{self.name}_{num}"
             seed = int(hashlib.sha1(s.encode("utf-8")).hexdigest(), 16)
 
-            smallnoise = self.getnoise(10, 0.05, height=500, seed=seed)
-            midnoise = self.getnoise(6, 0.075, height=500, seed=seed * 2)
-            bignoise = self.getnoise(2, 0.1, height=500, seed=seed * 3)
-            img = img * smallnoise * midnoise * bignoise
+            # smallnoise = self.getnoise(10, 0.2, height=500, seed=seed)
+            # midnoise = self.getnoise(4, 0.15, height=500, seed=seed * 2)
+            # bignoise = self.getnoise(2, 0.1, height=500, seed=seed * 3)
+            # img = img * smallnoise * midnoise * bignoise
 
         # rescale
         scaled = int(cp.shape(img)[0] * resize_factor)
@@ -303,18 +314,27 @@ class patient():
         return f
 
     def getnoise(self, octaves, intensity, height=500, seed=1):
+        # print("generating noise")
         noise = PerlinNoise(octaves=octaves, seed=seed)
-        xpix, ypix = height, height
+        # print("generated noise")
+        xpix, ypix = int(height / 10), int(height / 10)
         pic = ([[noise([i/xpix, j/ypix]) for j in range(xpix)]
                for i in range(ypix)])
-
-        pic = np.stack(pic)
+        pic = cv2.resize(np.stack(pic), (height, height))
+        # print("to pic done")
+        # pic = np.stack(pic)
         pic = cp.array(pic)
         pic /= cp.max(pic)
-        pic *= self.circ(150, 300, height, height)
+        pic *= self.circ(150, 180, height, height)
         pic *= intensity
         pic += 1
-
-        imageio.imsave("noise.png", cp.asnumpy(pic))
+        # print("EDITED noise")
+        # imageio.imsave("noise.png", cp.asnumpy(pic))
 
         return cp.array(pic)
+
+    def adjust(self, img, alpha=1.0, beta=0.0):
+        # 積和演算を行う。
+        dst = alpha * img + beta
+        # [0, 255] でクリップし、uint8 型にする。
+        return np.clip(dst, 0, 255).astype(cp.uint8)

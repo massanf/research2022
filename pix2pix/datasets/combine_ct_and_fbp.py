@@ -51,7 +51,7 @@ def prep(fold_AB):
 
     train, val, n_test = torch.utils.data.random_split(patients, [n_train, n_val, n_test])
 
-    splits = {"train": train, "val": val, "n_test": n_test}
+    splits = {"train": train, "val": val, "test": n_test}
 
     # print(patients)
 
@@ -86,10 +86,13 @@ def prep(fold_AB):
                 if os.path.exists(path_AB):
                     continue
                 im_ct = p.ct.img[img]
+                # print("getting")
                 im_fbp = p.get_equiv_fbp(img)
-                im_AB = cp.asnumpy(cp.concatenate([im_ct, im_fbp], 1))
+                # print("connecting")
+                im_AB = cp.asnumpy(cp.concatenate([im_ct, im_fbp], 1)).astype("uint8")
 
                 # print(path_AB)
+                # print("saving")
                 if not cv2.imwrite("./" + path_AB, im_AB):
                     print("NO!")
                     sys.exit(0)
