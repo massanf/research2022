@@ -20,7 +20,7 @@ class drrset():
         self,
         ctset,
         num_views: int,
-        zm=0.5,
+        zm=0.4,
         height=500,
         width=500,
         zoffset=-50,
@@ -115,21 +115,41 @@ class drrset():
             del drr
             torch.cuda.empty_cache()
 
-    def filter(self, px):
+        if adjust:
+            breakpoint = int(cp.percentile(cp.ravel(cp.stack(self.img)), 85))
+            print(breakpoint)
+            for idx, img in enumerate(self.img):
+                # self.img[idx][img > breakpoint] = breakpoint
+                newimg = self.img[idx]
+                for c in range(breakpoint, 255):
+                    newc = self.filter_diffuse(c, breakpoint)
+                    newimg[newimg == c] = newc
+                self.img[idx] = newimg
+
+    def filter_diffuse(self, px, breakpoint, highest=220):
+        if px > breakpoint:
+            h = highest
+            b = breakpoint
+            return int((h - b) / (255 - b) * (px - b) + b)
+        else:
+            return px
+
+    def filter_black(self, px):
         if px < 40:
-            return -px
+            return 0
         elif px < 60:
-            return - 2 * (px - 40) + 40
+            return px - 2 * (px - 40) + 40
 
     def f(self, img):
-        cutoff = 25
+        cutoff = 10
         newimg = img.astype("float64")
         for c in range(0, 61):
-            newimg[cp.all(newimg < c)] = self.filter(c)
+            newimg[newimg == c] = self.filter_black(c)
         newimg[newimg > cutoff] = ((newimg[newimg > cutoff] -
                                     cp.average(newimg[newimg > cutoff])) /
                                    cp.std(newimg[newimg > cutoff]) * 28.069 +
                                    202.102)
         newimg[newimg < 0] = 0
         newimg[newimg > 255] = 255
-        return newimg.astype("uint8")
+        newimg = newimg.astype("uint8")
+        return newimg

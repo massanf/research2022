@@ -24,11 +24,18 @@ def slack(line):
 def main():
     # for vol_path in tqdm(glob.glob("./data/*")):
     # if "__" in vol_path:
-        # continue
+    # continue
     # vol = vol_path.split("/")[-1]
     # print(vol)
     # print(vol)
-    p = patient.patient(name=sys.argv[1])
+    p = patient.patient(
+        name=sys.argv[1],
+        do={'ct': True, 'drr': True, 'posdrr': True, 'fbp': True,
+            'posfbp': True, 'resize': True},
+        skip_done=True,
+        prnt=True,
+        idx=sys.argv[2]
+    )
     # imageio.mimsave(f"pics/drr.gif", p.drr.img)
 
 
@@ -38,5 +45,5 @@ except KeyboardInterrupt:
     slack("Stopped")
     raise
 except Exception as e:
-    slack(e)
+    slack(f"ERROR on {sys.argv[1]}")
     raise

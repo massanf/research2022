@@ -5,6 +5,7 @@ import numpy as np
 import pickle
 import cv2
 import math
+import glob
 # from cupyx.scipy.ndimage import resize
 from skopt import gp_minimize
 from perlin_noise import PerlinNoise
@@ -12,7 +13,7 @@ import hashlib
 # from tqdm import tqdm
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
-import imageio.v2 as imageio
+# import imageio.v2 as imageio
 import fbp.tompy as fbp
 from ct import ct
 from drr import drr
@@ -23,48 +24,107 @@ graphdir = research / pathlib.Path("graphs")
 
 
 class patient():
-    def __init__(self, name, num_views=450):
+    def __init__(
+        self,
+        name,
+        num_views=450,
+        do={'ct': True, 'drr': True, 'posdrr': True, 'fbp': True,
+            'posfbp': True, 'resize': True},
+        skip_done=False,
+        prnt=False,
+        idx=-1
+    ):
         self.name = name
         self.num_views = num_views
         self.m = -1000
         self.b = -1000
         self.resize_factor = 1
 
+        ln = len(glob.glob("./data/*"))
+
+        if prnt:
+            print(f"{self.name} ({idx}/{ln}): CT", flush=True)
         if (datadir / name / "ct.pickle").exists():
-            with open(datadir / name / "ct.pickle", 'rb') as handle:
-                self.ct = pickle.load(handle)
+            if do['ct'] and not skip_done:
+                self.generate_ct()
+            else:
+                with open(datadir / name / "ct.pickle", 'rb') as handle:
+                    self.ct = pickle.load(handle)
         else:
-            self.generate_ct()
+            if do['ct']:
+                self.generate_ct()
+            else:
+                raise ValueError
 
+        if prnt:
+            print(f"{self.name} ({idx}/{ln}): DRR", flush=True)
         if (datadir / name / "drr.pickle").exists():
-            with open(datadir / name / "drr.pickle", 'rb') as handle:
-                self.drr = pickle.load(handle)
+            if do['drr'] and not skip_done:
+                self.generate_drr()
+            else:
+                with open(datadir / name / "drr.pickle", 'rb') as handle:
+                    self.drr = pickle.load(handle)
         else:
-            self.generate_drr()
+            if do['drr']:
+                self.generate_drr()
+            else:
+                raise ValueError
 
+        if prnt:
+            print(f"{self.name} ({idx}/{ln}): DRR (pos)", flush=True)
         if (datadir / name / "posdrr.pickle").exists():
-            with open(datadir / name / "posdrr.pickle", 'rb') as handle:
-                self.posdrr = pickle.load(handle)
+            if do['posdrr'] and not skip_done:
+                self.generate_posdrr()
+            else:
+                with open(datadir / name / "posdrr.pickle", 'rb') as handle:
+                    self.posdrr = pickle.load(handle)
         else:
-            self.generate_posdrr()
+            if do['posdrr']:
+                self.generate_posdrr()
+            else:
+                raise ValueError
 
+        if prnt:
+            print(f"{self.name} ({idx}/{ln}): FBP", flush=True)
         if (datadir / name / "fbp.pickle").exists():
-            with open(datadir / name / "fbp.pickle", 'rb') as handle:
-                self.fbp = pickle.load(handle)
+            if do['fbp'] and not skip_done:
+                self.generate_fbp()
+            else:
+                with open(datadir / name / "fbp.pickle", 'rb') as handle:
+                    self.fbp = pickle.load(handle)
         else:
-            self.generate_fbp()
+            if do['fbp']:
+                self.generate_fbp()
+            else:
+                raise ValueError
 
+        if prnt:
+            print(f"{self.name} ({idx}/{ln}): FBP (pos)", flush=True)
         if (datadir / name / "posfbp.pickle").exists():
-            with open(datadir / name / "posfbp.pickle", 'rb') as handle:
-                self.posfbp = pickle.load(handle)
+            if do['posfbp'] and not skip_done:
+                self.generate_posfbp()
+            else:
+                with open(datadir / name / "posfbp.pickle", 'rb') as handle:
+                    self.posfbp = pickle.load(handle)
         else:
-            self.generate_posfbp()
+            if do['posfbp']:
+                self.generate_posfbp()
+            else:
+                raise ValueError
 
+        if prnt:
+            print(f"{self.name} ({idx}/{ln}): Resize", flush=True)
         if (datadir / name / "resize.pickle").exists():
-            with open(datadir / name / "resize.pickle", 'rb') as handle:
-                self.resize_factor = pickle.load(handle)
+            if do['resize'] and not skip_done:
+                self.calculate_resize()
+            else:
+                with open(datadir / name / "resize.pickle", 'rb') as handle:
+                    self.resize_factor = pickle.load(handle)
         else:
-            self.calculate_resize()
+            if do['resize']:
+                self.calculate_resize()
+            else:
+                raise ValueError
 
     # generators ----------
     def generate_ct(self):
@@ -75,25 +135,21 @@ class patient():
         self.generate_drr()
 
     def generate_drr(
-        self,
-        cont=True
+        self
     ):
         # print("Creating new DRRset")
         self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
         with open(datadir / self.name / "drr.pickle", 'wb') as handle:
             pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        if cont:
-            self.generate_posdrr()
 
     def generate_posdrr(
         self,
-        zm=0.5,
+        zm=0.4,
         delx=6e-3,
         cropstartx=75,
         cropstarty=120,
         cropheight=350,
         cropwidth=350,
-        cont=True
     ):
         self.posdrr = drr.drrset(ctset=self.ct, num_views=self.num_views,
                                  cropstartx=cropstartx, cropstarty=cropstarty,
@@ -101,10 +157,8 @@ class patient():
                                  delx=delx, zm=zm, adjust=False)
         with open(datadir / self.name / "posdrr.pickle", 'wb') as handle:
             pickle.dump(self.posdrr, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        if cont:
-            self.generate_fbp()
 
-    def generate_fbp(self, load_all=True, cont=True):
+    def generate_fbp(self, load_all=True):
         self.fbp = fbp.fbpset(
             self.drr,
             height=500,
@@ -114,10 +168,8 @@ class patient():
         )
         with open(datadir / self.name / "fbp.pickle", 'wb') as handle:
             pickle.dump(self.fbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        if cont:
-            self.generate_posfbp()
 
-    def generate_posfbp(self, load_all=True, cont=True):
+    def generate_posfbp(self, load_all=True):
         self.posfbp = fbp.fbpset(
             self.posdrr,
             height=500,
@@ -127,8 +179,6 @@ class patient():
         )
         with open(datadir / self.name / "posfbp.pickle", 'wb') as handle:
             pickle.dump(self.posfbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        if cont:
-            self.calculate_resize()
 
     def calculate_resize(self, base1=120, base2=150, base3=180, plot=True):
         # print("Calculating resize factor")
@@ -220,9 +270,9 @@ class patient():
             resize_factor *= (((295. - 127.) / 400) / ((232. - 95.) / 350))
 
         # add noise
-        if noise:
-            s = f"{self.name}_{num}"
-            seed = int(hashlib.sha1(s.encode("utf-8")).hexdigest(), 16)
+        # if noise:
+        #     s = f"{self.name}_{num}"
+        #     seed = int(hashlib.sha1(s.encode("utf-8")).hexdigest(), 16)
 
             # smallnoise = self.getnoise(10, 0.2, height=500, seed=seed)
             # midnoise = self.getnoise(4, 0.15, height=500, seed=seed * 2)

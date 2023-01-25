@@ -79,7 +79,15 @@ def prep(fold_AB):
                 continue
             # print(n, pat)
             pat_name = pat.split("/")[-1]
-            p = patient.patient(pat_name)
+            print(pat_name)
+            path_AB = os.path.join(img_fold_AB, f"{pat_name}_{use_range[0]}.jpg")
+            if os.path.exists(path_AB):
+                continue
+            p = patient.patient(
+                pat_name,
+                do={'ct': False, 'drr': False, 'posdrr': False,
+                    'fbp': False, 'posfbp': False, 'resize': False}
+            )
             for img in tqdm(range(use_range[0], use_range[1]),
                             desc=pat_name, leave=False):
                 path_AB = os.path.join(img_fold_AB, f"{pat_name}_{img}.jpg")

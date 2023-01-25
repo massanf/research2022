@@ -61,8 +61,8 @@ class DRR(nn.Module):
         else:
             raise ValueError("Invalid projector type.")
         self.register_parameter("sdr", None)
-        self.register_parameter("rotations", None)
-        self.register_parameter("translations", None)
+        # self.register_parameter("rotations", None)
+        # self.register_parameter("translations", None)
 
     def forward(
         self,
