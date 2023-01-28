@@ -127,7 +127,7 @@ class fbpset():
         # sinogram = affine_transform(sinogram, )
         sinogram = cp.array(sinogram)
 
-        imageio.imsave(here / "sino.png", cp.asnumpy(sinogram))
+        # imageio.imsave(here / "sino.png", cp.asnumpy(sinogram))
 
         theta = cp.linspace(0., 180., max(self.height, self.width),
                             endpoint=False)

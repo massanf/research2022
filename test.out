@@ -1,30 +1,150 @@
-4411403 (1/99): CT
-4411403 (1/99): DRR
+4411403 (0/89): CT
+4411403 (0/89): DRR
 DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-219
-4411403 (1/99): DRR (pos)
-DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-4411403 (1/99): FBP
+113
+4411403 (0/89): DRR (pos)
+4411403 (0/89): FBP
 FBP:   0%|          | 0/400 [00:00<?, ?it/s]
-4411403 (1/99): FBP (pos)
-FBP:   0%|          | 0/350 [00:00<?, ?it/s]
-4411403 (1/99): Resize
-Resize:   0%|          | 0/50 [00:00<?, ?it/s]
-4411398 (2/99): CT
-4411398 (2/99): DRR
+4411403 (0/89): FBP (pos)
+4411403 (0/89): Resize
+4411398 (1/89): CT
+4411398 (1/89): DRR
 DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-214
-4411398 (2/99): DRR (pos)
+115
+4411398 (1/89): DRR (pos)
+4411398 (1/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411398 (1/89): FBP (pos)
+4411398 (1/89): Resize
+4411433 (2/89): CT
+4411433 (2/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+126
+4411433 (2/89): DRR (pos)
+4411433 (2/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411433 (2/89): FBP (pos)
+4411433 (2/89): Resize
+4411396 (3/89): CT
+4411396 (3/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+142
+4411396 (3/89): DRR (pos)
+4411396 (3/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411396 (3/89): FBP (pos)
+4411396 (3/89): Resize
+4411471 (4/89): CT
+4411471 (4/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+132
+4411471 (4/89): DRR (pos)
+4411471 (4/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411471 (4/89): FBP (pos)
+4411471 (4/89): Resize
+4411564 (5/89): CT
+4411564 (5/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+131
+4411564 (5/89): DRR (pos)
+4411564 (5/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411564 (5/89): FBP (pos)
+4411564 (5/89): Resize
+4410400 (6/89): CT
+4410400 (6/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+134
+4410400 (6/89): DRR (pos)
+4410400 (6/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410400 (6/89): FBP (pos)
+4410400 (6/89): Resize
+4404367 (7/89): CT
+4404367 (7/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+138
+4404367 (7/89): DRR (pos)
+4404367 (7/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404367 (7/89): FBP (pos)
+4404367 (7/89): Resize
+4410839 (8/89): CT
+4410839 (8/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+132
+4410839 (8/89): DRR (pos)
+4410839 (8/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410839 (8/89): FBP (pos)
+4410839 (8/89): Resize
+4410828 (9/89): CT
+4410828 (9/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+122
+4410828 (9/89): DRR (pos)
+4410828 (9/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410828 (9/89): FBP (pos)
+4410828 (9/89): Resize
+4410857 (10/89): CT
+4410857 (10/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+133
+4410857 (10/89): DRR (pos)
+4410857 (10/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410857 (10/89): FBP (pos)
+4410857 (10/89): Resize
+4404147 (11/89): CT
+4404147 (11/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+138
+4404147 (11/89): DRR (pos)
+4404147 (11/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404147 (11/89): FBP (pos)
+4404147 (11/89): Resize
+4411404 (12/89): CT
+4411404 (12/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+123
+4411404 (12/89): DRR (pos)
+4411404 (12/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411404 (12/89): FBP (pos)
+4411404 (12/89): Resize
+4404150 (13/89): CT
+4404150 (13/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+133
+4404150 (13/89): DRR (pos)
+4404150 (13/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404150 (13/89): FBP (pos)
+4404150 (13/89): Resize
+4410827 (14/89): CT
+4410827 (14/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+124
+4410827 (14/89): DRR (pos)
+4410827 (14/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410827 (14/89): FBP (pos)
+4410827 (14/89): Resize
+4404149 (15/89): CT
+4404149 (15/89): DRR
 DRR:   0%|          | 0/450 [00:00<?, ?it/s]
 Traceback (most recent call last):
   File "/home/mfujita/Documents/research/prepare.py", line 43, in <module>
     main()
   File "/home/mfujita/Documents/research/prepare.py", line 31, in main
     p = patient.patient(
-  File "/home/mfujita/Documents/research/patient/patient.py", line 83, in __init__
-    self.generate_posdrr()
-  File "/home/mfujita/Documents/research/patient/patient.py", line 154, in generate_posdrr
-    cropstartx=cropstartx, cropstarty=cropstarty,
+  File "/home/mfujita/Documents/research/patient/patient.py", line 69, in __init__
+    self.generate_drr()
+  File "/home/mfujita/Documents/research/patient/patient.py", line 140, in generate_drr
+    self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
   File "/home/mfujita/Documents/research/drr/drr.py", line 101, in __init__
     img_tensor = drr(**detector_kwargs)
   File "/home/mfujita/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
@@ -35,53 +155,666 @@ Traceback (most recent call last):
     voxels = self.get_voxel(alphamid, source, target)
   File "/home/mfujita/Documents/research/drr/DiffDRR/diffdrr/projectors/siddon.py", line 62, in get_voxel
     idxs = (
-torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.04 GiB (GPU 0; 11.76 GiB total capacity; 4.99 GiB already allocated; 1.04 GiB free; 5.60 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
-4411433 (3/99): CT
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.52 GiB (GPU 0; 11.76 GiB total capacity; 7.37 GiB already allocated; 1.48 GiB free; 8.27 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+4410824 (16/89): CT
+4410824 (16/89): DRR
 DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-228
-4411433 (3/99): DRR
-4411433 (3/99): DRR (pos)
-Traceback (most recent call last):
-  File "/home/mfujita/Documents/research/prepare.py", line 43, in <module>
-    main()
-  File "/home/mfujita/Documents/research/prepare.py", line 31, in main
-    p = patient.patient(
-  File "/home/mfujita/Documents/research/patient/patient.py", line 83, in __init__
-    self.generate_posdrr()
-  File "/home/mfujita/Documents/research/patient/patient.py", line 156, in generate_posdrr
-    delx=delx, zm=zm, adjust=False)
-NameError: name 'zm' is not defined
-4411396 (4/99): CT
-DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-212
-4411396 (4/99): DRR
-4411396 (4/99): DRR (pos)
-Traceback (most recent call last):
-  File "/home/mfujita/Documents/research/prepare.py", line 43, in <module>
-    main()
-  File "/home/mfujita/Documents/research/prepare.py", line 31, in main
-    p = patient.patient(
-  File "/home/mfujita/Documents/research/patient/patient.py", line 83, in __init__
-    self.generate_posdrr()
-  File "/home/mfujita/Documents/research/patient/patient.py", line 156, in generate_posdrr
-    cropheight=cropheight, cropwidth=cropwidth,
-NameError: name 'zm' is not defined
-4411471 (6/99): CT
-DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-219
-4411471 (6/99): DRR
-4411471 (6/99): DRR (pos)
-DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-4411471 (6/99): FBP
+136
+4410824 (16/89): DRR (pos)
+4410824 (16/89): FBP
 FBP:   0%|          | 0/400 [00:00<?, ?it/s]
-4411471 (6/99): FBP (pos)
-FBP:   0%|          | 0/350 [00:00<?, ?it/s]
-4411471 (6/99): Resize
-Resize:   0%|          | 0/50 [00:00<?, ?it/s]
-4411564 (7/99): CT
+4410824 (16/89): FBP (pos)
+4410824 (16/89): Resize
+4411566 (17/89): CT
+4411566 (17/89): DRR
 DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-220
-4411564 (7/99): DRR
-4411564 (7/99): DRR (pos)
+122
+4411566 (17/89): DRR (pos)
+4411566 (17/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411566 (17/89): FBP (pos)
+4411566 (17/89): Resize
+4410856 (18/89): CT
+4410856 (18/89): DRR
 DRR:   0%|          | 0/450 [00:00<?, ?it/s]
-4411564 (7/99): FBP
+112
+4410856 (18/89): DRR (pos)
+4410856 (18/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410856 (18/89): FBP (pos)
+4410856 (18/89): Resize
+4411408 (19/89): CT
+4411408 (19/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+119
+4411408 (19/89): DRR (pos)
+4411408 (19/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411408 (19/89): FBP (pos)
+4411408 (19/89): Resize
+4267535 (20/89): CT
+4267535 (20/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+123
+4267535 (20/89): DRR (pos)
+4267535 (20/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4267535 (20/89): FBP (pos)
+4267535 (20/89): Resize
+4410837 (21/89): CT
+4410837 (21/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+135
+4410837 (21/89): DRR (pos)
+4410837 (21/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410837 (21/89): FBP (pos)
+4410837 (21/89): Resize
+4410832 (22/89): CT
+4410832 (22/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+136
+4410832 (22/89): DRR (pos)
+4410832 (22/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410832 (22/89): FBP (pos)
+4410832 (22/89): Resize
+4410829 (23/89): CT
+4410829 (23/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+138
+4410829 (23/89): DRR (pos)
+4410829 (23/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410829 (23/89): FBP (pos)
+4410829 (23/89): Resize
+4410835 (24/89): CT
+4410835 (24/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+117
+4410835 (24/89): DRR (pos)
+4410835 (24/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410835 (24/89): FBP (pos)
+4410835 (24/89): Resize
+4409575 (25/89): CT
+4409575 (25/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+131
+4409575 (25/89): DRR (pos)
+4409575 (25/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4409575 (25/89): FBP (pos)
+4409575 (25/89): Resize
+4411405 (26/89): CT
+4411405 (26/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+130
+4411405 (26/89): DRR (pos)
+4411405 (26/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411405 (26/89): FBP (pos)
+4411405 (26/89): Resize
+4410886 (27/89): CT
+4410886 (27/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+136
+4410886 (27/89): DRR (pos)
+4410886 (27/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410886 (27/89): FBP (pos)
+4410886 (27/89): Resize
+4411797 (28/89): CT
+4411797 (28/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+126
+4411797 (28/89): DRR (pos)
+4411797 (28/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411797 (28/89): FBP (pos)
+4411797 (28/89): Resize
+4404146 (29/89): CT
+4404146 (29/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+113
+4404146 (29/89): DRR (pos)
+4404146 (29/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404146 (29/89): FBP (pos)
+4404146 (29/89): Resize
+4411419 (30/89): CT
+4411419 (30/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+140
+4411419 (30/89): DRR (pos)
+4411419 (30/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411419 (30/89): FBP (pos)
+4411419 (30/89): Resize
+4411560 (31/89): CT
+4411560 (31/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+114
+4411560 (31/89): DRR (pos)
+4411560 (31/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411560 (31/89): FBP (pos)
+4411560 (31/89): Resize
+4411794 (32/89): CT
+4411794 (32/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+129
+4411794 (32/89): DRR (pos)
+4411794 (32/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411794 (32/89): FBP (pos)
+4411794 (32/89): Resize
+4410859 (33/89): CT
+4410859 (33/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+129
+4410859 (33/89): DRR (pos)
+4410859 (33/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410859 (33/89): FBP (pos)
+4410859 (33/89): Resize
+4410826 (34/89): CT
+4410826 (34/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+138
+4410826 (34/89): DRR (pos)
+4410826 (34/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410826 (34/89): FBP (pos)
+4410826 (34/89): Resize
+4411482 (35/89): CT
+4411482 (35/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+112
+4411482 (35/89): DRR (pos)
+4411482 (35/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411482 (35/89): FBP (pos)
+4411482 (35/89): Resize
+4411565 (36/89): CT
+4411565 (36/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+133
+4411565 (36/89): DRR (pos)
+4411565 (36/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411565 (36/89): FBP (pos)
+4411565 (36/89): Resize
+4411402 (37/89): CT
+4411402 (37/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+126
+4411402 (37/89): DRR (pos)
+4411402 (37/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411402 (37/89): FBP (pos)
+4411402 (37/89): Resize
+4410834 (38/89): CT
+4410834 (38/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+131
+4410834 (38/89): DRR (pos)
+4410834 (38/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410834 (38/89): FBP (pos)
+4410834 (38/89): Resize
+4411425 (39/89): CT
+4411425 (39/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+133
+4411425 (39/89): DRR (pos)
+4411425 (39/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411425 (39/89): FBP (pos)
+4411425 (39/89): Resize
+4411469 (40/89): CT
+4411469 (40/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+122
+4411469 (40/89): DRR (pos)
+4411469 (40/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411469 (40/89): FBP (pos)
+4411469 (40/89): Resize
+4404145 (41/89): CT
+4404145 (41/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+137
+4404145 (41/89): DRR (pos)
+4404145 (41/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404145 (41/89): FBP (pos)
+4404145 (41/89): Resize
+4410087 (42/89): CT
+4410087 (42/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+125
+4410087 (42/89): DRR (pos)
+4410087 (42/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410087 (42/89): FBP (pos)
+4410087 (42/89): Resize
+4411557 (43/89): CT
+4411557 (43/89): DRR
+4411557 (43/89): DRR (pos)
+4411557 (43/89): FBP
+4411557 (43/89): FBP (pos)
+4411557 (43/89): Resize
+4411414 (44/89): CT
+4411414 (44/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+120
+4411414 (44/89): DRR (pos)
+4411414 (44/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411414 (44/89): FBP (pos)
+4411414 (44/89): Resize
+4410088 (45/89): CT
+4410088 (45/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+127
+4410088 (45/89): DRR (pos)
+4410088 (45/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410088 (45/89): FBP (pos)
+4410088 (45/89): Resize
+4410086 (46/89): CT
+4410086 (46/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+112
+4410086 (46/89): DRR (pos)
+4410086 (46/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410086 (46/89): FBP (pos)
+4410086 (46/89): Resize
+4411561 (47/89): CT
+4411561 (47/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+121
+4411561 (47/89): DRR (pos)
+4411561 (47/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411561 (47/89): FBP (pos)
+4411561 (47/89): Resize
+4411562 (48/89): CT
+4411562 (48/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+127
+4411562 (48/89): DRR (pos)
+4411562 (48/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411562 (48/89): FBP (pos)
+4411562 (48/89): Resize
+4411558 (49/89): CT
+4411558 (49/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+133
+4411558 (49/89): DRR (pos)
+4411558 (49/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411558 (49/89): FBP (pos)
+4411558 (49/89): Resize
+4411417 (50/89): CT
+4411417 (50/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+122
+4411417 (50/89): DRR (pos)
+4411417 (50/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411417 (50/89): FBP (pos)
+4411417 (50/89): Resize
+4411430 (51/89): CT
+4411430 (51/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+135
+4411430 (51/89): DRR (pos)
+4411430 (51/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411430 (51/89): FBP (pos)
+4411430 (51/89): Resize
+4410836 (52/89): CT
+4410836 (52/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+135
+4410836 (52/89): DRR (pos)
+4410836 (52/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410836 (52/89): FBP (pos)
+4410836 (52/89): Resize
+4411426 (53/89): CT
+4411426 (53/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+126
+4411426 (53/89): DRR (pos)
+4411426 (53/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411426 (53/89): FBP (pos)
+4411426 (53/89): Resize
+4411416 (54/89): CT
+4411416 (54/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+132
+4411416 (54/89): DRR (pos)
+4411416 (54/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411416 (54/89): FBP (pos)
+4411416 (54/89): Resize
+4411476 (55/89): CT
+4411476 (55/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+133
+4411476 (55/89): DRR (pos)
+4411476 (55/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411476 (55/89): FBP (pos)
+4411476 (55/89): Resize
+4404366 (56/89): CT
+4404366 (56/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+124
+4404366 (56/89): DRR (pos)
+4404366 (56/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404366 (56/89): FBP (pos)
+4404366 (56/89): Resize
+4410858 (57/89): CT
+4410858 (57/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+124
+4410858 (57/89): DRR (pos)
+4410858 (57/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410858 (57/89): FBP (pos)
+4410858 (57/89): Resize
+4410831 (58/89): CT
+4410831 (58/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+123
+4410831 (58/89): DRR (pos)
+4410831 (58/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410831 (58/89): FBP (pos)
+4410831 (58/89): Resize
+4411395 (59/89): CT
+4411395 (59/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+117
+4411395 (59/89): DRR (pos)
+4411395 (59/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411395 (59/89): FBP (pos)
+4411395 (59/89): Resize
+4411563 (60/89): CT
+4411563 (60/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+132
+4411563 (60/89): DRR (pos)
+4411563 (60/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411563 (60/89): FBP (pos)
+4411563 (60/89): Resize
+4411428 (61/89): CT
+4411428 (61/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+131
+4411428 (61/89): DRR (pos)
+4411428 (61/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411428 (61/89): FBP (pos)
+4411428 (61/89): Resize
+4410838 (62/89): CT
+4410838 (62/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+123
+4410838 (62/89): DRR (pos)
+4410838 (62/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410838 (62/89): FBP (pos)
+4410838 (62/89): Resize
+4411427 (63/89): CT
+4411427 (63/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+135
+4411427 (63/89): DRR (pos)
+4411427 (63/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411427 (63/89): FBP (pos)
+4411427 (63/89): Resize
+4410402 (64/89): CT
+4410402 (64/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+129
+4410402 (64/89): DRR (pos)
+4410402 (64/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410402 (64/89): FBP (pos)
+4410402 (64/89): Resize
+4410825 (65/89): CT
+4410825 (65/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/mfujita/Documents/research/prepare.py", line 43, in <module>
+    main()
+  File "/home/mfujita/Documents/research/prepare.py", line 31, in main
+    p = patient.patient(
+  File "/home/mfujita/Documents/research/patient/patient.py", line 69, in __init__
+    self.generate_drr()
+  File "/home/mfujita/Documents/research/patient/patient.py", line 140, in generate_drr
+    self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
+  File "/home/mfujita/Documents/research/drr/drr.py", line 101, in __init__
+    img_tensor = drr(**detector_kwargs)
+  File "/home/mfujita/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/mfujita/Documents/research/drr/DiffDRR/diffdrr/drr.py", line 91, in forward
+    drr = self.siddon.raytrace(source, rays)
+  File "/home/mfujita/Documents/research/drr/DiffDRR/diffdrr/projectors/siddon.py", line 77, in raytrace
+    voxels = self.get_voxel(alphamid, source, target)
+  File "/home/mfujita/Documents/research/drr/DiffDRR/diffdrr/projectors/siddon.py", line 62, in get_voxel
+    idxs = (
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.53 GiB (GPU 0; 11.76 GiB total capacity; 7.37 GiB already allocated; 1.51 GiB free; 8.27 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+4411406 (66/89): CT
+4411406 (66/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+123
+4411406 (66/89): DRR (pos)
+4411406 (66/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411406 (66/89): FBP (pos)
+4411406 (66/89): Resize
+4410833 (67/89): CT
+4410833 (67/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+123
+4410833 (67/89): DRR (pos)
+4410833 (67/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410833 (67/89): FBP (pos)
+4410833 (67/89): Resize
+4411475 (68/89): CT
+4411475 (68/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+127
+4411475 (68/89): DRR (pos)
+4411475 (68/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411475 (68/89): FBP (pos)
+4411475 (68/89): Resize
+4411401 (69/89): CT
+4411401 (69/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+126
+4411401 (69/89): DRR (pos)
+4411401 (69/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411401 (69/89): FBP (pos)
+4411401 (69/89): Resize
+4409574 (70/89): CT
+4409574 (70/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+126
+4409574 (70/89): DRR (pos)
+4409574 (70/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4409574 (70/89): FBP (pos)
+4409574 (70/89): Resize
+4411796 (71/89): CT
+4411796 (71/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+123
+4411796 (71/89): DRR (pos)
+4411796 (71/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411796 (71/89): FBP (pos)
+4411796 (71/89): Resize
+4410401 (72/89): CT
+4410401 (72/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+135
+4410401 (72/89): DRR (pos)
+4410401 (72/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410401 (72/89): FBP (pos)
+4410401 (72/89): Resize
+4411429 (73/89): CT
+4411429 (73/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+134
+4411429 (73/89): DRR (pos)
+4411429 (73/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411429 (73/89): FBP (pos)
+4411429 (73/89): Resize
+4411424 (74/89): CT
+4411424 (74/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+128
+4411424 (74/89): DRR (pos)
+4411424 (74/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411424 (74/89): FBP (pos)
+4411424 (74/89): Resize
+4267523 (75/89): CT
+4267523 (75/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+125
+4267523 (75/89): DRR (pos)
+4267523 (75/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4267523 (75/89): FBP (pos)
+4267523 (75/89): Resize
+4404148 (76/89): CT
+4404148 (76/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+132
+4404148 (76/89): DRR (pos)
+4404148 (76/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404148 (76/89): FBP (pos)
+4404148 (76/89): Resize
+4411559 (77/89): CT
+4411559 (77/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+129
+4411559 (77/89): DRR (pos)
+4411559 (77/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411559 (77/89): FBP (pos)
+4411559 (77/89): Resize
+4410840 (78/89): CT
+4410840 (78/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+115
+4410840 (78/89): DRR (pos)
+4410840 (78/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410840 (78/89): FBP (pos)
+4410840 (78/89): Resize
+4404449 (79/89): CT
+4404449 (79/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+121
+4404449 (79/89): DRR (pos)
+4404449 (79/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4404449 (79/89): FBP (pos)
+4404449 (79/89): Resize
+4411407 (80/89): CT
+4411407 (80/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+129
+4411407 (80/89): DRR (pos)
+4411407 (80/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411407 (80/89): FBP (pos)
+4411407 (80/89): Resize
+4410830 (81/89): CT
+4410830 (81/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+111
+4410830 (81/89): DRR (pos)
+4410830 (81/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4410830 (81/89): FBP (pos)
+4410830 (81/89): Resize
+4411420 (82/89): CT
+4411420 (82/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+116
+4411420 (82/89): DRR (pos)
+4411420 (82/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411420 (82/89): FBP (pos)
+4411420 (82/89): Resize
+4411432 (83/89): CT
+4411432 (83/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+136
+4411432 (83/89): DRR (pos)
+4411432 (83/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411432 (83/89): FBP (pos)
+4411432 (83/89): Resize
+4411423 (84/89): CT
+4411423 (84/89): DRR
+4411423 (84/89): DRR (pos)
+4411423 (84/89): FBP
+4411423 (84/89): FBP (pos)
+4411423 (84/89): Resize
+4404151 (85/89): CT
+4404151 (85/89): DRR
+4404151 (85/89): DRR (pos)
+4404151 (85/89): FBP
+4404151 (85/89): FBP (pos)
+4404151 (85/89): Resize
+4409573 (86/89): CT
+4409573 (86/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+122
+4409573 (86/89): DRR (pos)
+4409573 (86/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4409573 (86/89): FBP (pos)
+4409573 (86/89): Resize
+4411397 (87/89): CT
+4411397 (87/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+124
+4411397 (87/89): DRR (pos)
+4411397 (87/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411397 (87/89): FBP (pos)
+4411397 (87/89): Resize
+4411415 (88/89): CT
+4411415 (88/89): DRR
+DRR:   0%|          | 0/450 [00:00<?, ?it/s]
+118
+4411415 (88/89): DRR (pos)
+4411415 (88/89): FBP
+FBP:   0%|          | 0/400 [00:00<?, ?it/s]
+4411415 (88/89): FBP (pos)
+4411415 (88/89): Resize

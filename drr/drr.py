@@ -20,7 +20,7 @@ class drrset():
         self,
         ctset,
         num_views: int,
-        zm=0.4,
+        zm=0.7,
         height=500,
         width=500,
         zoffset=-50,
@@ -75,6 +75,16 @@ class drrset():
         # self.img = cp.empty(self.num_views, dtype=object)
         self.img = [None] * self.num_views
 
+        # define the model
+        drr = DRR(
+            volume,
+            spacing,
+            width=width,
+            height=height,
+            delx=delx,
+            device="cuda"
+        )
+
         for view in tqdm(range(0, self.num_views), desc="DRR", leave=False):
             a = 2 * cp.pi * view / self.num_views
             detector_kwargs = {
@@ -87,16 +97,6 @@ class drrset():
                 "bz": self.bz,
             }
 
-            # define the model
-            drr = DRR(
-                volume,
-                spacing,
-                width=width,
-                height=height,
-                delx=delx,
-                device="cuda"
-            )
-
             # Make the DRR image
             img_tensor = drr(**detector_kwargs)
             img = cp.array(img_tensor.to('cpu').detach().numpy().copy())
@@ -107,26 +107,30 @@ class drrset():
                               [cropstarty:cropstarty + cropheight,
                                cropstartx:cropstartx + cropwidth])
 
-            if adjust:
-                self.img[view] = self.f(self.img[view])
+            # if adjust:
+                # self.img[view] = self.f(self.img[view])
 
             del img
             del img_tensor
-            del drr
             torch.cuda.empty_cache()
 
         if adjust:
-            breakpoint = int(cp.percentile(cp.ravel(cp.stack(self.img)), 85))
-            print(breakpoint)
+            s = cp.ravel(cp.stack(self.img))
+            b = int(cp.percentile(s[s > 50], 40))
+            print(b)
             for idx, img in enumerate(self.img):
-                # self.img[idx][img > breakpoint] = breakpoint
+                # self.img[idx][img > b] = b
+                # b = int(cp.percentile(img[img > 50], 70))
                 newimg = self.img[idx]
-                for c in range(breakpoint, 255):
-                    newc = self.filter_diffuse(c, breakpoint)
+                for c in range(b, 255):
+                    newc = self.filter_diffuse(c, b, b + (255 - b) * 0.2)
                     newimg[newimg == c] = newc
                 self.img[idx] = newimg
 
-    def filter_diffuse(self, px, breakpoint, highest=220):
+        for idx, img in enumerate(self.img):
+            self.img[idx] = self.f(img)
+
+    def filter_diffuse(self, px, breakpoint, highest):
         if px > breakpoint:
             h = highest
             b = breakpoint
@@ -153,3 +157,4 @@ class drrset():
         newimg[newimg > 255] = 255
         newimg = newimg.astype("uint8")
         return newimg
+        # return img

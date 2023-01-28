@@ -4,8 +4,9 @@ import time
 
 ln = len(glob.glob("./data/*"))
 for idx, vol_path in enumerate(glob.glob("./data/*")):
-    if "__" in vol_path:
-        continue
     vol = vol_path.split("/")[-1]
+    if "__" in vol_path:
+        print(f"{vol_path}: passed")
+        continue
     subprocess.run(["python", "prepare.py", vol, str(idx)])
-    time.sleep(5)
+    time.sleep(1)

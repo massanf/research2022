@@ -15,6 +15,7 @@ from tqdm.notebook import tqdm
 sys.path.append('./../')
 from patient import patient
 
+torch.manual_seed(0)
 
 def image_write(path_A, path_B, path_AB):
     im_A = cv2.imread(path_A, 1) # python2: cv2.CV_LOAD_IMAGE_COLOR; python3: cv2.IMREAD_COLOR
@@ -43,7 +44,7 @@ def prep(fold_AB):
     # if not args.no_multiprocessing:
     #     pool = Pool()
 
-    patients = glob.glob("./data/*")
+    patients = sorted(glob.glob("./data/*"))
 
     n_train = int(len(patients) * 0.7)
     n_val = int(len(patients) * 0.2)

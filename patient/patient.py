@@ -132,7 +132,6 @@ class patient():
         self.ct = ct.ctset(name=self.name, type="float32")
         with open(datadir / self.name / "ct.pickle", 'wb') as handle:
             pickle.dump(self.ct, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        self.generate_drr()
 
     def generate_drr(
         self
