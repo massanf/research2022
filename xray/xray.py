@@ -31,6 +31,7 @@ class xrayset():
         width=0,
         output_height=0,
         output_width=0,
+        margin=120,
         sample="xray/colorsample.jpg"
     ):
         """init
@@ -68,22 +69,22 @@ class xrayset():
         # self.raw_data = cp.empty(sheets, dtype=object)
         self.raw_data = [None] * sheets
         # self.raw_data = []
+        # for i in [0, 110, 220, 330]:
         for i in tqdm(range(0, sheets)):
             self.load(i, sample)
         self.img = self.raw_data
         print(self.output_height, self.output_width)
-        margin = 0
         for i in range(0, len(self.img)):
             self.img[i] = cp.array(
                             cv2.resize(
                                 cp.asnumpy(self.img[i]).astype("float64"),
-                                (self.output_height + 2 * margin,
-                                 self.output_width + 2 * margin)
+                                (self.output_height + 2 * 0,
+                                 self.output_width + 2 * 0)
                             )
                         )
             h, w = np.shape(self.img[i])
             self.img[i] -= 30
-            self.img[i][margin:h - 2 * margin, margin:w - 2 * margin] += 30
+            self.img[i][0:h - 2 * 0, 0:w - 2 * 0] += 30
             self.img[i][self.img[i] < 0] = 0
             self.img[i][self.img[i] > 255] = 255
             self.img[i] = self.img[i].astype("uint8")
@@ -111,7 +112,7 @@ class xrayset():
 
         # add border
         imgs = [cv2.copyMakeBorder(cp.asnumpy(img),
-                120, 120, 120, 120, cv2.BORDER_CONSTANT,
+                margin, margin, margin, margin, cv2.BORDER_CONSTANT,
                 value=0) for img in imgs]
         self.img = [cp.array(cv2.resize(cp.asnumpy(img),
                              (height, height))) for img in imgs]

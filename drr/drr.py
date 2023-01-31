@@ -116,14 +116,14 @@ class drrset():
 
         if adjust:
             s = cp.ravel(cp.stack(self.img))
-            b = int(cp.percentile(s[s > 50], 40))
+            b = int(cp.percentile(s[s > 50], 75))
             print(b)
             for idx, img in enumerate(self.img):
                 # self.img[idx][img > b] = b
                 # b = int(cp.percentile(img[img > 50], 70))
                 newimg = self.img[idx]
                 for c in range(b, 255):
-                    newc = self.filter_diffuse(c, b, b + (255 - b) * 0.2)
+                    newc = self.filter_diffuse(c, b, b + (255 - b) * 0.4)
                     newimg[newimg == c] = newc
                 self.img[idx] = newimg
 
