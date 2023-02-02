@@ -6,6 +6,8 @@ import pickle
 import cv2
 import math
 import glob
+from matplotlib import rc
+import matplotlib as mlp
 # from cupyx.scipy.ndimage import resize
 from skopt import gp_minimize
 from perlin_noise import PerlinNoise
@@ -211,12 +213,11 @@ class patient():
             plt.savefig(graphdir / f"{self.name}_resize.png")
 
     # helpers --------
-
     def get_equiv(self, num, resize_factor=0, plot=False):
         if resize_factor == 0:
             resize_factor = self.resize_factor
 
-        ttl = cp.sum(cp.full(cp.shape(self.ct.img[0]), 255))
+        ttl = cp.sum(cp.full(cp.shape(self.ct.img[0]), 1))
         history = []
         min_sum = 53106966000
         min_sum_idx = 0
@@ -235,17 +236,27 @@ class patient():
         # print(min_sum_idx, min_sum, resize_factor)
         # print(min_sum / cp.sum(cp.full(cp.shape(self.ct.img[0]), 255)))
         if plot:
-            plt.style.use('dark_background')
-            plt.figure(figsize=(6, 4), dpi=360)
-            plt.title("Position")
-            plt.xlabel("FBP Position")
-            plt.ylabel("Average pixel value difference")
-            plt.plot(history)
+            print(history)
         x1, y1 = (95, 127)
         x2, y2 = (232, 295)
         # print(min_sum_idx)
         min_sum_idx = int((y2 - y1) / (x2 - x1) * (min_sum_idx - x1) + y1)
         return (min_sum_idx, min_sum)
+
+    def get_equiv_data(self, num, resize_factor=0):
+        if resize_factor == 0:
+            resize_factor = self.resize_factor
+
+        ttl = cp.sum(cp.full(cp.shape(self.ct.img[0]), 1))
+        history = []
+        for idx in range(min(280, len(self.posfbp.x.img[0]))):
+            now = cp.sum(cp.absolute(self.ct.img[num] -
+                         self.hist_match(self.get_resized_fbp(int(idx),
+                                         pos=True,
+                                         resize_factor=resize_factor),
+                         self.ct.img[num]))) / ttl
+            history.append(float(now))
+        return history
 
     def get_equiv_fbp(self, num):
         img = self.get_resized_fbp(self.get_equiv(num)[0], noise=True)
