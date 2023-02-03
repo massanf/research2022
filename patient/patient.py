@@ -212,6 +212,33 @@ class patient():
             plt.ylabel("Average pixel value difference")
             plt.savefig(graphdir / f"{self.name}_resize.png")
 
+    def calculate_resize_data(self, base1=120, base2=150, base3=180, plot=True):
+        # print("Calculating resize factor")
+
+        def loss(x):
+            return (self.get_equiv(base1, resize_factor=x[0])[1] +
+                    self.get_equiv(base2, resize_factor=x[0])[1] +
+                    self.get_equiv(base3, resize_factor=x[0])[1]) / 3
+
+        n_calls = 50
+        result = gp_minimize(
+            loss,
+            [(0.5, 2.0)],
+            n_calls=n_calls,
+            callback=[self.tqdm_skopt(total=n_calls,
+                      desc="Resize", leave=False)]
+        )
+        # self.resize_factor = (self.result.x[0] *
+        #                       (((295. - 127.) / 400) / ((232. - 95.) / 350)))
+        # plt.cla()
+        # plt.scatter(self.result.x_iters,
+        #             self.result.func_vals, s=1.0)
+        # plt.title("Resize factor")
+        # plt.xlabel("resize_factor")
+        # plt.ylabel("Average pixel value difference")
+        # plt.savefig(graphdir / f"{self.name}_resize.png")
+        return result.x_iters, result.func_vals
+
     # helpers --------
     def get_equiv(self, num, resize_factor=0, plot=False):
         if resize_factor == 0:
@@ -302,6 +329,7 @@ class patient():
             start = int((scaled - out) / 2)
             # print(start, out)
             new_img = img[start:start + out, start:start + out]
+
         new_img = new_img.astype('int16')
         return new_img
 
