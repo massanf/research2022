@@ -3,6 +3,7 @@ import numpy as np
 import sys
 import torch
 # import gc
+import random
 
 from pathlib import Path
 from drr.DiffDRR.diffdrr.drr import DRR
@@ -116,14 +117,15 @@ class drrset():
 
         if adjust:
             s = cp.ravel(cp.stack(self.img))
-            b = int(cp.percentile(s[s > 50], 75))
+            b = int(cp.percentile(s[s > 50], random.randint(65, 85)))
+            k = random.randint(3, 5)
             print(b)
             for idx, img in enumerate(self.img):
                 # self.img[idx][img > b] = b
                 # b = int(cp.percentile(img[img > 50], 70))
                 newimg = self.img[idx]
                 for c in range(b, 255):
-                    newc = self.filter_diffuse(c, b, b + (255 - b) * 0.4)
+                    newc = self.filter_diffuse(c, b, b + (255 - b) * (k / 10))
                     newimg[newimg == c] = newc
                 self.img[idx] = newimg
 

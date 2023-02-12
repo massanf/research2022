@@ -32,7 +32,7 @@ class patient():
         num_views=450,
         do={'ct': True, 'drr': True, 'posdrr': True, 'fbp': True,
             'posfbp': True, 'resize': True},
-        skip_done=False,
+        skip_done=True,
         prnt=False,
         idx=-1
     ):

@@ -22,7 +22,7 @@ class ctset():
         self.raw_data = []
 
         for idx, file in enumerate(glob.glob(str(here / "data"
-                                   / f"{self.name}" / "ct" / "*"))):
+                                   / f"{self.name}" / "ct" / "*.dcm"))):
             self.raw_data.append(self.load(file))
         # for idx, datum in enumerate(self.raw_data):
         #     if not hasattr(datum, "ImagePositionPatient"):

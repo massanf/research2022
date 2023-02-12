@@ -8,5 +8,5 @@ for idx, vol_path in enumerate(glob.glob("./data/*")):
     if "__" in vol_path:
         print(f"{vol_path}: passed")
         continue
-    subprocess.run(["python", "prepare.py", vol, str(idx)])
+    subprocess.run(["python", "prepare.py", vol, str(idx + 1)])
     time.sleep(1)
