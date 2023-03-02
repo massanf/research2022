@@ -1,10 +1,12 @@
 from __future__ import division
+
 # import scipy
 import cv2
 import pathlib
 
 import cupy as cp
 from cupyx.scipy.ndimage import affine_transform
+
 # from cupy import resize
 import imageio.v2 as imageio
 from cupyx.scipy.fftpack import fft, ifft
@@ -16,6 +18,7 @@ from cupyx.scipy.fft import fftfreq
 # from PIL import Image
 from tqdm.notebook import tqdm
 from scipy.interpolate import interp1d
+
 # from gui import imagename
 # from skimage.transform import rotate
 from cupyx.scipy.ndimage import rotate
@@ -24,7 +27,7 @@ from xray import xray
 here = pathlib.Path(__file__).parent.resolve()
 
 
-class fbpset():
+class fbpset:
     """Reconstruct FBP from xrayset class
 
     example:
@@ -39,6 +42,7 @@ class fbpset():
         imageio.imsave("rec.png", rec.get(565))
 
     """
+
     def __init__(
         self,
         xray: xray.xrayset,
@@ -51,7 +55,7 @@ class fbpset():
         sidepad=0,
         toppad=0,
         rotate=0,
-        load_all=True
+        load_all=True,
     ):
         """init
 
@@ -92,8 +96,7 @@ class fbpset():
         self.rotate = rotate
 
         if load_all:
-            for idx in tqdm(range(len(self.x.img[0])), desc="FBP",
-                            leave=False):
+            for idx in tqdm(range(len(self.x.img[0])), desc="FBP", leave=False):
                 # for idx in range(5):
                 self.generate(idx)
 
@@ -112,29 +115,23 @@ class fbpset():
             self.generate(sheet_number)
         return self.data[sheet_number]
 
-    def generate(
-        self,
-        sheet_number: int
-    ):
+    def generate(self, sheet_number: int):
         """Generate FBP result
 
         Args:
             sheet_number (int): sheet number (0 to 1024)
         """
         sinogram = self.create_sino(sheet_number)
-        sinogram = cp.array(cv2.resize(cp.asnumpy(sinogram),
-                                       (self.height, self.width)))
+        sinogram = cp.array(cv2.resize(cp.asnumpy(sinogram), (self.height, self.width)))
         # sinogram = affine_transform(sinogram, )
         sinogram = cp.array(sinogram)
 
         # imageio.imsave(here / "sino.png", cp.asnumpy(sinogram))
 
-        theta = cp.linspace(0., 180., max(self.height, self.width),
-                            endpoint=False)
+        theta = cp.linspace(0.0, 180.0, max(self.height, self.width), endpoint=False)
         reconstruction_fbp = self.iradon_transform(
-            sinogram,
-            theta=theta,
-            interpolation='linear').astype("float32")
+            sinogram, theta=theta, interpolation="linear"
+        ).astype("float32")
         reconstruction_fbp -= cp.min(reconstruction_fbp.flatten())
         reconstruction_fbp /= cp.max(reconstruction_fbp.flatten())
         reconstruction_fbp *= 256
@@ -167,16 +164,12 @@ class fbpset():
         """
         n = int(len(self.x.img) / 2)
         w = cp.shape(self.x.img[0])[0]
-        new_sino = cp.zeros(
-            (n + 2 * self.toppad, w + 2 * self.sidepad),
-            dtype="uint8"
-        )
+        new_sino = cp.zeros((n + 2 * self.toppad, w + 2 * self.sidepad), dtype="uint8")
         for row in range(self.start, self.start + n):
             for col in range(0, w):
                 a = int((row - self.start) % n)
                 b = int(row - int(self.angle * col / w)) % len(self.x.img)
-                new_sino[a][self.sidepad + col] = (self.x.img[b][sheet_number]
-                                                   [col])
+                new_sino[a][self.sidepad + col] = self.x.img[b][sheet_number][col]
         new_sino = cp.rot90(new_sino)
         return new_sino
 
@@ -203,35 +196,35 @@ class fbpset():
     #                                         theta=theta,
     #                                         interpolation='cubic')
     #     return reconstruction_fbp
-        # return reconstruction_fbp
+    # return reconstruction_fbp
 
-        # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4.5))
+    # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4.5))
 
-        # ax1.set_title("Original")
-        # ax1.imshow(image, cmap=plt.cm.Greys_r)
-        # ax2.set_title("Radon transform\n(Sinogram)")
-        # ax2.set_xlabel("Projection angle (deg)")
-        # ax2.set_ylabel("Projection position (pixels)")
-        # ax2.imshow(sinogram, cmap=plt.cm.Greys_r,
-        #            extent=(0, 180, 0, sinogram.shape[0]), aspect='auto')
+    # ax1.set_title("Original")
+    # ax1.imshow(image, cmap=plt.cm.Greys_r)
+    # ax2.set_title("Radon transform\n(Sinogram)")
+    # ax2.set_xlabel("Projection angle (deg)")
+    # ax2.set_ylabel("Projection position (pixels)")
+    # ax2.imshow(sinogram, cmap=plt.cm.Greys_r,
+    #            extent=(0, 180, 0, sinogram.shape[0]), aspect='auto')
 
-        # fig.tight_layout()
-        # plt.savefig("test1.png")
+    # fig.tight_layout()
+    # plt.savefig("test1.png")
 
-        # self.error = reconstruction_fbp - image
-        # print('FBP reconstruction error: %.3g'
-        #   % cp.sqrt(cp.mean(self.error**2)))
-        # imageio.imsave('asdf.png', reconstruction_fbp)
-        # imkwargs = dict(vmin=-0.2, vmax=0.2)
-        # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4.5),
-        #                                sharex=True, sharey=True,
-        #                                subplot_kw={'adjustable': 'box'})
-        # ax1.set_title("Reconstruction\nFiltered back projection")
-        # ax1.imshow(reconstruction_fbp, cmap=plt.cm.Greys_r)
-        # ax2.set_title("Reconstruction error\nFiltered back projection")
-        # ax2.imshow(reconstruction_fbp-image,cmap=plt.cm.Greys_r, **imkwargs)
-        # plt.show()
-        # plt.savefig("test2.png")
+    # self.error = reconstruction_fbp - image
+    # print('FBP reconstruction error: %.3g'
+    #   % cp.sqrt(cp.mean(self.error**2)))
+    # imageio.imsave('asdf.png', reconstruction_fbp)
+    # imkwargs = dict(vmin=-0.2, vmax=0.2)
+    # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4.5),
+    #                                sharex=True, sharey=True,
+    #                                subplot_kw={'adjustable': 'box'})
+    # ax1.set_title("Reconstruction\nFiltered back projection")
+    # ax1.imshow(reconstruction_fbp, cmap=plt.cm.Greys_r)
+    # ax2.set_title("Reconstruction error\nFiltered back projection")
+    # ax2.imshow(reconstruction_fbp-image,cmap=plt.cm.Greys_r, **imkwargs)
+    # plt.show()
+    # plt.savefig("test2.png")
 
     def grey_scale(self, photo):
         a = photo[:, :, 0] * 0.299
@@ -240,11 +233,10 @@ class fbpset():
         return a + b + c
 
     def radon_transform(self, image, steps):
-        """Create sinogram from image array
-        """
-        radon = cp.zeros((steps, len(image)), dtype='float64')
+        """Create sinogram from image array"""
+        radon = cp.zeros((steps, len(image)), dtype="float64")
         for s in range(steps):
-            rotation = rotate(image, -s*180/steps).astype('float64')
+            rotation = rotate(image, -s * 180 / steps).astype("float64")
             radon[:, s] = sum(rotation)
         return radon
 
@@ -255,14 +247,9 @@ class fbpset():
         new_center = diagonal // 2
         pad_before = new_center - old_center
         pad_width = ((pad_before, pad - pad_before), (0, 0))
-        return cp.pad(sinogram, pad_width, mode='constant', constant_values=0)
+        return cp.pad(sinogram, pad_width, mode="constant", constant_values=0)
 
-    def iradon_transform(
-        self,
-        radon_image,
-        theta=None,
-        interpolation='linear'
-    ):
+    def iradon_transform(self, radon_image, theta=None, interpolation="linear"):
         """FBP
 
         Args:
@@ -281,24 +268,17 @@ class fbpset():
         th = (cp.pi / 180.0) * theta
         # resize image to next power of two (but no less than 64) for
         # Fourier analysis; speeds up Fourier and lessens artifacts
-        projection_size_padded = \
-            max(64, int(2 ** cp.ceil(cp.log2(2 * radon_image.shape[0]))))
-        pad_width = (
-                        (0, projection_size_padded - radon_image.shape[0]),
-                        (0, 0)
-                    )
-        img = cp.pad(
-                        radon_image,
-                        pad_width,
-                        mode='constant',
-                        constant_values=0
-                    )
+        projection_size_padded = max(
+            64, int(2 ** cp.ceil(cp.log2(2 * radon_image.shape[0])))
+        )
+        pad_width = ((0, projection_size_padded - radon_image.shape[0]), (0, 0))
+        img = cp.pad(radon_image, pad_width, mode="constant", constant_values=0)
         f = cp.array(fftfreq(projection_size_padded).reshape(-1, 1))
         # omega = 2 * cp.pi * f                             # angular frequency
-        fourier_filter = 2 * cp.abs(f)                      # ramp filter
+        fourier_filter = 2 * cp.abs(f)  # ramp filter
         projection = fft(img, axis=0) * fourier_filter
         radon_filtered = cp.real(ifft(projection, axis=0))
-        radon_filtered = radon_filtered[:radon_image.shape[0], :]
+        radon_filtered = radon_filtered[: radon_image.shape[0], :]
         radon_filtered = cp.array(radon_filtered)
         reconstructed = cp.zeros((output_size, output_size))
         mid_index = radon_image.shape[0] // 2
@@ -306,24 +286,27 @@ class fbpset():
         xpr = X - int(output_size) // 2
         ypr = Y - int(output_size) // 2
         # Reconstruct image by interpolation
-        interpolation_types = ('linear', 'nearest', 'cubic')
+        interpolation_types = ("linear", "nearest", "cubic")
         if interpolation not in interpolation_types:
             raise ValueError("Unknown interpolation: %s" % interpolation)
         for i in range(len(theta)):
             t = ypr * cp.cos(th[i]) - xpr * cp.sin(th[i])
             x = cp.arange(radon_filtered.shape[0]) - mid_index
-            if interpolation == 'linear':
-                backprojected = cp.interp(t, x, radon_filtered[:, i],
-                                          left=0, right=0)
+            if interpolation == "linear":
+                backprojected = cp.interp(t, x, radon_filtered[:, i], left=0, right=0)
             else:
-                interpolant = interp1d(x, radon_filtered[:, i],
-                                       kind=interpolation,
-                                       bounds_error=False, fill_value=0)
+                interpolant = interp1d(
+                    x,
+                    radon_filtered[:, i],
+                    kind=interpolation,
+                    bounds_error=False,
+                    fill_value=0,
+                )
                 backprojected = interpolant(t)
             reconstructed += backprojected
         radius = output_size // 2
-        reconstruction_circle = (xpr ** 2 + ypr ** 2) <= radius ** 2
-        reconstructed[~reconstruction_circle] = 0.
+        reconstruction_circle = (xpr**2 + ypr**2) <= radius**2
+        reconstructed[~reconstruction_circle] = 0.0
 
         return reconstructed * cp.pi / (2 * len(th))
 

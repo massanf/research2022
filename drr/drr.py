@@ -2,13 +2,16 @@ import cupy as cp
 import numpy as np
 import sys
 import torch
+
 # import gc
 import random
 
 from pathlib import Path
 from drr.DiffDRR.diffdrr.drr import DRR
+
 # from tqdm import tqdm
 from tqdm.notebook import tqdm
+
 # from skimage.transform import resize
 
 here = Path(__file__).resolve().parent
@@ -16,7 +19,7 @@ sys.path.append(str(here) + "/..")
 # from ct import ct # noqa: E402
 
 
-class drrset():
+class drrset:
     def __init__(
         self,
         ctset,
@@ -40,7 +43,7 @@ class drrset():
         cropstarty=80,
         cropheight=400,
         cropwidth=400,
-        adjust=True
+        adjust=True,
     ):
         """Generates DRR dataset
 
@@ -70,21 +73,13 @@ class drrset():
         # spacing = [0.247937, 1.0, 0.247937]
 
         # Get parameters for the detector
-        self.bx, self.by, self.bz = (cp.shape(volume) *
-                                     np.array(spacing) / 2)
+        self.bx, self.by, self.bz = cp.shape(volume) * np.array(spacing) / 2
 
         # self.img = cp.empty(self.num_views, dtype=object)
         self.img = [None] * self.num_views
 
         # define the model
-        drr = DRR(
-            volume,
-            spacing,
-            width=width,
-            height=height,
-            delx=delx,
-            device="cuda"
-        )
+        drr = DRR(volume, spacing, width=width, height=height, delx=delx, device="cuda")
 
         for view in tqdm(range(0, self.num_views), desc="DRR", leave=False):
             a = 2 * cp.pi * view / self.num_views
@@ -100,16 +95,17 @@ class drrset():
 
             # Make the DRR image
             img_tensor = drr(**detector_kwargs)
-            img = cp.array(img_tensor.to('cpu').detach().numpy().copy())
+            img = cp.array(img_tensor.to("cpu").detach().numpy().copy())
             img /= cp.max(img)
             img *= 255
 
-            self.img[view] = (img.astype("uint8")
-                              [cropstarty:cropstarty + cropheight,
-                               cropstartx:cropstartx + cropwidth])
+            self.img[view] = img.astype("uint8")[
+                cropstarty : cropstarty + cropheight,
+                cropstartx : cropstartx + cropwidth,
+            ]
 
             # if adjust:
-                # self.img[view] = self.f(self.img[view])
+            # self.img[view] = self.f(self.img[view])
 
             del img
             del img_tensor
@@ -117,7 +113,7 @@ class drrset():
 
         if adjust:
             s = cp.ravel(cp.stack(self.img))
-            b = int(cp.percentile(s[s > 50], random.randint(65, 85)))
+            b = int(cp.percentile(s[s > 50], random.randint(40, 70)))
             k = random.randint(3, 5)
             print(b)
             for idx, img in enumerate(self.img):
@@ -151,10 +147,9 @@ class drrset():
         newimg = img.astype("float64")
         for c in range(0, 61):
             newimg[newimg == c] = self.filter_black(c)
-        newimg[newimg > cutoff] = ((newimg[newimg > cutoff] -
-                                    cp.average(newimg[newimg > cutoff])) /
-                                   cp.std(newimg[newimg > cutoff]) * 28.069 +
-                                   202.102)
+        newimg[newimg > cutoff] = (
+            newimg[newimg > cutoff] - cp.average(newimg[newimg > cutoff])
+        ) / cp.std(newimg[newimg > cutoff]) * 28.069 + 202.102
         newimg[newimg < 0] = 0
         newimg[newimg > 255] = 255
         newimg = newimg.astype("uint8")

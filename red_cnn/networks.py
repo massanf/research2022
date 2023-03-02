@@ -12,10 +12,18 @@ class RED_CNN(nn.Module):
         self.conv4 = nn.Conv2d(out_ch, out_ch, kernel_size=5, stride=1, padding=0)
         self.conv5 = nn.Conv2d(out_ch, out_ch, kernel_size=5, stride=1, padding=0)
 
-        self.tconv1 = nn.ConvTranspose2d(out_ch, out_ch, kernel_size=5, stride=1, padding=0)
-        self.tconv2 = nn.ConvTranspose2d(out_ch, out_ch, kernel_size=5, stride=1, padding=0)
-        self.tconv3 = nn.ConvTranspose2d(out_ch, out_ch, kernel_size=5, stride=1, padding=0)
-        self.tconv4 = nn.ConvTranspose2d(out_ch, out_ch, kernel_size=5, stride=1, padding=0)
+        self.tconv1 = nn.ConvTranspose2d(
+            out_ch, out_ch, kernel_size=5, stride=1, padding=0
+        )
+        self.tconv2 = nn.ConvTranspose2d(
+            out_ch, out_ch, kernel_size=5, stride=1, padding=0
+        )
+        self.tconv3 = nn.ConvTranspose2d(
+            out_ch, out_ch, kernel_size=5, stride=1, padding=0
+        )
+        self.tconv4 = nn.ConvTranspose2d(
+            out_ch, out_ch, kernel_size=5, stride=1, padding=0
+        )
         self.tconv5 = nn.ConvTranspose2d(out_ch, 1, kernel_size=5, stride=1, padding=0)
 
         self.relu = nn.ReLU()

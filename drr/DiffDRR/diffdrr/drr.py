@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+
 # import numpy as np
 import cupy as np
 import torch
@@ -21,7 +22,7 @@ class DRR(nn.Module):
         width=None,
         dely=None,
         projector="siddon",
-        device="cpu"
+        device="cpu",
     ):
         """
         Class for generating DRRs.

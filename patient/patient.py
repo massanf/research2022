@@ -1,5 +1,6 @@
 import pathlib
 import cupy as cp
+
 # from cupy import resize
 import numpy as np
 import pickle
@@ -8,13 +9,16 @@ import math
 import glob
 from matplotlib import rc
 import matplotlib as mlp
+
 # from cupyx.scipy.ndimage import resize
 from skopt import gp_minimize
 from perlin_noise import PerlinNoise
 import hashlib
+
 # from tqdm import tqdm
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
+
 # import imageio.v2 as imageio
 import fbp.tompy as fbp
 from ct import ct
@@ -25,16 +29,22 @@ datadir = research / pathlib.Path("data")
 graphdir = research / pathlib.Path("graphs")
 
 
-class patient():
+class patient:
     def __init__(
         self,
         name,
         num_views=450,
-        do={'ct': True, 'drr': True, 'posdrr': True, 'fbp': True,
-            'posfbp': True, 'resize': True},
+        do={
+            "ct": True,
+            "drr": True,
+            "posdrr": True,
+            "fbp": True,
+            "posfbp": True,
+            "resize": True,
+        },
         skip_done=True,
         prnt=False,
-        idx=-1
+        idx=-1,
     ):
         self.name = name
         self.num_views = num_views
@@ -47,13 +57,13 @@ class patient():
         if prnt:
             print(f"{self.name} ({idx}/{ln}): CT", flush=True)
         if (datadir / name / "ct.pickle").exists():
-            if do['ct'] and not skip_done:
+            if do["ct"] and not skip_done:
                 self.generate_ct()
             else:
-                with open(datadir / name / "ct.pickle", 'rb') as handle:
+                with open(datadir / name / "ct.pickle", "rb") as handle:
                     self.ct = pickle.load(handle)
         else:
-            if do['ct']:
+            if do["ct"]:
                 self.generate_ct()
             else:
                 raise ValueError
@@ -61,13 +71,13 @@ class patient():
         if prnt:
             print(f"{self.name} ({idx}/{ln}): DRR", flush=True)
         if (datadir / name / "drr.pickle").exists():
-            if do['drr'] and not skip_done:
+            if do["drr"] and not skip_done:
                 self.generate_drr()
             else:
-                with open(datadir / name / "drr.pickle", 'rb') as handle:
+                with open(datadir / name / "drr.pickle", "rb") as handle:
                     self.drr = pickle.load(handle)
         else:
-            if do['drr']:
+            if do["drr"]:
                 self.generate_drr()
             else:
                 raise ValueError
@@ -75,13 +85,13 @@ class patient():
         if prnt:
             print(f"{self.name} ({idx}/{ln}): DRR (pos)", flush=True)
         if (datadir / name / "posdrr.pickle").exists():
-            if do['posdrr'] and not skip_done:
+            if do["posdrr"] and not skip_done:
                 self.generate_posdrr()
             else:
-                with open(datadir / name / "posdrr.pickle", 'rb') as handle:
+                with open(datadir / name / "posdrr.pickle", "rb") as handle:
                     self.posdrr = pickle.load(handle)
         else:
-            if do['posdrr']:
+            if do["posdrr"]:
                 self.generate_posdrr()
             else:
                 raise ValueError
@@ -89,13 +99,13 @@ class patient():
         if prnt:
             print(f"{self.name} ({idx}/{ln}): FBP", flush=True)
         if (datadir / name / "fbp.pickle").exists():
-            if do['fbp'] and not skip_done:
+            if do["fbp"] and not skip_done:
                 self.generate_fbp()
             else:
-                with open(datadir / name / "fbp.pickle", 'rb') as handle:
+                with open(datadir / name / "fbp.pickle", "rb") as handle:
                     self.fbp = pickle.load(handle)
         else:
-            if do['fbp']:
+            if do["fbp"]:
                 self.generate_fbp()
             else:
                 raise ValueError
@@ -103,13 +113,13 @@ class patient():
         if prnt:
             print(f"{self.name} ({idx}/{ln}): FBP (pos)", flush=True)
         if (datadir / name / "posfbp.pickle").exists():
-            if do['posfbp'] and not skip_done:
+            if do["posfbp"] and not skip_done:
                 self.generate_posfbp()
             else:
-                with open(datadir / name / "posfbp.pickle", 'rb') as handle:
+                with open(datadir / name / "posfbp.pickle", "rb") as handle:
                     self.posfbp = pickle.load(handle)
         else:
-            if do['posfbp']:
+            if do["posfbp"]:
                 self.generate_posfbp()
             else:
                 raise ValueError
@@ -117,13 +127,13 @@ class patient():
         if prnt:
             print(f"{self.name} ({idx}/{ln}): Resize", flush=True)
         if (datadir / name / "resize.pickle").exists():
-            if do['resize'] and not skip_done:
+            if do["resize"] and not skip_done:
                 self.calculate_resize()
             else:
-                with open(datadir / name / "resize.pickle", 'rb') as handle:
+                with open(datadir / name / "resize.pickle", "rb") as handle:
                     self.resize_factor = pickle.load(handle)
         else:
-            if do['resize']:
+            if do["resize"]:
                 self.calculate_resize()
             else:
                 raise ValueError
@@ -132,16 +142,14 @@ class patient():
     def generate_ct(self):
         # print("Creating new CTset")
         self.ct = ct.ctset(name=self.name, type="float32")
-        with open(datadir / self.name / "ct.pickle", 'wb') as handle:
-            pickle.dump(self.ct, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        # with open(datadir / self.name / "ct.pickle", "wb") as handle:
+        #     pickle.dump(self.ct, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    def generate_drr(
-        self
-    ):
+    def generate_drr(self):
         # print("Creating new DRRset")
         self.drr = drr.drrset(ctset=self.ct, num_views=self.num_views)
-        with open(datadir / self.name / "drr.pickle", 'wb') as handle:
-            pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        # with open(datadir / self.name / "drr.pickle", 'wb') as handle:
+        #     pickle.dump(self.drr, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def generate_posdrr(
         self,
@@ -152,61 +160,59 @@ class patient():
         cropheight=350,
         cropwidth=350,
     ):
-        self.posdrr = drr.drrset(ctset=self.ct, num_views=self.num_views,
-                                 cropstartx=cropstartx, cropstarty=cropstarty,
-                                 cropheight=cropheight, cropwidth=cropwidth,
-                                 delx=delx, zm=zm, adjust=False)
-        with open(datadir / self.name / "posdrr.pickle", 'wb') as handle:
-            pickle.dump(self.posdrr, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        self.posdrr = drr.drrset(
+            ctset=self.ct,
+            num_views=self.num_views,
+            cropstartx=cropstartx,
+            cropstarty=cropstarty,
+            cropheight=cropheight,
+            cropwidth=cropwidth,
+            delx=delx,
+            zm=zm,
+            adjust=False,
+        )
+        # with open(datadir / self.name / "posdrr.pickle", 'wb') as handle:
+        #     pickle.dump(self.posdrr, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def generate_fbp(self, load_all=True):
         self.fbp = fbp.fbpset(
-            self.drr,
-            height=500,
-            angle=75,
-            rotate=191,
-            load_all=load_all
+            self.drr, height=500, angle=75, rotate=191, load_all=load_all
         )
-        with open(datadir / self.name / "fbp.pickle", 'wb') as handle:
-            pickle.dump(self.fbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        # with open(datadir / self.name / "fbp.pickle", "wb") as handle:
+        #     pickle.dump(self.fbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def generate_posfbp(self, load_all=True):
         self.posfbp = fbp.fbpset(
-            self.posdrr,
-            height=500,
-            angle=75,
-            rotate=191,
-            load_all=load_all
+            self.posdrr, height=500, angle=75, rotate=191, load_all=load_all
         )
-        with open(datadir / self.name / "posfbp.pickle", 'wb') as handle:
-            pickle.dump(self.posfbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        # with open(datadir / self.name / "posfbp.pickle", "wb") as handle:
+        #     pickle.dump(self.posfbp, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    def calculate_resize(self, base1=120, base2=150, base3=180, plot=True):
+    def calculate_resize(self, base1=120, base2=150, base3=180, plot=False):
         # print("Calculating resize factor")
 
         def loss(x):
-            return (self.get_equiv(base1, resize_factor=x[0])[1] +
-                    self.get_equiv(base2, resize_factor=x[0])[1] +
-                    self.get_equiv(base3, resize_factor=x[0])[1]) / 3
+            return (
+                self.get_equiv(base1, resize_factor=x[0])[1]
+                + self.get_equiv(base2, resize_factor=x[0])[1]
+                + self.get_equiv(base3, resize_factor=x[0])[1]
+            ) / 3
 
         n_calls = 50
         self.result = gp_minimize(
             loss,
             [(0.5, 2.0)],
             n_calls=n_calls,
-            callback=[self.tqdm_skopt(total=n_calls,
-                      desc="Resize", leave=False)]
+            callback=[self.tqdm_skopt(total=n_calls, desc="Resize", leave=False)],
         )
         # self.resize_factor = (self.result.x[0] *
         #                       (((295. - 127.) / 400) / ((232. - 95.) / 350)))
         self.resize_factor = self.result.x[0]
-        with open(datadir / self.name / "resize.pickle", 'wb') as handle:
-            pickle.dump(self.resize_factor, handle,
-                        protocol=pickle.HIGHEST_PROTOCOL)
+        # with open(datadir / self.name / "resize.pickle", "wb") as handle:
+        #     pickle.dump(self.resize_factor, handle, protocol=pickle.HIGHEST_PROTOCOL)
         if plot:
             plt.cla()
-            plt.scatter(self.result.x_iters,
-                        self.result.func_vals, s=1.0)
+            plt.scatter(self.result.x_iters, self.result.func_vals, s=1.0)
             plt.title("Resize factor")
             plt.xlabel("resize_factor")
             plt.ylabel("Average pixel value difference")
@@ -216,17 +222,18 @@ class patient():
         # print("Calculating resize factor")
 
         def loss(x):
-            return (self.get_equiv(base1, resize_factor=x[0])[1] +
-                    self.get_equiv(base2, resize_factor=x[0])[1] +
-                    self.get_equiv(base3, resize_factor=x[0])[1]) / 3
+            return (
+                self.get_equiv(base1, resize_factor=x[0])[1]
+                + self.get_equiv(base2, resize_factor=x[0])[1]
+                + self.get_equiv(base3, resize_factor=x[0])[1]
+            ) / 3
 
         n_calls = 50
         result = gp_minimize(
             loss,
             [(0.5, 2.0)],
             n_calls=n_calls,
-            callback=[self.tqdm_skopt(total=n_calls,
-                      desc="Resize", leave=False)]
+            callback=[self.tqdm_skopt(total=n_calls, desc="Resize", leave=False)],
         )
         # self.resize_factor = (self.result.x[0] *
         #                       (((295. - 127.) / 400) / ((232. - 95.) / 350)))
@@ -251,11 +258,20 @@ class patient():
         # pos_resize_factor = (resize_factor /
         #                      (((295. - 127.) / 400) / ((232. - 95.) / 350)))
         for idx in range(min(280, len(self.posfbp.x.img[0]))):
-            now = cp.sum(cp.absolute(self.ct.img[num] -
-                         self.hist_match(self.get_resized_fbp(int(idx),
-                                         pos=True,
-                                         resize_factor=resize_factor),
-                         self.ct.img[num]))) / ttl
+            now = (
+                cp.sum(
+                    cp.absolute(
+                        self.ct.img[num]
+                        - self.hist_match(
+                            self.get_resized_fbp(
+                                int(idx), pos=True, resize_factor=resize_factor
+                            ),
+                            self.ct.img[num],
+                        )
+                    )
+                )
+                / ttl
+            )
             history.append(float(now))
             if min_sum > now:
                 min_sum = float(now)
@@ -277,11 +293,20 @@ class patient():
         ttl = cp.sum(cp.full(cp.shape(self.ct.img[0]), 1))
         history = []
         for idx in range(min(280, len(self.posfbp.x.img[0]))):
-            now = cp.sum(cp.absolute(self.ct.img[num] -
-                         self.hist_match(self.get_resized_fbp(int(idx),
-                                         pos=True,
-                                         resize_factor=resize_factor),
-                         self.ct.img[num]))) / ttl
+            now = (
+                cp.sum(
+                    cp.absolute(
+                        self.ct.img[num]
+                        - self.hist_match(
+                            self.get_resized_fbp(
+                                int(idx), pos=True, resize_factor=resize_factor
+                            ),
+                            self.ct.img[num],
+                        )
+                    )
+                )
+                / ttl
+            )
             history.append(float(now))
         return history
 
@@ -304,17 +329,17 @@ class patient():
             img = self.posfbp.get(num)
         else:
             img = self.fbp.get(num)
-            resize_factor *= (((295. - 127.) / 400) / ((232. - 95.) / 350))
+            resize_factor *= ((295.0 - 127.0) / 400) / ((232.0 - 95.0) / 350)
 
         # add noise
         # if noise:
         #     s = f"{self.name}_{num}"
         #     seed = int(hashlib.sha1(s.encode("utf-8")).hexdigest(), 16)
 
-            # smallnoise = self.getnoise(10, 0.2, height=500, seed=seed)
-            # midnoise = self.getnoise(4, 0.15, height=500, seed=seed * 2)
-            # bignoise = self.getnoise(2, 0.1, height=500, seed=seed * 3)
-            # img = img * smallnoise * midnoise * bignoise
+        # smallnoise = self.getnoise(10, 0.2, height=500, seed=seed)
+        # midnoise = self.getnoise(4, 0.15, height=500, seed=seed * 2)
+        # bignoise = self.getnoise(2, 0.1, height=500, seed=seed * 3)
+        # img = img * smallnoise * midnoise * bignoise
 
         # rescale
         scaled = int(cp.shape(img)[0] * resize_factor)
@@ -324,13 +349,13 @@ class patient():
 
         if out > scaled:
             start = int((out - scaled) / 2)
-            new_img[start:start + scaled, start:start + scaled] = img
+            new_img[start : start + scaled, start : start + scaled] = img
         else:
             start = int((scaled - out) / 2)
             # print(start, out)
-            new_img = img[start:start + out, start:start + out]
+            new_img = img[start : start + out, start : start + out]
 
-        new_img = new_img.astype('int16')
+        new_img = new_img.astype("int16")
         return new_img
 
     # utils ---------
@@ -367,8 +392,9 @@ class patient():
 
         # get the set of unique pixel values and their corresponding
         # indices and counts
-        s_values, bin_idx, s_counts = cp.unique(source, return_inverse=True,
-                                                return_counts=True)
+        s_values, bin_idx, s_counts = cp.unique(
+            source, return_inverse=True, return_counts=True
+        )
         t_values, t_counts = cp.unique(template, return_counts=True)
 
         # take the cumsum of the counts and normalize by the number of
@@ -386,7 +412,7 @@ class patient():
         return interp_t_values[bin_idx].reshape(oldshape)
 
     def circ(self, rin, rout, height, width):
-        f = cp.full((height, width), 1.)
+        f = cp.full((height, width), 1.0)
         i, o = (rin, rout)
         hh, hw = (height / 2, width / 2)
         for x in range(0, height):
@@ -406,8 +432,7 @@ class patient():
         noise = PerlinNoise(octaves=octaves, seed=seed)
         # print("generated noise")
         xpix, ypix = int(height / 10), int(height / 10)
-        pic = ([[noise([i/xpix, j/ypix]) for j in range(xpix)]
-               for i in range(ypix)])
+        pic = [[noise([i / xpix, j / ypix]) for j in range(xpix)] for i in range(ypix)]
         pic = cv2.resize(np.stack(pic), (height, height))
         # print("to pic done")
         # pic = np.stack(pic)

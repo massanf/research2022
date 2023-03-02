@@ -1,28 +1,32 @@
 # import matplotlib.pyplot as plt
 # import numpy as np
 import cupy as np
+
 # import matplotlib.animation as animation
 import argparse
 import torch
+
 # from PIL import Image, ImageEnhance
 import imageio.v2 as imageio
 
 from pathlib import Path
 import sys
+
 currentdir = Path(__file__).resolve().parent
-sys.path.append(str(currentdir)+"/..")
+sys.path.append(str(currentdir) + "/..")
 from ct import ct
 
 import os
 
 # from diffdrr import DRR, load_example_ct, read_dicom
 from DiffDRR.diffdrr.drr import DRR
+
 # from diffdrr.visualization import plot_drr
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--rotate_num', type=int, default=4, help='')
-parser.add_argument('--vol', type=int, default=4, help='')
-parser.add_argument('--num_views', type=int, default=1, help='')
+parser.add_argument("--rotate_num", type=int, default=4, help="")
+parser.add_argument("--vol", type=int, default=4, help="")
+parser.add_argument("--num_views", type=int, default=1, help="")
 args = parser.parse_args()
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -36,11 +40,13 @@ print("=== create_drr.py ===", flush=True)
 count = 0
 
 
-volname = 'vol0'
-edition = '0'
+volname = "vol0"
+edition = "0"
 
 # create output folder
-(script_dir / Path('../document_drr') / Path(volname)).mkdir(parents=True, exist_ok=True)
+(script_dir / Path("../document_drr") / Path(volname)).mkdir(
+    parents=True, exist_ok=True
+)
 
 # Read in the volume
 # volume, spacing = read_dicom(script_dir / Path('../data') / Path(volname) / Path("ct"))
@@ -53,7 +59,7 @@ volume, spacing = c.get_volume(0.5)
 bx, by, bz = np.array(volume.shape) * np.array(spacing) / 2
 
 # define the model
-drr = DRR(volume, spacing, width=300, height=300,  delx=1.0e-2, device="cuda")
+drr = DRR(volume, spacing, width=300, height=300, delx=1.0e-2, device="cuda")
 
 num_views = 1
 
@@ -74,7 +80,7 @@ for i in range(0, num_views):
     # Make the DRR image
     img_tensor = drr(**detector_kwargs)
 
-    img = img_tensor.to('cpu').detach().numpy().copy()
+    img = img_tensor.to("cpu").detach().numpy().copy()
 
     # save img
     # fig = plt.figure(figsize=(10, 10))
@@ -101,4 +107,13 @@ for i in range(0, num_views):
     # im.save(script_dir / Path('../document_drr') / Path(volname) / Path(str((i + 18) % 200) + '.jpg'), quality=95)
 
     # print("DRR: ", i, "/", num_views * rotate_num * args.vol)
-    print("drr:", count, "/", num_views * rotate_num * args.vol, "(", int((count / (num_views * rotate_num * args.vol)) * 100), "% )", flush=True)
+    print(
+        "drr:",
+        count,
+        "/",
+        num_views * rotate_num * args.vol,
+        "(",
+        int((count / (num_views * rotate_num * args.vol)) * 100),
+        "% )",
+        flush=True,
+    )

@@ -9,5 +9,6 @@ def createSSHClient(server, port, user, password):
     client.connect(server, port, user, password)
     return client
 
+
 ssh = createSSHClient("192.168.193.104", "", "mfujita", "piano38125")
 scp = SCPClient(ssh.get_transport())

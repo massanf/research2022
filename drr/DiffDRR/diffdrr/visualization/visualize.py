@@ -4,7 +4,6 @@ import numpy as np
 
 
 def plot_volume(volume, spacing, bx, by, bz, ax):
-
     # Get the dimensions of the volume
     Nx, Ny, Nz = np.array(volume.shape) * np.array(spacing)
     X, Y, Z = np.meshgrid(
@@ -47,7 +46,6 @@ def plot_volume(volume, spacing, bx, by, bz, ax):
 
 
 def plot_camera(source, rays, ax):
-
     # Plot the source
     source = source.detach().cpu().numpy()
     ax.scatter3D(source[0], source[1], source[2])

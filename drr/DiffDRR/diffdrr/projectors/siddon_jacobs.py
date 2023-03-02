@@ -84,7 +84,6 @@ class SiddonJacobs:
         return update.unsqueeze(-1)
 
     def raytrace(self, source, target):
-
         # Get the update conditions
         ones = torch.ones(3, device=self.device)
         update_idxs = (source < target) * ones - (source > target) * ones

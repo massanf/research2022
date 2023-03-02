@@ -10,7 +10,7 @@ import cv2
 here = pathlib.Path(__file__).parent.parent.resolve()
 
 
-class xrayset():
+class xrayset:
     """Set of Xray images
 
     example:
@@ -22,6 +22,7 @@ class xrayset():
             voltage=120
         )
     """
+
     def __init__(
         self,
         name: str,
@@ -32,7 +33,7 @@ class xrayset():
         output_height=0,
         output_width=0,
         margin=120,
-        sample="xray/colorsample.jpg"
+        sample="xray/colorsample.jpg",
     ):
         """init
 
@@ -76,15 +77,14 @@ class xrayset():
         print(self.output_height, self.output_width)
         for i in range(0, len(self.img)):
             self.img[i] = cp.array(
-                            cv2.resize(
-                                cp.asnumpy(self.img[i]).astype("float64"),
-                                (self.output_height + 2 * 0,
-                                 self.output_width + 2 * 0)
-                            )
-                        )
+                cv2.resize(
+                    cp.asnumpy(self.img[i]).astype("float64"),
+                    (self.output_height + 2 * 0, self.output_width + 2 * 0),
+                )
+            )
             h, w = np.shape(self.img[i])
             self.img[i] -= 30
-            self.img[i][0:h - 2 * 0, 0:w - 2 * 0] += 30
+            self.img[i][0 : h - 2 * 0, 0 : w - 2 * 0] += 30
             self.img[i][self.img[i] < 0] = 0
             self.img[i][self.img[i] > 255] = 255
             self.img[i] = self.img[i].astype("uint8")
@@ -98,7 +98,7 @@ class xrayset():
             if px < 40:
                 return -px
             elif px < 60:
-                return - 2 * (px - 40) + 40
+                return -2 * (px - 40) + 40
 
         for c in tqdm(range(0, 61)):
             imgs[cp.all(imgs < c)] = filter(c)
@@ -111,11 +111,21 @@ class xrayset():
         imgs = cp.reshape(imgs, oldshape)
 
         # add border
-        imgs = [cv2.copyMakeBorder(cp.asnumpy(img),
-                margin, margin, margin, margin, cv2.BORDER_CONSTANT,
-                value=0) for img in imgs]
-        self.img = [cp.array(cv2.resize(cp.asnumpy(img),
-                             (height, height))) for img in imgs]
+        imgs = [
+            cv2.copyMakeBorder(
+                cp.asnumpy(img),
+                margin,
+                margin,
+                margin,
+                margin,
+                cv2.BORDER_CONSTANT,
+                value=0,
+            )
+            for img in imgs
+        ]
+        self.img = [
+            cp.array(cv2.resize(cp.asnumpy(img), (height, height))) for img in imgs
+        ]
 
         # histogram match
         self.img_cp = []
@@ -128,7 +138,7 @@ class xrayset():
         for idx, img in enumerate(self.img):
             new_img = img.astype("float64")
             h, w = np.shape(new_img)
-            new_img = ((new_img - loVal) * 255.0 / (255 - loVal))
+            new_img = (new_img - loVal) * 255.0 / (255 - loVal)
             new_img[new_img < 0] = 0
             new_img[new_img > 255] = 255
             self.img_cp.append(cp.array(new_img))
@@ -151,7 +161,9 @@ class xrayset():
 
         for idx, img in enumerate(self.img_cp):
             new_img = img
-            new_img[img > cutoff] = (img[img > cutoff] - cp.average(img[img > cutoff])) / cp.std(img[img > cutoff]) * self.std + self.mean
+            new_img[img > cutoff] = (
+                img[img > cutoff] - cp.average(img[img > cutoff])
+            ) / cp.std(img[img > cutoff]) * self.std + self.mean
             self.img_cp[idx] = new_img
 
         for idx, img in enumerate(self.img_cp):
@@ -163,16 +175,23 @@ class xrayset():
         Args:
             num (int): Xray number
         """
-        file = (here / "data" / f"{self.name}" / "xray" /
-                f"{self.voltage}" / f"{num:04d}.img")
+        file = (
+            here
+            / "data"
+            / f"{self.name}"
+            / "xray"
+            / f"{self.voltage}"
+            / f"{num:04d}.img"
+        )
 
-        with open(file, 'rb') as f:
+        with open(file, "rb") as f:
             # Seek backwards from end of file by 2 bytes per pixel
             f.seek(-self.width * self.height * 2, 2)
-            img = cp.fromfile(
-                f,
-                dtype=cp.uint16
-            ).reshape((self.height, self.width)).astype("float32")
+            img = (
+                cp.fromfile(f, dtype=cp.uint16)
+                .reshape((self.height, self.width))
+                .astype("float32")
+            )
 
         img = self.filter(img)
         # img = self.hist_match(img, template)
@@ -222,8 +241,9 @@ class xrayset():
 
         # get the set of unique pixel values and their corresponding
         # indices and counts
-        s_values, bin_idx, s_counts = cp.unique(source, return_inverse=True,
-                                                return_counts=True)
+        s_values, bin_idx, s_counts = cp.unique(
+            source, return_inverse=True, return_counts=True
+        )
         t_values, t_counts = cp.unique(template, return_counts=True)
 
         s_counts[0] = 0
@@ -251,14 +271,18 @@ class xrayset():
         target = cv2.cvtColor(target, cv2.COLOR_BGR2LAB).astype("float32")
 
         # compute color statistics for the source and target images
-        (lMeanSrc, lStdSrc, aMeanSrc, aStdSrc, bMeanSrc, bStdSrc) = self.image_stats(source)
-        (lMeanTar, lStdTar, aMeanTar, aStdTar, bMeanTar, bStdTar) = self.image_stats(target)
+        (lMeanSrc, lStdSrc, aMeanSrc, aStdSrc, bMeanSrc, bStdSrc) = self.image_stats(
+            source
+        )
+        (lMeanTar, lStdTar, aMeanTar, aStdTar, bMeanTar, bStdTar) = self.image_stats(
+            target
+        )
         # subtract the means from the target image
         (l, a, b) = cv2.split(target)
         l -= lMeanTar
         a -= aMeanTar
         b -= bMeanTar
-        # scale by the standard deviations     
+        # scale by the standard deviations
 
         l = (lStdTar / lStdSrc) * l
         a = (aStdTar / aStdSrc) * a
