@@ -1,0 +1,742 @@
+CUDA_VISIBLE_DEVICES=0
+/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/torch/utils/data/dataloader.py:474: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+Socket had error 'TypeError' object has no attribute 'errno', attempting restart
+----------------- Options ---------------
+               batch_size: 1                             
+                    beta1: 0.5                           
+          checkpoints_dir: ./checkpoints                 
+           continue_train: False                         
+                crop_size: 256                           
+                 dataroot: ./datasets/ctfbp              	[default: None]
+             dataset_mode: aligned                       
+                direction: BtoA                          	[default: AtoB]
+              display_env: main                          
+             display_freq: 400                           
+               display_id: 1                             
+            display_ncols: 4                             
+             display_port: 8097                          
+           display_server: http://localhost              
+          display_winsize: 256                           
+                    epoch: latest                        
+              epoch_count: 1                             
+                 gan_mode: vanilla                       
+                  gpu_ids: 0                             
+                init_gain: 0.02                          
+                init_type: normal                        
+                 input_nc: 3                             
+                  isTrain: True                          	[default: None]
+                lambda_L1: 100.0                         
+                load_iter: 0                             	[default: 0]
+                load_size: 286                           
+                       lr: 0.0002                        
+           lr_decay_iters: 50                            
+                lr_policy: linear                        
+         max_dataset_size: inf                           
+                    model: pix2pix                       	[default: cycle_gan]
+                 n_epochs: 100                           
+           n_epochs_decay: 100                           
+               n_layers_D: 3                             
+                     name: ctfbp_pix2pix                 	[default: experiment_name]
+                      ndf: 64                            
+                     netD: basic                         
+                     netG: unet_256                      
+                      ngf: 64                            
+               no_dropout: False                         
+                  no_flip: False                         
+                  no_html: False                         
+                     norm: batch                         
+              num_threads: 4                             
+                output_nc: 3                             
+                    phase: train                         
+                pool_size: 0                             
+               preprocess: resize_and_crop               
+               print_freq: 100                           
+             save_by_iter: False                         
+          save_epoch_freq: 5                             
+         save_latest_freq: 5000                          
+           serial_batches: False                         
+                   suffix:                               
+         update_html_freq: 1000                          
+                use_wandb: False                         
+                  verbose: False                         
+       wandb_project_name: CycleGAN-and-pix2pix          
+----------------- End -------------------
+dataset [AlignedDataset] was created
+The number of training images = 58164
+initialize network with normal
+initialize network with normal
+model [Pix2PixModel] was created
+---------- Networks initialized -------------
+[Network G] Total number of parameters : 54.414 M
+[Network D] Total number of parameters : 2.769 M
+-----------------------------------------------
+
+
+Could not connect to Visdom server. 
+ Trying to start a server....
+/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/torch/optim/lr_scheduler.py:129: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "
+Command: /home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/bin/python3.8 -m visdom.server -p 8097 &>/dev/null &
+create web directory ./checkpoints/ctfbp_pix2pix/web...
+learning rate 0.0002000 -> 0.0002000
+(epoch: 1, iters: 100, time: 0.034, data: 1.333) G_GAN: 1.231 G_L1: 11.505 D_real: 0.428 D_fake: 0.346 
+Exception in user code:
+------------------------------------------------------------
+(epoch: 1, iters: 200, time: 0.037, data: 0.002) G_GAN: 1.058 G_L1: 12.764 D_real: 0.553 D_fake: 0.415 
+(epoch: 1, iters: 300, time: 0.036, data: 0.001) G_GAN: 1.869 G_L1: 8.769 D_real: 0.648 D_fake: 0.262 
+(epoch: 1, iters: 400, time: 0.218, data: 0.002) G_GAN: 1.932 G_L1: 9.914 D_real: 0.195 D_fake: 0.340 
+(epoch: 1, iters: 500, time: 0.039, data: 0.002) G_GAN: 1.262 G_L1: 8.062 D_real: 0.413 D_fake: 0.229 
+(epoch: 1, iters: 600, time: 0.060, data: 0.002) G_GAN: 1.711 G_L1: 13.298 D_real: 0.226 D_fake: 1.081 
+(epoch: 1, iters: 700, time: 0.034, data: 0.001) G_GAN: 1.471 G_L1: 7.127 D_real: 0.251 D_fake: 1.186 
+(epoch: 1, iters: 800, time: 0.130, data: 0.001) G_GAN: 1.211 G_L1: 7.242 D_real: 0.309 D_fake: 1.193 
+(epoch: 1, iters: 900, time: 0.030, data: 0.001) G_GAN: 1.571 G_L1: 5.913 D_real: 0.190 D_fake: 0.631 
+(epoch: 1, iters: 1000, time: 0.035, data: 0.002) G_GAN: 1.093 G_L1: 6.270 D_real: 0.569 D_fake: 0.602 
+(epoch: 1, iters: 1100, time: 0.038, data: 0.002) G_GAN: 0.588 G_L1: 8.717 D_real: 1.342 D_fake: 0.214 
+(epoch: 1, iters: 1200, time: 0.128, data: 0.001) G_GAN: 1.906 G_L1: 6.173 D_real: 0.539 D_fake: 0.483 
+(epoch: 1, iters: 1300, time: 0.038, data: 0.002) G_GAN: 2.404 G_L1: 6.177 D_real: 0.169 D_fake: 0.839 
+(epoch: 1, iters: 1400, time: 0.034, data: 0.002) G_GAN: 1.163 G_L1: 7.840 D_real: 1.541 D_fake: 0.066 
+(epoch: 1, iters: 1500, time: 0.036, data: 0.002) G_GAN: 1.250 G_L1: 6.056 D_real: 0.271 D_fake: 0.564 
+(epoch: 1, iters: 1600, time: 0.126, data: 0.002) G_GAN: 1.701 G_L1: 5.745 D_real: 0.339 D_fake: 0.211 
+(epoch: 1, iters: 1700, time: 0.037, data: 0.001) G_GAN: 0.993 G_L1: 6.247 D_real: 0.877 D_fake: 0.736 
+(epoch: 1, iters: 1800, time: 0.035, data: 0.001) G_GAN: 1.626 G_L1: 6.882 D_real: 0.554 D_fake: 0.113 
+(epoch: 1, iters: 1900, time: 0.033, data: 0.002) G_GAN: 1.537 G_L1: 6.425 D_real: 0.206 D_fake: 0.715 
+(epoch: 1, iters: 2000, time: 0.217, data: 0.002) G_GAN: 1.300 G_L1: 4.905 D_real: 0.564 D_fake: 0.310 
+(epoch: 1, iters: 2100, time: 0.032, data: 0.002) G_GAN: 1.765 G_L1: 6.369 D_real: 0.231 D_fake: 0.481 
+(epoch: 1, iters: 2200, time: 0.028, data: 0.003) G_GAN: 2.799 G_L1: 6.316 D_real: 0.103 D_fake: 0.396 
+(epoch: 1, iters: 2300, time: 0.039, data: 0.001) G_GAN: 1.283 G_L1: 7.500 D_real: 0.536 D_fake: 0.339 
+(epoch: 1, iters: 2400, time: 0.124, data: 0.002) G_GAN: 1.977 G_L1: 5.157 D_real: 0.347 D_fake: 0.563 
+(epoch: 1, iters: 2500, time: 0.029, data: 0.002) G_GAN: 0.942 G_L1: 4.308 D_real: 1.407 D_fake: 0.144 
+(epoch: 1, iters: 2600, time: 0.048, data: 0.002) G_GAN: 1.365 G_L1: 4.690 D_real: 0.409 D_fake: 0.834 
+(epoch: 1, iters: 2700, time: 0.037, data: 0.002) G_GAN: 1.907 G_L1: 6.356 D_real: 0.142 D_fake: 0.456 
+(epoch: 1, iters: 2800, time: 0.127, data: 0.001) G_GAN: 1.219 G_L1: 5.083 D_real: 0.329 D_fake: 0.494 
+(epoch: 1, iters: 2900, time: 0.039, data: 0.002) G_GAN: 1.436 G_L1: 5.886 D_real: 0.531 D_fake: 0.462 
+(epoch: 1, iters: 3000, time: 0.033, data: 0.002) G_GAN: 0.768 G_L1: 7.615 D_real: 0.717 D_fake: 0.629 
+(epoch: 1, iters: 3100, time: 0.034, data: 0.003) G_GAN: 1.110 G_L1: 4.541 D_real: 0.371 D_fake: 1.098 
+(epoch: 1, iters: 3200, time: 0.127, data: 0.001) G_GAN: 0.886 G_L1: 5.183 D_real: 0.919 D_fake: 0.324 
+(epoch: 1, iters: 3300, time: 0.045, data: 0.001) G_GAN: 1.738 G_L1: 6.452 D_real: 0.504 D_fake: 0.624 
+(epoch: 1, iters: 3400, time: 0.034, data: 0.002) G_GAN: 2.124 G_L1: 7.518 D_real: 0.110 D_fake: 0.430 
+(epoch: 1, iters: 3500, time: 0.039, data: 0.001) G_GAN: 1.745 G_L1: 6.120 D_real: 0.121 D_fake: 0.657 
+(epoch: 1, iters: 3600, time: 0.123, data: 0.002) G_GAN: 0.584 G_L1: 3.819 D_real: 0.658 D_fake: 0.385 
+(epoch: 1, iters: 3700, time: 0.032, data: 0.001) G_GAN: 1.921 G_L1: 8.237 D_real: 0.329 D_fake: 0.222 
+(epoch: 1, iters: 3800, time: 0.061, data: 0.002) G_GAN: 2.034 G_L1: 5.878 D_real: 0.285 D_fake: 0.307 
+(epoch: 1, iters: 3900, time: 0.037, data: 0.001) G_GAN: 2.018 G_L1: 6.404 D_real: 0.176 D_fake: 0.504 
+(epoch: 1, iters: 4000, time: 0.220, data: 0.002) G_GAN: 1.773 G_L1: 7.257 D_real: 0.213 D_fake: 0.394 
+(epoch: 1, iters: 4100, time: 0.033, data: 0.002) G_GAN: 1.535 G_L1: 7.251 D_real: 0.459 D_fake: 0.331 
+(epoch: 1, iters: 4200, time: 0.029, data: 0.002) G_GAN: 1.953 G_L1: 5.877 D_real: 0.309 D_fake: 0.215 
+(epoch: 1, iters: 4300, time: 0.029, data: 0.002) G_GAN: 0.991 G_L1: 5.937 D_real: 1.607 D_fake: 0.243 
+(epoch: 1, iters: 4400, time: 0.125, data: 0.003) G_GAN: 1.276 G_L1: 6.174 D_real: 0.544 D_fake: 0.240 
+(epoch: 1, iters: 4500, time: 0.031, data: 0.001) G_GAN: 0.807 G_L1: 4.429 D_real: 0.658 D_fake: 0.328 
+(epoch: 1, iters: 4600, time: 0.053, data: 0.002) G_GAN: 1.610 G_L1: 5.893 D_real: 0.568 D_fake: 0.253 
+(epoch: 1, iters: 4700, time: 0.044, data: 0.001) G_GAN: 1.873 G_L1: 7.268 D_real: 0.387 D_fake: 0.342 
+(epoch: 1, iters: 4800, time: 0.119, data: 0.002) G_GAN: 1.202 G_L1: 6.411 D_real: 1.337 D_fake: 0.121 
+(epoch: 1, iters: 4900, time: 0.035, data: 0.001) G_GAN: 1.668 G_L1: 5.197 D_real: 0.632 D_fake: 0.322 
+(epoch: 1, iters: 5000, time: 0.038, data: 0.002) G_GAN: 1.238 G_L1: 5.063 D_real: 0.746 D_fake: 0.428 
+saving the latest model (epoch 1, total_iters 5000)
+(epoch: 1, iters: 5100, time: 0.036, data: 0.002) G_GAN: 1.265 G_L1: 5.709 D_real: 1.191 D_fake: 0.169 
+(epoch: 1, iters: 5200, time: 0.126, data: 0.002) G_GAN: 1.410 G_L1: 5.387 D_real: 0.604 D_fake: 0.139 
+(epoch: 1, iters: 5300, time: 0.035, data: 0.001) G_GAN: 2.397 G_L1: 6.490 D_real: 0.136 D_fake: 0.231 
+(epoch: 1, iters: 5400, time: 0.035, data: 0.002) G_GAN: 2.045 G_L1: 5.463 D_real: 0.417 D_fake: 0.787 
+(epoch: 1, iters: 5500, time: 0.036, data: 0.002) G_GAN: 1.979 G_L1: 6.127 D_real: 0.459 D_fake: 0.344 
+(epoch: 1, iters: 5600, time: 0.128, data: 0.002) G_GAN: 2.338 G_L1: 7.083 D_real: 0.114 D_fake: 0.478 
+(epoch: 1, iters: 5700, time: 0.053, data: 0.002) G_GAN: 1.759 G_L1: 5.207 D_real: 0.407 D_fake: 0.322 
+(epoch: 1, iters: 5800, time: 0.051, data: 0.001) G_GAN: 2.496 G_L1: 5.659 D_real: 0.324 D_fake: 1.062 
+(epoch: 1, iters: 5900, time: 0.030, data: 0.002) G_GAN: 2.628 G_L1: 6.517 D_real: 0.246 D_fake: 0.341 
+(epoch: 1, iters: 6000, time: 0.217, data: 0.001) G_GAN: 1.399 G_L1: 6.919 D_real: 0.768 D_fake: 0.150 
+(epoch: 1, iters: 6100, time: 0.033, data: 0.001) G_GAN: 1.623 G_L1: 4.790 D_real: 1.015 D_fake: 0.809 
+(epoch: 1, iters: 6200, time: 0.034, data: 0.002) G_GAN: 2.419 G_L1: 4.825 D_real: 0.131 D_fake: 0.551 
+(epoch: 1, iters: 6300, time: 0.031, data: 0.002) G_GAN: 1.111 G_L1: 6.244 D_real: 0.728 D_fake: 0.402 
+(epoch: 1, iters: 6400, time: 0.138, data: 0.001) G_GAN: 1.581 G_L1: 4.860 D_real: 0.503 D_fake: 0.217 
+(epoch: 1, iters: 6500, time: 0.031, data: 0.002) G_GAN: 1.891 G_L1: 5.500 D_real: 0.518 D_fake: 0.191 
+(epoch: 1, iters: 6600, time: 0.035, data: 0.002) G_GAN: 2.420 G_L1: 6.281 D_real: 0.384 D_fake: 0.134 
+(epoch: 1, iters: 6700, time: 0.036, data: 0.002) G_GAN: 0.650 G_L1: 5.981 D_real: 0.897 D_fake: 0.306 
+(epoch: 1, iters: 6800, time: 0.117, data: 0.002) G_GAN: 1.374 G_L1: 5.881 D_real: 0.512 D_fake: 0.384 
+(epoch: 1, iters: 6900, time: 0.036, data: 0.001) G_GAN: 2.124 G_L1: 7.208 D_real: 0.159 D_fake: 0.589 
+(epoch: 1, iters: 7000, time: 0.040, data: 0.002) G_GAN: 2.150 G_L1: 6.829 D_real: 0.216 D_fake: 0.575 
+(epoch: 1, iters: 7100, time: 0.050, data: 0.001) G_GAN: 1.213 G_L1: 4.667 D_real: 0.636 D_fake: 0.528 
+(epoch: 1, iters: 7200, time: 0.133, data: 0.008) G_GAN: 1.518 G_L1: 5.068 D_real: 0.454 D_fake: 0.305 
+(epoch: 1, iters: 7300, time: 0.030, data: 0.001) G_GAN: 2.382 G_L1: 5.396 D_real: 0.200 D_fake: 0.700 
+(epoch: 1, iters: 7400, time: 0.046, data: 0.002) G_GAN: 2.419 G_L1: 6.187 D_real: 0.068 D_fake: 0.627 
+(epoch: 1, iters: 7500, time: 0.034, data: 0.000) G_GAN: 2.410 G_L1: 5.960 D_real: 0.183 D_fake: 0.407 
+(epoch: 1, iters: 7600, time: 0.123, data: 0.002) G_GAN: 2.430 G_L1: 6.415 D_real: 0.037 D_fake: 0.602 
+(epoch: 1, iters: 7700, time: 0.036, data: 0.001) G_GAN: 2.537 G_L1: 6.039 D_real: 0.026 D_fake: 0.475 
+(epoch: 1, iters: 7800, time: 0.040, data: 0.002) G_GAN: 2.417 G_L1: 6.832 D_real: 0.667 D_fake: 0.053 
+(epoch: 1, iters: 7900, time: 0.034, data: 0.001) G_GAN: 2.125 G_L1: 4.297 D_real: 0.321 D_fake: 0.675 
+(epoch: 1, iters: 8000, time: 0.207, data: 0.002) G_GAN: 1.204 G_L1: 5.613 D_real: 0.555 D_fake: 0.461 
+(epoch: 1, iters: 8100, time: 0.036, data: 0.002) G_GAN: 1.954 G_L1: 4.202 D_real: 0.419 D_fake: 0.463 
+(epoch: 1, iters: 8200, time: 0.030, data: 0.002) G_GAN: 2.420 G_L1: 6.555 D_real: 0.119 D_fake: 0.247 
+(epoch: 1, iters: 8300, time: 0.031, data: 0.002) G_GAN: 1.696 G_L1: 5.194 D_real: 0.181 D_fake: 0.772 
+(epoch: 1, iters: 8400, time: 0.124, data: 0.002) G_GAN: 1.976 G_L1: 5.674 D_real: 0.158 D_fake: 0.665 
+(epoch: 1, iters: 8500, time: 0.034, data: 0.001) G_GAN: 0.523 G_L1: 6.069 D_real: 1.200 D_fake: 0.286 
+(epoch: 1, iters: 8600, time: 0.041, data: 0.001) G_GAN: 1.929 G_L1: 4.431 D_real: 0.258 D_fake: 0.716 
+(epoch: 1, iters: 8700, time: 0.032, data: 0.002) G_GAN: 1.380 G_L1: 6.929 D_real: 0.455 D_fake: 0.379 
+(epoch: 1, iters: 8800, time: 0.128, data: 0.002) G_GAN: 1.767 G_L1: 6.504 D_real: 0.518 D_fake: 0.304 
+(epoch: 1, iters: 8900, time: 0.029, data: 0.001) G_GAN: 2.087 G_L1: 4.838 D_real: 0.613 D_fake: 0.447 
+(epoch: 1, iters: 9000, time: 0.035, data: 0.002) G_GAN: 2.517 G_L1: 6.355 D_real: 0.278 D_fake: 0.271 
+(epoch: 1, iters: 9100, time: 0.038, data: 0.003) G_GAN: 1.540 G_L1: 6.657 D_real: 0.351 D_fake: 0.414 
+(epoch: 1, iters: 9200, time: 0.130, data: 0.002) G_GAN: 2.418 G_L1: 7.114 D_real: 0.250 D_fake: 0.478 
+(epoch: 1, iters: 9300, time: 0.035, data: 0.001) G_GAN: 1.237 G_L1: 5.099 D_real: 0.587 D_fake: 0.487 
+(epoch: 1, iters: 9400, time: 0.034, data: 0.002) G_GAN: 1.828 G_L1: 3.891 D_real: 0.786 D_fake: 0.290 
+(epoch: 1, iters: 9500, time: 0.040, data: 0.002) G_GAN: 0.325 G_L1: 4.518 D_real: 1.646 D_fake: 0.134 
+(epoch: 1, iters: 9600, time: 0.124, data: 0.002) G_GAN: 1.207 G_L1: 4.289 D_real: 1.249 D_fake: 0.186 
+(epoch: 1, iters: 9700, time: 0.033, data: 0.002) G_GAN: 1.492 G_L1: 4.165 D_real: 0.883 D_fake: 0.355 
+(epoch: 1, iters: 9800, time: 0.036, data: 0.001) G_GAN: 2.288 G_L1: 4.878 D_real: 0.191 D_fake: 0.954 
+(epoch: 1, iters: 9900, time: 0.035, data: 0.002) G_GAN: 1.526 G_L1: 5.257 D_real: 0.580 D_fake: 0.245 
+(epoch: 1, iters: 10000, time: 0.218, data: 0.001) G_GAN: 2.230 G_L1: 7.393 D_real: 0.082 D_fake: 0.543 
+saving the latest model (epoch 1, total_iters 10000)
+(epoch: 1, iters: 10100, time: 0.035, data: 0.002) G_GAN: 1.256 G_L1: 7.056 D_real: 0.275 D_fake: 0.373 
+(epoch: 1, iters: 10200, time: 0.030, data: 0.002) G_GAN: 1.136 G_L1: 3.951 D_real: 0.868 D_fake: 0.238 
+(epoch: 1, iters: 10300, time: 0.037, data: 0.002) G_GAN: 1.509 G_L1: 5.551 D_real: 0.506 D_fake: 0.536 
+(epoch: 1, iters: 10400, time: 0.124, data: 0.004) G_GAN: 1.938 G_L1: 6.344 D_real: 0.330 D_fake: 0.156 
+(epoch: 1, iters: 10500, time: 0.048, data: 0.002) G_GAN: 1.936 G_L1: 4.575 D_real: 0.176 D_fake: 0.255 
+(epoch: 1, iters: 10600, time: 0.032, data: 0.001) G_GAN: 2.401 G_L1: 4.701 D_real: 0.138 D_fake: 0.763 
+(epoch: 1, iters: 10700, time: 0.040, data: 0.002) G_GAN: 1.394 G_L1: 4.264 D_real: 0.833 D_fake: 0.298 
+(epoch: 1, iters: 10800, time: 0.120, data: 0.001) G_GAN: 1.383 G_L1: 4.776 D_real: 0.472 D_fake: 0.623 
+(epoch: 1, iters: 10900, time: 0.031, data: 0.001) G_GAN: 1.674 G_L1: 4.802 D_real: 0.338 D_fake: 0.420 
+(epoch: 1, iters: 11000, time: 0.047, data: 0.002) G_GAN: 0.817 G_L1: 4.396 D_real: 0.832 D_fake: 0.305 
+(epoch: 1, iters: 11100, time: 0.042, data: 0.003) G_GAN: 1.475 G_L1: 4.547 D_real: 0.506 D_fake: 0.338 
+(epoch: 1, iters: 11200, time: 0.121, data: 0.002) G_GAN: 1.724 G_L1: 5.971 D_real: 0.860 D_fake: 0.694 
+(epoch: 1, iters: 11300, time: 0.035, data: 0.002) G_GAN: 2.176 G_L1: 6.648 D_real: 0.283 D_fake: 0.770 
+(epoch: 1, iters: 11400, time: 0.030, data: 0.002) G_GAN: 1.601 G_L1: 5.752 D_real: 0.821 D_fake: 0.106 
+(epoch: 1, iters: 11500, time: 0.032, data: 0.002) G_GAN: 2.295 G_L1: 6.960 D_real: 0.040 D_fake: 0.498 
+(epoch: 1, iters: 11600, time: 0.132, data: 0.002) G_GAN: 2.098 G_L1: 5.310 D_real: 0.297 D_fake: 0.524 
+(epoch: 1, iters: 11700, time: 0.034, data: 0.001) G_GAN: 1.382 G_L1: 5.696 D_real: 0.732 D_fake: 0.177 
+(epoch: 1, iters: 11800, time: 0.045, data: 0.016) G_GAN: 3.060 G_L1: 7.773 D_real: 0.043 D_fake: 0.191 
+(epoch: 1, iters: 11900, time: 0.030, data: 0.002) G_GAN: 1.302 G_L1: 6.105 D_real: 0.433 D_fake: 0.384 
+(epoch: 1, iters: 12000, time: 0.204, data: 0.002) G_GAN: 0.920 G_L1: 6.464 D_real: 0.705 D_fake: 0.330 
+(epoch: 1, iters: 12100, time: 0.038, data: 0.002) G_GAN: 1.084 G_L1: 5.440 D_real: 0.709 D_fake: 0.477 
+(epoch: 1, iters: 12200, time: 0.039, data: 0.002) G_GAN: 1.056 G_L1: 4.519 D_real: 0.736 D_fake: 0.531 
+(epoch: 1, iters: 12300, time: 0.038, data: 0.003) G_GAN: 1.970 G_L1: 6.087 D_real: 0.299 D_fake: 0.489 
+(epoch: 1, iters: 12400, time: 0.128, data: 0.003) G_GAN: 1.642 G_L1: 7.433 D_real: 0.205 D_fake: 0.669 
+(epoch: 1, iters: 12500, time: 0.035, data: 0.001) G_GAN: 1.685 G_L1: 4.089 D_real: 0.373 D_fake: 1.168 
+(epoch: 1, iters: 12600, time: 0.035, data: 0.003) G_GAN: 1.481 G_L1: 4.714 D_real: 0.368 D_fake: 0.567 
+(epoch: 1, iters: 12700, time: 0.031, data: 0.002) G_GAN: 1.405 G_L1: 4.432 D_real: 0.247 D_fake: 0.774 
+(epoch: 1, iters: 12800, time: 0.125, data: 0.000) G_GAN: 2.057 G_L1: 5.232 D_real: 0.584 D_fake: 0.477 
+(epoch: 1, iters: 12900, time: 0.031, data: 0.002) G_GAN: 1.184 G_L1: 4.829 D_real: 0.708 D_fake: 0.324 
+(epoch: 1, iters: 13000, time: 0.033, data: 0.003) G_GAN: 1.000 G_L1: 5.250 D_real: 0.937 D_fake: 0.342 
+(epoch: 1, iters: 13100, time: 0.030, data: 0.002) G_GAN: 2.430 G_L1: 6.850 D_real: 0.005 D_fake: 0.867 
+(epoch: 1, iters: 13200, time: 0.128, data: 0.001) G_GAN: 1.735 G_L1: 6.770 D_real: 0.650 D_fake: 0.098 
+(epoch: 1, iters: 13300, time: 0.032, data: 0.001) G_GAN: 1.691 G_L1: 5.717 D_real: 0.625 D_fake: 0.133 
+(epoch: 1, iters: 13400, time: 0.034, data: 0.002) G_GAN: 1.748 G_L1: 6.057 D_real: 0.660 D_fake: 0.227 
+(epoch: 1, iters: 13500, time: 0.040, data: 0.002) G_GAN: 1.613 G_L1: 4.550 D_real: 0.926 D_fake: 0.122 
+(epoch: 1, iters: 13600, time: 0.121, data: 0.003) G_GAN: 0.863 G_L1: 4.463 D_real: 1.953 D_fake: 0.387 
+(epoch: 1, iters: 13700, time: 0.035, data: 0.001) G_GAN: 2.519 G_L1: 5.921 D_real: 0.197 D_fake: 0.327 
+(epoch: 1, iters: 13800, time: 0.031, data: 0.002) G_GAN: 1.940 G_L1: 5.510 D_real: 0.363 D_fake: 0.265 
+(epoch: 1, iters: 13900, time: 0.035, data: 0.003) G_GAN: 1.242 G_L1: 4.970 D_real: 0.439 D_fake: 0.461 
+(epoch: 1, iters: 14000, time: 0.192, data: 0.001) G_GAN: 2.131 G_L1: 5.315 D_real: 0.303 D_fake: 0.103 
+(epoch: 1, iters: 14100, time: 0.031, data: 0.001) G_GAN: 2.701 G_L1: 5.844 D_real: 0.132 D_fake: 0.479 
+(epoch: 1, iters: 14200, time: 0.039, data: 0.001) G_GAN: 1.169 G_L1: 5.113 D_real: 0.499 D_fake: 0.520 
+(epoch: 1, iters: 14300, time: 0.027, data: 0.001) G_GAN: 1.798 G_L1: 6.244 D_real: 0.510 D_fake: 0.341 
+(epoch: 1, iters: 14400, time: 0.121, data: 0.001) G_GAN: 1.391 G_L1: 5.905 D_real: 0.640 D_fake: 0.467 
+(epoch: 1, iters: 14500, time: 0.035, data: 0.002) G_GAN: 2.371 G_L1: 6.079 D_real: 0.081 D_fake: 0.474 
+(epoch: 1, iters: 14600, time: 0.034, data: 0.002) G_GAN: 1.352 G_L1: 5.467 D_real: 0.531 D_fake: 0.514 
+(epoch: 1, iters: 14700, time: 0.063, data: 0.002) G_GAN: 2.007 G_L1: 5.647 D_real: 0.158 D_fake: 0.910 
+(epoch: 1, iters: 14800, time: 0.131, data: 0.002) G_GAN: 2.060 G_L1: 5.548 D_real: 0.151 D_fake: 0.394 
+(epoch: 1, iters: 14900, time: 0.036, data: 0.001) G_GAN: 1.496 G_L1: 4.858 D_real: 0.824 D_fake: 0.331 
+(epoch: 1, iters: 15000, time: 0.044, data: 0.001) G_GAN: 1.500 G_L1: 5.575 D_real: 0.404 D_fake: 0.579 
+saving the latest model (epoch 1, total_iters 15000)
+(epoch: 1, iters: 15100, time: 0.042, data: 0.003) G_GAN: 1.387 G_L1: 5.173 D_real: 0.744 D_fake: 0.417 
+(epoch: 1, iters: 15200, time: 0.126, data: 0.001) G_GAN: 1.660 G_L1: 4.025 D_real: 0.638 D_fake: 0.287 
+(epoch: 1, iters: 15300, time: 0.039, data: 0.001) G_GAN: 1.985 G_L1: 4.961 D_real: 0.219 D_fake: 0.664 
+(epoch: 1, iters: 15400, time: 0.028, data: 0.003) G_GAN: 2.103 G_L1: 4.944 D_real: 0.387 D_fake: 0.155 
+(epoch: 1, iters: 15500, time: 0.045, data: 0.002) G_GAN: 2.090 G_L1: 4.257 D_real: 0.423 D_fake: 0.514 
+(epoch: 1, iters: 15600, time: 0.127, data: 0.001) G_GAN: 2.855 G_L1: 5.918 D_real: 0.099 D_fake: 0.415 
+(epoch: 1, iters: 15700, time: 0.033, data: 0.003) G_GAN: 1.499 G_L1: 3.998 D_real: 0.731 D_fake: 0.237 
+(epoch: 1, iters: 15800, time: 0.032, data: 0.002) G_GAN: 2.083 G_L1: 6.646 D_real: 0.302 D_fake: 0.319 
+(epoch: 1, iters: 15900, time: 0.029, data: 0.002) G_GAN: 1.670 G_L1: 6.283 D_real: 0.417 D_fake: 0.216 
+(epoch: 1, iters: 16000, time: 0.225, data: 0.002) G_GAN: 2.339 G_L1: 6.001 D_real: 0.137 D_fake: 0.225 
+(epoch: 1, iters: 16100, time: 0.030, data: 0.003) G_GAN: 2.054 G_L1: 4.479 D_real: 0.269 D_fake: 1.751 
+(epoch: 1, iters: 16200, time: 0.031, data: 0.004) G_GAN: 1.798 G_L1: 5.773 D_real: 0.609 D_fake: 0.137 
+(epoch: 1, iters: 16300, time: 0.041, data: 0.003) G_GAN: 1.818 G_L1: 6.197 D_real: 0.181 D_fake: 0.739 
+(epoch: 1, iters: 16400, time: 0.125, data: 0.002) G_GAN: 1.683 G_L1: 5.634 D_real: 0.406 D_fake: 0.465 
+(epoch: 1, iters: 16500, time: 0.044, data: 0.002) G_GAN: 1.777 G_L1: 3.688 D_real: 0.288 D_fake: 0.480 
+(epoch: 1, iters: 16600, time: 0.032, data: 0.002) G_GAN: 2.552 G_L1: 6.181 D_real: 0.047 D_fake: 0.491 
+(epoch: 1, iters: 16700, time: 0.031, data: 0.003) G_GAN: 1.885 G_L1: 4.822 D_real: 0.479 D_fake: 0.275 
+(epoch: 1, iters: 16800, time: 0.127, data: 0.002) G_GAN: 1.354 G_L1: 4.756 D_real: 0.672 D_fake: 0.333 
+(epoch: 1, iters: 16900, time: 0.048, data: 0.001) G_GAN: 1.618 G_L1: 4.345 D_real: 0.824 D_fake: 0.221 
+(epoch: 1, iters: 17000, time: 0.037, data: 0.001) G_GAN: 1.301 G_L1: 5.090 D_real: 1.240 D_fake: 0.147 
+(epoch: 1, iters: 17100, time: 0.031, data: 0.002) G_GAN: 2.087 G_L1: 4.886 D_real: 0.190 D_fake: 0.961 
+(epoch: 1, iters: 17200, time: 0.137, data: 0.001) G_GAN: 2.464 G_L1: 5.020 D_real: 0.023 D_fake: 0.628 
+(epoch: 1, iters: 17300, time: 0.037, data: 0.002) G_GAN: 0.796 G_L1: 5.183 D_real: 1.592 D_fake: 0.206 
+(epoch: 1, iters: 17400, time: 0.035, data: 0.001) G_GAN: 2.318 G_L1: 6.844 D_real: 0.061 D_fake: 0.511 
+(epoch: 1, iters: 17500, time: 0.033, data: 0.002) G_GAN: 1.744 G_L1: 4.821 D_real: 0.488 D_fake: 0.363 
+(epoch: 1, iters: 17600, time: 0.124, data: 0.001) G_GAN: 2.241 G_L1: 9.707 D_real: 0.335 D_fake: 0.873 
+(epoch: 1, iters: 17700, time: 0.039, data: 0.001) G_GAN: 2.064 G_L1: 5.445 D_real: 0.194 D_fake: 0.495 
+(epoch: 1, iters: 17800, time: 0.031, data: 0.002) G_GAN: 1.453 G_L1: 4.094 D_real: 0.498 D_fake: 0.273 
+(epoch: 1, iters: 17900, time: 0.038, data: 0.002) G_GAN: 2.563 G_L1: 6.561 D_real: 0.003 D_fake: 1.739 
+(epoch: 1, iters: 18000, time: 0.201, data: 0.002) G_GAN: 0.760 G_L1: 5.639 D_real: 1.054 D_fake: 0.431 
+(epoch: 1, iters: 18100, time: 0.028, data: 0.002) G_GAN: 1.340 G_L1: 4.155 D_real: 0.586 D_fake: 0.599 
+(epoch: 1, iters: 18200, time: 0.042, data: 0.002) G_GAN: 1.270 G_L1: 4.354 D_real: 1.067 D_fake: 0.242 
+(epoch: 1, iters: 18300, time: 0.029, data: 0.001) G_GAN: 2.187 G_L1: 5.521 D_real: 0.086 D_fake: 0.428 
+(epoch: 1, iters: 18400, time: 0.120, data: 0.002) G_GAN: 1.628 G_L1: 6.532 D_real: 0.625 D_fake: 0.264 
+(epoch: 1, iters: 18500, time: 0.043, data: 0.001) G_GAN: 1.982 G_L1: 4.867 D_real: 0.138 D_fake: 1.109 
+(epoch: 1, iters: 18600, time: 0.034, data: 0.002) G_GAN: 2.400 G_L1: 10.612 D_real: 0.552 D_fake: 0.296 
+(epoch: 1, iters: 18700, time: 0.030, data: 0.002) G_GAN: 1.019 G_L1: 4.684 D_real: 1.249 D_fake: 0.201 
+(epoch: 1, iters: 18800, time: 0.126, data: 0.002) G_GAN: 1.987 G_L1: 5.728 D_real: 0.036 D_fake: 0.332 
+(epoch: 1, iters: 18900, time: 0.033, data: 0.000) G_GAN: 1.693 G_L1: 6.115 D_real: 0.363 D_fake: 0.192 
+(epoch: 1, iters: 19000, time: 0.035, data: 0.002) G_GAN: 2.779 G_L1: 8.140 D_real: 0.001 D_fake: 0.191 
+(epoch: 1, iters: 19100, time: 0.036, data: 0.002) G_GAN: 1.651 G_L1: 4.163 D_real: 0.856 D_fake: 0.339 
+(epoch: 1, iters: 19200, time: 0.132, data: 0.001) G_GAN: 1.849 G_L1: 5.100 D_real: 0.403 D_fake: 0.321 
+(epoch: 1, iters: 19300, time: 0.035, data: 0.001) G_GAN: 1.597 G_L1: 4.962 D_real: 0.548 D_fake: 0.289 
+(epoch: 1, iters: 19400, time: 0.037, data: 0.001) G_GAN: 2.198 G_L1: 7.499 D_real: 0.002 D_fake: 0.294 
+(epoch: 1, iters: 19500, time: 0.051, data: 0.003) G_GAN: 1.912 G_L1: 5.221 D_real: 0.288 D_fake: 0.604 
+(epoch: 1, iters: 19600, time: 0.130, data: 0.002) G_GAN: 1.842 G_L1: 4.776 D_real: 0.342 D_fake: 0.692 
+(epoch: 1, iters: 19700, time: 0.032, data: 0.001) G_GAN: 1.526 G_L1: 3.566 D_real: 0.427 D_fake: 0.494 
+(epoch: 1, iters: 19800, time: 0.036, data: 0.005) G_GAN: 2.048 G_L1: 4.138 D_real: 0.222 D_fake: 0.548 
+(epoch: 1, iters: 19900, time: 0.028, data: 0.002) G_GAN: 2.583 G_L1: 7.790 D_real: 0.039 D_fake: 1.268 
+(epoch: 1, iters: 20000, time: 0.208, data: 0.006) G_GAN: 1.751 G_L1: 5.527 D_real: 0.312 D_fake: 0.548 
+saving the latest model (epoch 1, total_iters 20000)
+(epoch: 1, iters: 20100, time: 0.047, data: 0.002) G_GAN: 1.598 G_L1: 3.875 D_real: 1.004 D_fake: 0.253 
+(epoch: 1, iters: 20200, time: 0.035, data: 0.001) G_GAN: 1.809 G_L1: 6.387 D_real: 0.145 D_fake: 0.281 
+(epoch: 1, iters: 20300, time: 0.035, data: 0.002) G_GAN: 1.305 G_L1: 4.045 D_real: 0.787 D_fake: 0.287 
+(epoch: 1, iters: 20400, time: 0.120, data: 0.001) G_GAN: 1.675 G_L1: 5.998 D_real: 0.269 D_fake: 0.357 
+(epoch: 1, iters: 20500, time: 0.045, data: 0.001) G_GAN: 1.679 G_L1: 5.691 D_real: 1.248 D_fake: 0.076 
+(epoch: 1, iters: 20600, time: 0.031, data: 0.002) G_GAN: 0.815 G_L1: 5.204 D_real: 1.528 D_fake: 0.490 
+(epoch: 1, iters: 20700, time: 0.039, data: 0.003) G_GAN: 1.176 G_L1: 4.315 D_real: 1.305 D_fake: 0.157 
+(epoch: 1, iters: 20800, time: 0.131, data: 0.002) G_GAN: 1.737 G_L1: 4.024 D_real: 0.552 D_fake: 0.564 
+(epoch: 1, iters: 20900, time: 0.037, data: 0.001) G_GAN: 1.492 G_L1: 4.064 D_real: 0.462 D_fake: 0.525 
+(epoch: 1, iters: 21000, time: 0.031, data: 0.002) G_GAN: 1.368 G_L1: 7.871 D_real: 0.352 D_fake: 0.561 
+(epoch: 1, iters: 21100, time: 0.045, data: 0.002) G_GAN: 1.474 G_L1: 4.474 D_real: 0.633 D_fake: 0.583 
+(epoch: 1, iters: 21200, time: 0.136, data: 0.002) G_GAN: 1.667 G_L1: 4.907 D_real: 1.052 D_fake: 0.123 
+(epoch: 1, iters: 21300, time: 0.036, data: 0.002) G_GAN: 1.950 G_L1: 5.131 D_real: 2.269 D_fake: 0.035 
+(epoch: 1, iters: 21400, time: 0.030, data: 0.002) G_GAN: 1.514 G_L1: 4.736 D_real: 0.227 D_fake: 1.060 
+(epoch: 1, iters: 21500, time: 0.036, data: 0.002) G_GAN: 1.983 G_L1: 5.467 D_real: 0.516 D_fake: 0.303 
+(epoch: 1, iters: 21600, time: 0.129, data: 0.002) G_GAN: 1.606 G_L1: 5.346 D_real: 0.231 D_fake: 0.457 
+(epoch: 1, iters: 21700, time: 0.047, data: 0.001) G_GAN: 1.603 G_L1: 4.518 D_real: 0.298 D_fake: 1.091 
+(epoch: 1, iters: 21800, time: 0.034, data: 0.001) G_GAN: 2.269 G_L1: 4.653 D_real: 0.122 D_fake: 0.487 
+(epoch: 1, iters: 21900, time: 0.033, data: 0.002) G_GAN: 1.522 G_L1: 4.858 D_real: 0.576 D_fake: 0.344 
+(epoch: 1, iters: 22000, time: 0.210, data: 0.002) G_GAN: 1.106 G_L1: 5.857 D_real: 0.682 D_fake: 0.348 
+(epoch: 1, iters: 22100, time: 0.036, data: 0.001) G_GAN: 2.342 G_L1: 5.326 D_real: 0.665 D_fake: 0.198 
+(epoch: 1, iters: 22200, time: 0.036, data: 0.001) G_GAN: 2.710 G_L1: 6.570 D_real: 0.021 D_fake: 0.523 
+(epoch: 1, iters: 22300, time: 0.035, data: 0.002) G_GAN: 1.362 G_L1: 4.395 D_real: 0.416 D_fake: 1.323 
+(epoch: 1, iters: 22400, time: 0.137, data: 0.002) G_GAN: 2.444 G_L1: 6.083 D_real: 0.251 D_fake: 0.176 
+(epoch: 1, iters: 22500, time: 0.035, data: 0.001) G_GAN: 1.437 G_L1: 4.696 D_real: 1.092 D_fake: 0.419 
+(epoch: 1, iters: 22600, time: 0.039, data: 0.001) G_GAN: 1.945 G_L1: 4.699 D_real: 0.847 D_fake: 0.206 
+(epoch: 1, iters: 22700, time: 0.041, data: 0.001) G_GAN: 2.221 G_L1: 6.651 D_real: 0.003 D_fake: 1.165 
+(epoch: 1, iters: 22800, time: 0.136, data: 0.002) G_GAN: 3.030 G_L1: 6.872 D_real: 0.076 D_fake: 0.125 
+(epoch: 1, iters: 22900, time: 0.039, data: 0.001) G_GAN: 3.314 G_L1: 6.681 D_real: 0.015 D_fake: 0.180 
+(epoch: 1, iters: 23000, time: 0.037, data: 0.002) G_GAN: 1.770 G_L1: 4.907 D_real: 0.488 D_fake: 0.158 
+(epoch: 1, iters: 23100, time: 0.037, data: 0.002) G_GAN: 2.076 G_L1: 4.901 D_real: 0.285 D_fake: 0.456 
+(epoch: 1, iters: 23200, time: 0.129, data: 0.002) G_GAN: 1.797 G_L1: 4.678 D_real: 0.406 D_fake: 0.321 
+(epoch: 1, iters: 23300, time: 0.034, data: 0.001) G_GAN: 2.503 G_L1: 11.175 D_real: 0.185 D_fake: 0.223 
+(epoch: 1, iters: 23400, time: 0.034, data: 0.002) G_GAN: 1.344 G_L1: 4.240 D_real: 1.009 D_fake: 0.358 
+(epoch: 1, iters: 23500, time: 0.032, data: 0.002) G_GAN: 1.957 G_L1: 5.051 D_real: 0.485 D_fake: 0.310 
+(epoch: 1, iters: 23600, time: 0.118, data: 0.002) G_GAN: 1.924 G_L1: 4.532 D_real: 1.162 D_fake: 0.070 
+(epoch: 1, iters: 23700, time: 0.031, data: 0.002) G_GAN: 1.181 G_L1: 4.580 D_real: 1.310 D_fake: 0.377 
+(epoch: 1, iters: 23800, time: 0.033, data: 0.002) G_GAN: 3.485 G_L1: 4.861 D_real: 0.299 D_fake: 0.069 
+(epoch: 1, iters: 23900, time: 0.029, data: 0.003) G_GAN: 1.405 G_L1: 4.014 D_real: 0.555 D_fake: 0.452 
+(epoch: 1, iters: 24000, time: 0.230, data: 0.002) G_GAN: 2.251 G_L1: 4.843 D_real: 0.043 D_fake: 0.410 
+(epoch: 1, iters: 24100, time: 0.034, data: 0.002) G_GAN: 1.741 G_L1: 5.210 D_real: 0.307 D_fake: 0.427 
+(epoch: 1, iters: 24200, time: 0.039, data: 0.002) G_GAN: 2.306 G_L1: 6.991 D_real: 0.041 D_fake: 0.415 
+(epoch: 1, iters: 24300, time: 0.038, data: 0.001) G_GAN: 2.712 G_L1: 4.487 D_real: 0.038 D_fake: 0.351 
+(epoch: 1, iters: 24400, time: 0.126, data: 0.001) G_GAN: 2.017 G_L1: 5.824 D_real: 0.794 D_fake: 0.140 
+(epoch: 1, iters: 24500, time: 0.037, data: 0.002) G_GAN: 1.240 G_L1: 4.846 D_real: 0.900 D_fake: 0.245 
+(epoch: 1, iters: 24600, time: 0.042, data: 0.002) G_GAN: 1.521 G_L1: 4.508 D_real: 0.549 D_fake: 0.284 
+(epoch: 1, iters: 24700, time: 0.030, data: 0.003) G_GAN: 1.093 G_L1: 4.322 D_real: 1.142 D_fake: 0.404 
+(epoch: 1, iters: 24800, time: 0.126, data: 0.002) G_GAN: 1.396 G_L1: 4.670 D_real: 1.027 D_fake: 0.125 
+(epoch: 1, iters: 24900, time: 0.052, data: 0.001) G_GAN: 1.700 G_L1: 21.250 D_real: 0.227 D_fake: 0.467 
+(epoch: 1, iters: 25000, time: 0.038, data: 0.001) G_GAN: 1.453 G_L1: 4.335 D_real: 0.631 D_fake: 0.795 
+saving the latest model (epoch 1, total_iters 25000)
+(epoch: 1, iters: 25100, time: 0.032, data: 0.000) G_GAN: 1.531 G_L1: 5.352 D_real: 0.181 D_fake: 1.239 
+(epoch: 1, iters: 25200, time: 0.118, data: 0.002) G_GAN: 2.131 G_L1: 4.684 D_real: 0.514 D_fake: 0.136 
+(epoch: 1, iters: 25300, time: 0.035, data: 0.002) G_GAN: 2.682 G_L1: 8.345 D_real: 0.144 D_fake: 0.226 
+(epoch: 1, iters: 25400, time: 0.028, data: 0.001) G_GAN: 2.300 G_L1: 6.347 D_real: 0.005 D_fake: 0.963 
+(epoch: 1, iters: 25500, time: 0.044, data: 0.001) G_GAN: 1.236 G_L1: 4.213 D_real: 1.052 D_fake: 0.233 
+(epoch: 1, iters: 25600, time: 0.135, data: 0.003) G_GAN: 1.967 G_L1: 6.738 D_real: 0.034 D_fake: 0.574 
+(epoch: 1, iters: 25700, time: 0.036, data: 0.001) G_GAN: 1.821 G_L1: 5.433 D_real: 0.744 D_fake: 0.154 
+(epoch: 1, iters: 25800, time: 0.037, data: 0.002) G_GAN: 1.397 G_L1: 5.612 D_real: 0.891 D_fake: 0.420 
+(epoch: 1, iters: 25900, time: 0.034, data: 0.002) G_GAN: 1.469 G_L1: 4.920 D_real: 0.774 D_fake: 0.322 
+(epoch: 1, iters: 26000, time: 0.206, data: 0.008) G_GAN: 2.049 G_L1: 4.264 D_real: 0.357 D_fake: 0.392 
+(epoch: 1, iters: 26100, time: 0.033, data: 0.001) G_GAN: 1.810 G_L1: 5.065 D_real: 0.334 D_fake: 0.485 
+(epoch: 1, iters: 26200, time: 0.031, data: 0.002) G_GAN: 1.294 G_L1: 4.941 D_real: 0.679 D_fake: 0.276 
+(epoch: 1, iters: 26300, time: 0.033, data: 0.002) G_GAN: 1.857 G_L1: 7.217 D_real: 0.161 D_fake: 0.716 
+(epoch: 1, iters: 26400, time: 0.124, data: 0.002) G_GAN: 2.688 G_L1: 6.404 D_real: 0.196 D_fake: 0.910 
+(epoch: 1, iters: 26500, time: 0.039, data: 0.001) G_GAN: 1.646 G_L1: 5.225 D_real: 0.331 D_fake: 0.152 
+(epoch: 1, iters: 26600, time: 0.037, data: 0.002) G_GAN: 2.110 G_L1: 4.694 D_real: 0.434 D_fake: 0.500 
+(epoch: 1, iters: 26700, time: 0.033, data: 0.002) G_GAN: 1.055 G_L1: 4.868 D_real: 0.717 D_fake: 0.275 
+(epoch: 1, iters: 26800, time: 0.129, data: 0.001) G_GAN: 2.523 G_L1: 10.922 D_real: 0.141 D_fake: 0.320 
+(epoch: 1, iters: 26900, time: 0.038, data: 0.002) G_GAN: 1.496 G_L1: 4.401 D_real: 0.335 D_fake: 0.419 
+(epoch: 1, iters: 27000, time: 0.040, data: 0.002) G_GAN: 1.724 G_L1: 3.465 D_real: 0.942 D_fake: 0.211 
+(epoch: 1, iters: 27100, time: 0.033, data: 0.002) G_GAN: 1.932 G_L1: 6.102 D_real: 0.705 D_fake: 0.130 
+(epoch: 1, iters: 27200, time: 0.123, data: 0.002) G_GAN: 1.738 G_L1: 4.678 D_real: 1.009 D_fake: 0.184 
+(epoch: 1, iters: 27300, time: 0.037, data: 0.002) G_GAN: 2.534 G_L1: 5.289 D_real: 0.050 D_fake: 0.165 
+(epoch: 1, iters: 27400, time: 0.043, data: 0.002) G_GAN: 1.893 G_L1: 5.047 D_real: 0.251 D_fake: 0.303 
+(epoch: 1, iters: 27500, time: 0.037, data: 0.001) G_GAN: 2.522 G_L1: 6.567 D_real: 0.068 D_fake: 1.032 
+(epoch: 1, iters: 27600, time: 0.127, data: 0.002) G_GAN: 1.800 G_L1: 5.187 D_real: 0.198 D_fake: 0.631 
+(epoch: 1, iters: 27700, time: 0.033, data: 0.002) G_GAN: 2.044 G_L1: 3.963 D_real: 0.182 D_fake: 0.584 
+(epoch: 1, iters: 27800, time: 0.039, data: 0.002) G_GAN: 1.626 G_L1: 4.559 D_real: 0.480 D_fake: 0.557 
+(epoch: 1, iters: 27900, time: 0.039, data: 0.002) G_GAN: 1.295 G_L1: 5.356 D_real: 0.973 D_fake: 0.270 
+(epoch: 1, iters: 28000, time: 0.218, data: 0.002) G_GAN: 1.915 G_L1: 4.660 D_real: 0.054 D_fake: 0.767 
+(epoch: 1, iters: 28100, time: 0.033, data: 0.002) G_GAN: 1.408 G_L1: 3.688 D_real: 0.660 D_fake: 0.282 
+(epoch: 1, iters: 28200, time: 0.038, data: 0.002) G_GAN: 2.813 G_L1: 6.911 D_real: 0.023 D_fake: 0.344 
+(epoch: 1, iters: 28300, time: 0.028, data: 0.002) G_GAN: 1.372 G_L1: 5.177 D_real: 0.533 D_fake: 0.163 
+(epoch: 1, iters: 28400, time: 0.140, data: 0.001) G_GAN: 2.787 G_L1: 4.962 D_real: 0.097 D_fake: 0.283 
+(epoch: 1, iters: 28500, time: 0.035, data: 0.001) G_GAN: 1.852 G_L1: 4.514 D_real: 0.554 D_fake: 0.156 
+(epoch: 1, iters: 28600, time: 0.038, data: 0.002) G_GAN: 1.436 G_L1: 4.568 D_real: 0.711 D_fake: 0.225 
+(epoch: 1, iters: 28700, time: 0.035, data: 0.002) G_GAN: 2.561 G_L1: 6.309 D_real: 0.143 D_fake: 0.766 
+(epoch: 1, iters: 28800, time: 0.131, data: 0.002) G_GAN: 2.503 G_L1: 6.972 D_real: 0.007 D_fake: 0.230 
+(epoch: 1, iters: 28900, time: 0.036, data: 0.002) G_GAN: 2.150 G_L1: 5.819 D_real: 1.400 D_fake: 0.065 
+(epoch: 1, iters: 29000, time: 0.038, data: 0.002) G_GAN: 3.423 G_L1: 6.304 D_real: 0.278 D_fake: 0.063 
+(epoch: 1, iters: 29100, time: 0.038, data: 0.002) G_GAN: 1.807 G_L1: 5.673 D_real: 0.365 D_fake: 0.540 
+(epoch: 1, iters: 29200, time: 0.131, data: 0.002) G_GAN: 2.058 G_L1: 9.051 D_real: 0.112 D_fake: 0.455 
+(epoch: 1, iters: 29300, time: 0.036, data: 0.002) G_GAN: 1.908 G_L1: 5.997 D_real: 0.258 D_fake: 0.226 
+(epoch: 1, iters: 29400, time: 0.035, data: 0.002) G_GAN: 1.732 G_L1: 3.627 D_real: 0.300 D_fake: 0.549 
+(epoch: 1, iters: 29500, time: 0.037, data: 0.002) G_GAN: 0.691 G_L1: 3.938 D_real: 1.668 D_fake: 0.248 
+(epoch: 1, iters: 29600, time: 0.132, data: 0.002) G_GAN: 2.816 G_L1: 6.128 D_real: 0.257 D_fake: 0.270 
+(epoch: 1, iters: 29700, time: 0.037, data: 0.001) G_GAN: 1.544 G_L1: 4.325 D_real: 0.955 D_fake: 0.160 
+(epoch: 1, iters: 29800, time: 0.030, data: 0.002) G_GAN: 1.165 G_L1: 4.053 D_real: 1.954 D_fake: 0.179 
+(epoch: 1, iters: 29900, time: 0.038, data: 0.002) G_GAN: 1.697 G_L1: 4.927 D_real: 0.996 D_fake: 0.139 
+(epoch: 1, iters: 30000, time: 0.214, data: 0.002) G_GAN: 2.156 G_L1: 5.153 D_real: 0.002 D_fake: 1.286 
+saving the latest model (epoch 1, total_iters 30000)
+(epoch: 1, iters: 30100, time: 0.030, data: 0.002) G_GAN: 1.371 G_L1: 5.236 D_real: 0.738 D_fake: 0.148 
+(epoch: 1, iters: 30200, time: 0.034, data: 0.001) G_GAN: 2.044 G_L1: 5.988 D_real: 0.128 D_fake: 0.721 
+(epoch: 1, iters: 30300, time: 0.032, data: 0.003) G_GAN: 1.556 G_L1: 5.578 D_real: 0.365 D_fake: 0.469 
+(epoch: 1, iters: 30400, time: 0.134, data: 0.002) G_GAN: 0.679 G_L1: 6.203 D_real: 0.763 D_fake: 0.066 
+(epoch: 1, iters: 30500, time: 0.053, data: 0.001) G_GAN: 2.559 G_L1: 7.040 D_real: 0.001 D_fake: 0.858 
+(epoch: 1, iters: 30600, time: 0.038, data: 0.001) G_GAN: 2.366 G_L1: 5.434 D_real: 0.002 D_fake: 0.636 
+(epoch: 1, iters: 30700, time: 0.037, data: 0.001) G_GAN: 1.825 G_L1: 5.957 D_real: 0.483 D_fake: 0.460 
+(epoch: 1, iters: 30800, time: 0.129, data: 0.002) G_GAN: 1.660 G_L1: 5.183 D_real: 0.594 D_fake: 0.235 
+(epoch: 1, iters: 30900, time: 0.036, data: 0.002) G_GAN: 2.119 G_L1: 4.782 D_real: 0.522 D_fake: 0.443 
+(epoch: 1, iters: 31000, time: 0.033, data: 0.001) G_GAN: 1.420 G_L1: 4.105 D_real: 0.339 D_fake: 0.681 
+(epoch: 1, iters: 31100, time: 0.039, data: 0.001) G_GAN: 2.089 G_L1: 6.119 D_real: 0.240 D_fake: 0.230 
+(epoch: 1, iters: 31200, time: 0.117, data: 0.001) G_GAN: 1.605 G_L1: 4.690 D_real: 0.472 D_fake: 0.469 
+(epoch: 1, iters: 31300, time: 0.037, data: 0.001) G_GAN: 2.746 G_L1: 6.178 D_real: 0.017 D_fake: 0.278 
+(epoch: 1, iters: 31400, time: 0.034, data: 0.001) G_GAN: 2.183 G_L1: 5.632 D_real: 0.153 D_fake: 0.348 
+(epoch: 1, iters: 31500, time: 0.045, data: 0.001) G_GAN: 2.635 G_L1: 5.989 D_real: 0.006 D_fake: 0.334 
+(epoch: 1, iters: 31600, time: 0.119, data: 0.003) G_GAN: 1.789 G_L1: 4.834 D_real: 0.625 D_fake: 0.198 
+(epoch: 1, iters: 31700, time: 0.038, data: 0.001) G_GAN: 1.945 G_L1: 4.015 D_real: 0.633 D_fake: 0.179 
+(epoch: 1, iters: 31800, time: 0.036, data: 0.002) G_GAN: 2.346 G_L1: 8.330 D_real: 0.046 D_fake: 0.372 
+(epoch: 1, iters: 31900, time: 0.038, data: 0.001) G_GAN: 2.233 G_L1: 6.463 D_real: 1.132 D_fake: 0.037 
+(epoch: 1, iters: 32000, time: 0.211, data: 0.001) G_GAN: 1.223 G_L1: 4.679 D_real: 0.965 D_fake: 0.307 
+(epoch: 1, iters: 32100, time: 0.035, data: 0.001) G_GAN: 1.852 G_L1: 4.249 D_real: 0.558 D_fake: 0.324 
+(epoch: 1, iters: 32200, time: 0.031, data: 0.002) G_GAN: 1.279 G_L1: 4.752 D_real: 0.693 D_fake: 0.527 
+(epoch: 1, iters: 32300, time: 0.033, data: 0.003) G_GAN: 2.027 G_L1: 4.617 D_real: 0.263 D_fake: 0.399 
+(epoch: 1, iters: 32400, time: 0.131, data: 0.002) G_GAN: 1.637 G_L1: 4.924 D_real: 0.654 D_fake: 0.288 
+(epoch: 1, iters: 32500, time: 0.034, data: 0.001) G_GAN: 1.852 G_L1: 4.361 D_real: 0.446 D_fake: 0.202 
+(epoch: 1, iters: 32600, time: 0.044, data: 0.002) G_GAN: 1.962 G_L1: 4.850 D_real: 0.585 D_fake: 0.183 
+(epoch: 1, iters: 32700, time: 0.035, data: 0.002) G_GAN: 2.805 G_L1: 5.580 D_real: 0.012 D_fake: 0.433 
+(epoch: 1, iters: 32800, time: 0.136, data: 0.001) G_GAN: 3.723 G_L1: 5.443 D_real: 0.003 D_fake: 0.956 
+(epoch: 1, iters: 32900, time: 0.054, data: 0.001) G_GAN: 1.151 G_L1: 4.605 D_real: 0.743 D_fake: 0.381 
+(epoch: 1, iters: 33000, time: 0.036, data: 0.001) G_GAN: 2.168 G_L1: 5.465 D_real: 0.054 D_fake: 0.300 
+(epoch: 1, iters: 33100, time: 0.029, data: 0.002) G_GAN: 1.850 G_L1: 4.727 D_real: 0.125 D_fake: 0.914 
+(epoch: 1, iters: 33200, time: 0.135, data: 0.003) G_GAN: 2.511 G_L1: 4.870 D_real: 0.181 D_fake: 0.288 
+(epoch: 1, iters: 33300, time: 0.037, data: 0.002) G_GAN: 1.081 G_L1: 4.039 D_real: 0.595 D_fake: 0.336 
+(epoch: 1, iters: 33400, time: 0.030, data: 0.002) G_GAN: 1.685 G_L1: 5.193 D_real: 0.487 D_fake: 0.491 
+(epoch: 1, iters: 33500, time: 0.035, data: 0.000) G_GAN: 3.024 G_L1: 4.286 D_real: 0.308 D_fake: 1.069 
+(epoch: 1, iters: 33600, time: 0.115, data: 0.003) G_GAN: 1.554 G_L1: 4.849 D_real: 0.796 D_fake: 0.679 
+(epoch: 1, iters: 33700, time: 0.033, data: 0.001) G_GAN: 2.902 G_L1: 5.346 D_real: 0.115 D_fake: 0.209 
+(epoch: 1, iters: 33800, time: 0.033, data: 0.003) G_GAN: 1.163 G_L1: 4.318 D_real: 0.517 D_fake: 0.361 
+(epoch: 1, iters: 33900, time: 0.032, data: 0.002) G_GAN: 2.532 G_L1: 5.825 D_real: 0.005 D_fake: 0.738 
+(epoch: 1, iters: 34000, time: 0.203, data: 0.002) G_GAN: 1.314 G_L1: 4.713 D_real: 0.754 D_fake: 0.513 
+(epoch: 1, iters: 34100, time: 0.038, data: 0.001) G_GAN: 1.166 G_L1: 3.902 D_real: 0.920 D_fake: 0.332 
+(epoch: 1, iters: 34200, time: 0.038, data: 0.002) G_GAN: 1.590 G_L1: 4.702 D_real: 0.744 D_fake: 0.190 
+(epoch: 1, iters: 34300, time: 0.042, data: 0.002) G_GAN: 1.402 G_L1: 4.555 D_real: 0.605 D_fake: 0.358 
+(epoch: 1, iters: 34400, time: 0.138, data: 0.001) G_GAN: 1.570 G_L1: 4.613 D_real: 0.432 D_fake: 0.913 
+(epoch: 1, iters: 34500, time: 0.037, data: 0.002) G_GAN: 1.680 G_L1: 5.728 D_real: 0.603 D_fake: 0.174 
+(epoch: 1, iters: 34600, time: 0.038, data: 0.002) G_GAN: 1.249 G_L1: 4.586 D_real: 0.866 D_fake: 0.181 
+(epoch: 1, iters: 34700, time: 0.036, data: 0.002) G_GAN: 2.718 G_L1: 5.724 D_real: 0.033 D_fake: 0.282 
+(epoch: 1, iters: 34800, time: 0.127, data: 0.001) G_GAN: 0.818 G_L1: 4.006 D_real: 0.974 D_fake: 0.687 
+(epoch: 1, iters: 34900, time: 0.051, data: 0.002) G_GAN: 3.093 G_L1: 6.157 D_real: 0.039 D_fake: 0.168 
+(epoch: 1, iters: 35000, time: 0.034, data: 0.002) G_GAN: 1.570 G_L1: 5.125 D_real: 0.265 D_fake: 0.473 
+saving the latest model (epoch 1, total_iters 35000)
+(epoch: 1, iters: 35100, time: 0.031, data: 0.002) G_GAN: 2.200 G_L1: 4.077 D_real: 1.342 D_fake: 0.211 
+(epoch: 1, iters: 35200, time: 0.119, data: 0.002) G_GAN: 1.475 G_L1: 3.220 D_real: 1.035 D_fake: 0.217 
+(epoch: 1, iters: 35300, time: 0.035, data: 0.001) G_GAN: 3.218 G_L1: 7.277 D_real: 0.014 D_fake: 0.138 
+(epoch: 1, iters: 35400, time: 0.038, data: 0.001) G_GAN: 1.907 G_L1: 5.801 D_real: 0.400 D_fake: 0.449 
+(epoch: 1, iters: 35500, time: 0.030, data: 0.004) G_GAN: 1.868 G_L1: 7.421 D_real: 0.000 D_fake: 0.318 
+(epoch: 1, iters: 35600, time: 0.124, data: 0.002) G_GAN: 2.435 G_L1: 6.142 D_real: 0.001 D_fake: 0.377 
+(epoch: 1, iters: 35700, time: 0.045, data: 0.001) G_GAN: 1.647 G_L1: 4.940 D_real: 0.357 D_fake: 0.308 
+(epoch: 1, iters: 35800, time: 0.034, data: 0.001) G_GAN: 1.608 G_L1: 4.644 D_real: 0.595 D_fake: 0.295 
+(epoch: 1, iters: 35900, time: 0.032, data: 0.002) G_GAN: 2.137 G_L1: 5.306 D_real: 0.231 D_fake: 0.806 
+(epoch: 1, iters: 36000, time: 0.208, data: 0.003) G_GAN: 2.197 G_L1: 5.424 D_real: 0.876 D_fake: 0.096 
+(epoch: 1, iters: 36100, time: 0.034, data: 0.002) G_GAN: 2.885 G_L1: 7.497 D_real: 0.178 D_fake: 1.042 
+(epoch: 1, iters: 36200, time: 0.037, data: 0.001) G_GAN: 1.786 G_L1: 4.596 D_real: 0.301 D_fake: 0.876 
+(epoch: 1, iters: 36300, time: 0.033, data: 0.002) G_GAN: 1.675 G_L1: 5.101 D_real: 0.297 D_fake: 0.408 
+(epoch: 1, iters: 36400, time: 0.140, data: 0.108) G_GAN: 2.931 G_L1: 6.372 D_real: 0.004 D_fake: 0.410 
+(epoch: 1, iters: 36500, time: 0.036, data: 0.002) G_GAN: 2.051 G_L1: 4.499 D_real: 0.398 D_fake: 0.621 
+(epoch: 1, iters: 36600, time: 0.035, data: 0.002) G_GAN: 2.172 G_L1: 6.652 D_real: 0.004 D_fake: 0.488 
+(epoch: 1, iters: 36700, time: 0.063, data: 0.002) G_GAN: 1.863 G_L1: 4.154 D_real: 0.581 D_fake: 0.139 
+(epoch: 1, iters: 36800, time: 0.138, data: 0.001) G_GAN: 2.360 G_L1: 6.146 D_real: 0.094 D_fake: 0.258 
+(epoch: 1, iters: 36900, time: 0.034, data: 0.002) G_GAN: 2.813 G_L1: 5.411 D_real: 0.005 D_fake: 0.168 
+(epoch: 1, iters: 37000, time: 0.039, data: 0.002) G_GAN: 2.761 G_L1: 5.190 D_real: 0.017 D_fake: 0.344 
+(epoch: 1, iters: 37100, time: 0.032, data: 0.002) G_GAN: 1.370 G_L1: 7.059 D_real: 0.916 D_fake: 0.245 
+(epoch: 1, iters: 37200, time: 0.120, data: 0.002) G_GAN: 1.773 G_L1: 4.300 D_real: 0.892 D_fake: 0.152 
+(epoch: 1, iters: 37300, time: 0.042, data: 0.003) G_GAN: 2.819 G_L1: 5.070 D_real: 0.813 D_fake: 0.055 
+(epoch: 1, iters: 37400, time: 0.038, data: 0.001) G_GAN: 1.629 G_L1: 3.587 D_real: 1.923 D_fake: 0.077 
+(epoch: 1, iters: 37500, time: 0.038, data: 0.005) G_GAN: 1.744 G_L1: 4.867 D_real: 0.817 D_fake: 0.094 
+(epoch: 1, iters: 37600, time: 0.130, data: 0.004) G_GAN: 3.228 G_L1: 6.434 D_real: 0.088 D_fake: 0.152 
+(epoch: 1, iters: 37700, time: 0.039, data: 0.008) G_GAN: 1.768 G_L1: 5.013 D_real: 0.786 D_fake: 0.411 
+(epoch: 1, iters: 37800, time: 0.029, data: 0.002) G_GAN: 2.303 G_L1: 5.386 D_real: 0.079 D_fake: 0.273 
+(epoch: 1, iters: 37900, time: 0.029, data: 0.002) G_GAN: 1.679 G_L1: 4.550 D_real: 1.136 D_fake: 0.146 
+(epoch: 1, iters: 38000, time: 0.202, data: 0.001) G_GAN: 1.320 G_L1: 5.065 D_real: 1.745 D_fake: 0.115 
+(epoch: 1, iters: 38100, time: 0.032, data: 0.001) G_GAN: 2.283 G_L1: 6.389 D_real: 0.506 D_fake: 0.418 
+(epoch: 1, iters: 38200, time: 0.035, data: 0.001) G_GAN: 2.338 G_L1: 4.223 D_real: 0.176 D_fake: 0.686 
+(epoch: 1, iters: 38300, time: 0.034, data: 0.002) G_GAN: 2.281 G_L1: 5.962 D_real: 1.005 D_fake: 0.050 
+(epoch: 1, iters: 38400, time: 0.123, data: 0.002) G_GAN: 1.425 G_L1: 6.481 D_real: 0.546 D_fake: 0.383 
+(epoch: 1, iters: 38500, time: 0.040, data: 0.001) G_GAN: 1.577 G_L1: 4.843 D_real: 0.850 D_fake: 0.177 
+(epoch: 1, iters: 38600, time: 0.036, data: 0.002) G_GAN: 2.067 G_L1: 3.895 D_real: 0.314 D_fake: 0.440 
+(epoch: 1, iters: 38700, time: 0.035, data: 0.002) G_GAN: 3.262 G_L1: 7.056 D_real: 0.006 D_fake: 1.499 
+(epoch: 1, iters: 38800, time: 0.129, data: 0.003) G_GAN: 1.689 G_L1: 4.686 D_real: 0.327 D_fake: 0.379 
+(epoch: 1, iters: 38900, time: 0.047, data: 0.001) G_GAN: 2.280 G_L1: 5.876 D_real: 0.429 D_fake: 0.336 
+(epoch: 1, iters: 39000, time: 0.030, data: 0.001) G_GAN: 1.464 G_L1: 3.806 D_real: 0.612 D_fake: 0.725 
+(epoch: 1, iters: 39100, time: 0.039, data: 0.002) G_GAN: 2.547 G_L1: 5.513 D_real: 0.006 D_fake: 0.283 
+(epoch: 1, iters: 39200, time: 0.128, data: 0.002) G_GAN: 2.331 G_L1: 5.541 D_real: 0.095 D_fake: 0.351 
+(epoch: 1, iters: 39300, time: 0.033, data: 0.001) G_GAN: 2.107 G_L1: 7.593 D_real: 0.517 D_fake: 0.392 
+(epoch: 1, iters: 39400, time: 0.038, data: 0.002) G_GAN: 2.141 G_L1: 6.308 D_real: 0.031 D_fake: 0.648 
+(epoch: 1, iters: 39500, time: 0.034, data: 0.001) G_GAN: 1.692 G_L1: 6.100 D_real: 0.210 D_fake: 0.475 
+(epoch: 1, iters: 39600, time: 0.134, data: 0.002) G_GAN: 2.409 G_L1: 5.155 D_real: 0.679 D_fake: 0.081 
+(epoch: 1, iters: 39700, time: 0.034, data: 0.001) G_GAN: 2.146 G_L1: 4.361 D_real: 0.836 D_fake: 0.324 
+(epoch: 1, iters: 39800, time: 0.029, data: 0.002) G_GAN: 3.667 G_L1: 7.812 D_real: 0.059 D_fake: 0.128 
+(epoch: 1, iters: 39900, time: 0.038, data: 0.002) G_GAN: 2.270 G_L1: 4.134 D_real: 0.396 D_fake: 0.382 
+(epoch: 1, iters: 40000, time: 0.217, data: 0.003) G_GAN: 1.574 G_L1: 4.879 D_real: 0.383 D_fake: 0.326 
+saving the latest model (epoch 1, total_iters 40000)
+(epoch: 1, iters: 40100, time: 0.031, data: 0.002) G_GAN: 2.807 G_L1: 5.422 D_real: 0.033 D_fake: 0.491 
+(epoch: 1, iters: 40200, time: 0.030, data: 0.001) G_GAN: 2.326 G_L1: 4.624 D_real: 0.118 D_fake: 0.871 
+(epoch: 1, iters: 40300, time: 0.030, data: 0.003) G_GAN: 2.558 G_L1: 7.240 D_real: 0.029 D_fake: 0.369 
+(epoch: 1, iters: 40400, time: 0.142, data: 0.001) G_GAN: 2.548 G_L1: 6.534 D_real: 0.021 D_fake: 0.334 
+(epoch: 1, iters: 40500, time: 0.034, data: 0.001) G_GAN: 1.973 G_L1: 3.880 D_real: 0.276 D_fake: 0.477 
+(epoch: 1, iters: 40600, time: 0.038, data: 0.001) G_GAN: 1.927 G_L1: 4.420 D_real: 0.310 D_fake: 0.350 
+(epoch: 1, iters: 40700, time: 0.037, data: 0.005) G_GAN: 2.278 G_L1: 5.831 D_real: 0.177 D_fake: 0.572 
+(epoch: 1, iters: 40800, time: 0.120, data: 0.001) G_GAN: 1.248 G_L1: 3.771 D_real: 1.896 D_fake: 0.087 
+(epoch: 1, iters: 40900, time: 0.048, data: 0.001) G_GAN: 1.547 G_L1: 4.573 D_real: 0.777 D_fake: 0.258 
+(epoch: 1, iters: 41000, time: 0.046, data: 0.002) G_GAN: 3.336 G_L1: 5.909 D_real: 0.571 D_fake: 0.047 
+(epoch: 1, iters: 41100, time: 0.035, data: 0.001) G_GAN: 3.311 G_L1: 5.088 D_real: 0.289 D_fake: 0.180 
+(epoch: 1, iters: 41200, time: 0.138, data: 0.001) G_GAN: 2.761 G_L1: 6.338 D_real: 0.001 D_fake: 0.145 
+(epoch: 1, iters: 41300, time: 0.042, data: 0.001) G_GAN: 1.397 G_L1: 4.433 D_real: 0.468 D_fake: 0.504 
+(epoch: 1, iters: 41400, time: 0.048, data: 0.002) G_GAN: 2.354 G_L1: 6.114 D_real: 0.201 D_fake: 0.291 
+(epoch: 1, iters: 41500, time: 0.028, data: 0.001) G_GAN: 3.104 G_L1: 7.468 D_real: 0.004 D_fake: 0.228 
+(epoch: 1, iters: 41600, time: 0.119, data: 0.001) G_GAN: 2.237 G_L1: 7.700 D_real: 0.004 D_fake: 1.034 
+(epoch: 1, iters: 41700, time: 0.032, data: 0.001) G_GAN: 1.884 G_L1: 5.685 D_real: 0.215 D_fake: 0.520 
+(epoch: 1, iters: 41800, time: 0.041, data: 0.002) G_GAN: 2.053 G_L1: 3.626 D_real: 0.745 D_fake: 0.200 
+(epoch: 1, iters: 41900, time: 0.059, data: 0.002) G_GAN: 2.863 G_L1: 6.251 D_real: 0.032 D_fake: 0.811 
+(epoch: 1, iters: 42000, time: 0.477, data: 0.001) G_GAN: 1.774 G_L1: 4.303 D_real: 0.383 D_fake: 0.629 
+(epoch: 1, iters: 42100, time: 0.039, data: 0.001) G_GAN: 1.326 G_L1: 5.466 D_real: 0.691 D_fake: 0.118 
+(epoch: 1, iters: 42200, time: 0.041, data: 0.001) G_GAN: 3.140 G_L1: 10.534 D_real: 0.718 D_fake: 0.535 
+(epoch: 1, iters: 42300, time: 0.038, data: 0.001) G_GAN: 1.725 G_L1: 5.054 D_real: 0.419 D_fake: 0.320 
+(epoch: 1, iters: 42400, time: 0.131, data: 0.002) G_GAN: 2.158 G_L1: 4.448 D_real: 0.510 D_fake: 0.596 
+(epoch: 1, iters: 42500, time: 0.028, data: 0.001) G_GAN: 2.707 G_L1: 5.475 D_real: 0.012 D_fake: 0.343 
+(epoch: 1, iters: 42600, time: 0.036, data: 0.002) G_GAN: 2.237 G_L1: 5.203 D_real: 0.112 D_fake: 0.728 
+(epoch: 1, iters: 42700, time: 0.041, data: 0.002) G_GAN: 2.072 G_L1: 4.920 D_real: 0.333 D_fake: 0.406 
+(epoch: 1, iters: 42800, time: 0.132, data: 0.001) G_GAN: 1.915 G_L1: 5.475 D_real: 0.498 D_fake: 0.449 
+(epoch: 1, iters: 42900, time: 0.034, data: 0.002) G_GAN: 2.325 G_L1: 6.493 D_real: 0.121 D_fake: 0.434 
+(epoch: 1, iters: 43000, time: 0.044, data: 0.002) G_GAN: 2.690 G_L1: 4.526 D_real: 0.156 D_fake: 0.682 
+(epoch: 1, iters: 43100, time: 0.034, data: 0.004) G_GAN: 2.388 G_L1: 5.408 D_real: 0.021 D_fake: 0.428 
+(epoch: 1, iters: 43200, time: 0.127, data: 0.002) G_GAN: 2.095 G_L1: 5.446 D_real: 0.483 D_fake: 0.380 
+(epoch: 1, iters: 43300, time: 0.034, data: 0.001) G_GAN: 2.754 G_L1: 6.243 D_real: 0.144 D_fake: 0.360 
+(epoch: 1, iters: 43400, time: 0.051, data: 0.002) G_GAN: 2.748 G_L1: 6.525 D_real: 0.033 D_fake: 0.275 
+(epoch: 1, iters: 43500, time: 0.031, data: 0.001) G_GAN: 1.861 G_L1: 5.104 D_real: 0.775 D_fake: 0.333 
+(epoch: 1, iters: 43600, time: 0.123, data: 0.003) G_GAN: 2.165 G_L1: 20.346 D_real: 0.137 D_fake: 0.280 
+(epoch: 1, iters: 43700, time: 0.034, data: 0.001) G_GAN: 3.175 G_L1: 10.350 D_real: 0.443 D_fake: 0.481 
+(epoch: 1, iters: 43800, time: 0.039, data: 0.002) G_GAN: 3.592 G_L1: 7.235 D_real: 0.037 D_fake: 0.135 
+(epoch: 1, iters: 43900, time: 0.032, data: 0.003) G_GAN: 1.722 G_L1: 4.630 D_real: 0.389 D_fake: 0.575 
+(epoch: 1, iters: 44000, time: 0.217, data: 0.002) G_GAN: 1.927 G_L1: 4.523 D_real: 0.425 D_fake: 0.237 
+(epoch: 1, iters: 44100, time: 0.031, data: 0.002) G_GAN: 1.957 G_L1: 6.651 D_real: 0.428 D_fake: 0.172 
+(epoch: 1, iters: 44200, time: 0.048, data: 0.002) G_GAN: 2.013 G_L1: 6.010 D_real: 1.500 D_fake: 0.136 
+(epoch: 1, iters: 44300, time: 0.031, data: 0.001) G_GAN: 2.812 G_L1: 5.113 D_real: 0.029 D_fake: 0.233 
+(epoch: 1, iters: 44400, time: 0.125, data: 0.002) G_GAN: 1.800 G_L1: 4.536 D_real: 0.566 D_fake: 0.187 
+(epoch: 1, iters: 44500, time: 0.040, data: 0.001) G_GAN: 2.439 G_L1: 5.105 D_real: 0.001 D_fake: 0.416 
+(epoch: 1, iters: 44600, time: 0.031, data: 0.001) G_GAN: 2.130 G_L1: 4.870 D_real: 0.079 D_fake: 0.542 
+(epoch: 1, iters: 44700, time: 0.051, data: 0.002) G_GAN: 1.795 G_L1: 3.709 D_real: 0.849 D_fake: 0.081 
+(epoch: 1, iters: 44800, time: 0.118, data: 0.002) G_GAN: 1.480 G_L1: 3.935 D_real: 0.493 D_fake: 0.854 
+(epoch: 1, iters: 44900, time: 0.037, data: 0.002) G_GAN: 2.454 G_L1: 6.518 D_real: 0.137 D_fake: 0.426 
+(epoch: 1, iters: 45000, time: 0.031, data: 0.002) G_GAN: 2.061 G_L1: 5.158 D_real: 0.361 D_fake: 0.332 
+saving the latest model (epoch 1, total_iters 45000)
+(epoch: 1, iters: 45100, time: 0.037, data: 0.002) G_GAN: 1.837 G_L1: 5.194 D_real: 0.191 D_fake: 0.440 
+(epoch: 1, iters: 45200, time: 0.137, data: 0.001) G_GAN: 2.599 G_L1: 5.222 D_real: 0.265 D_fake: 0.165 
+(epoch: 1, iters: 45300, time: 0.032, data: 0.002) G_GAN: 2.181 G_L1: 4.381 D_real: 0.386 D_fake: 0.311 
+(epoch: 1, iters: 45400, time: 0.034, data: 0.000) G_GAN: 2.720 G_L1: 5.485 D_real: 0.179 D_fake: 0.806 
+(epoch: 1, iters: 45500, time: 0.034, data: 0.091) G_GAN: 1.734 G_L1: 4.327 D_real: 0.488 D_fake: 0.435 
+(epoch: 1, iters: 45600, time: 0.165, data: 0.000) G_GAN: 1.689 G_L1: 4.446 D_real: 0.285 D_fake: 0.564 
+(epoch: 1, iters: 45700, time: 0.035, data: 0.002) G_GAN: 2.338 G_L1: 5.655 D_real: 0.125 D_fake: 0.259 
+(epoch: 1, iters: 45800, time: 0.043, data: 0.002) G_GAN: 2.640 G_L1: 4.103 D_real: 0.138 D_fake: 0.205 
+(epoch: 1, iters: 45900, time: 0.039, data: 0.002) G_GAN: 2.154 G_L1: 5.122 D_real: 0.427 D_fake: 0.284 
+(epoch: 1, iters: 46000, time: 0.198, data: 0.002) G_GAN: 2.398 G_L1: 4.808 D_real: 0.433 D_fake: 0.954 
+(epoch: 1, iters: 46100, time: 0.037, data: 0.001) G_GAN: 2.366 G_L1: 4.771 D_real: 0.241 D_fake: 0.219 
+(epoch: 1, iters: 46200, time: 0.037, data: 0.001) G_GAN: 1.637 G_L1: 5.437 D_real: 0.746 D_fake: 0.246 
+(epoch: 1, iters: 46300, time: 0.033, data: 0.002) G_GAN: 2.383 G_L1: 5.707 D_real: 0.224 D_fake: 0.514 
+(epoch: 1, iters: 46400, time: 0.110, data: 0.002) G_GAN: 2.299 G_L1: 5.446 D_real: 0.684 D_fake: 0.137 
+(epoch: 1, iters: 46500, time: 0.036, data: 0.002) G_GAN: 2.236 G_L1: 4.325 D_real: 0.556 D_fake: 0.207 
+(epoch: 1, iters: 46600, time: 0.037, data: 0.002) G_GAN: 1.504 G_L1: 5.559 D_real: 0.366 D_fake: 0.433 
+(epoch: 1, iters: 46700, time: 0.045, data: 0.001) G_GAN: 2.131 G_L1: 4.198 D_real: 0.354 D_fake: 0.337 
+(epoch: 1, iters: 46800, time: 0.132, data: 0.003) G_GAN: 2.535 G_L1: 5.696 D_real: 0.019 D_fake: 0.447 
+(epoch: 1, iters: 46900, time: 0.042, data: 0.002) G_GAN: 1.899 G_L1: 5.001 D_real: 0.229 D_fake: 0.531 
+(epoch: 1, iters: 47000, time: 0.029, data: 0.001) G_GAN: 1.696 G_L1: 4.782 D_real: 0.380 D_fake: 0.643 
+(epoch: 1, iters: 47100, time: 0.029, data: 0.001) G_GAN: 3.087 G_L1: 5.316 D_real: 0.010 D_fake: 0.756 
+(epoch: 1, iters: 47200, time: 0.131, data: 0.001) G_GAN: 2.590 G_L1: 5.259 D_real: 0.343 D_fake: 0.165 
+(epoch: 1, iters: 47300, time: 0.031, data: 0.001) G_GAN: 2.406 G_L1: 4.930 D_real: 0.032 D_fake: 0.135 
+(epoch: 1, iters: 47400, time: 0.038, data: 0.003) G_GAN: 3.452 G_L1: 5.472 D_real: 0.056 D_fake: 0.228 
+(epoch: 1, iters: 47500, time: 0.055, data: 0.002) G_GAN: 2.500 G_L1: 6.159 D_real: 0.078 D_fake: 0.141 
+(epoch: 1, iters: 47600, time: 0.131, data: 0.002) G_GAN: 1.232 G_L1: 4.103 D_real: 1.112 D_fake: 0.359 
+(epoch: 1, iters: 47700, time: 0.037, data: 0.002) G_GAN: 2.445 G_L1: 5.493 D_real: 0.653 D_fake: 0.100 
+(epoch: 1, iters: 47800, time: 0.035, data: 0.001) G_GAN: 2.454 G_L1: 6.537 D_real: 0.015 D_fake: 0.588 
+(epoch: 1, iters: 47900, time: 0.035, data: 0.004) G_GAN: 1.713 G_L1: 5.023 D_real: 0.320 D_fake: 0.605 
+(epoch: 1, iters: 48000, time: 0.207, data: 0.001) G_GAN: 1.708 G_L1: 4.186 D_real: 0.359 D_fake: 0.664 
+(epoch: 1, iters: 48100, time: 0.041, data: 0.001) G_GAN: 2.385 G_L1: 4.758 D_real: 0.425 D_fake: 0.145 
+(epoch: 1, iters: 48200, time: 0.031, data: 0.002) G_GAN: 2.282 G_L1: 4.781 D_real: 0.463 D_fake: 0.171 
+(epoch: 1, iters: 48300, time: 0.035, data: 0.002) G_GAN: 1.709 G_L1: 3.653 D_real: 0.553 D_fake: 0.278 
+(epoch: 1, iters: 48400, time: 0.128, data: 0.002) G_GAN: 1.921 G_L1: 4.281 D_real: 0.517 D_fake: 0.206 
+(epoch: 1, iters: 48500, time: 0.038, data: 0.001) G_GAN: 2.207 G_L1: 5.308 D_real: 0.282 D_fake: 0.323 
+(epoch: 1, iters: 48600, time: 0.039, data: 0.002) G_GAN: 2.042 G_L1: 3.306 D_real: 1.102 D_fake: 0.580 
+(epoch: 1, iters: 48700, time: 0.047, data: 0.002) G_GAN: 2.946 G_L1: 7.018 D_real: 0.005 D_fake: 0.543 
+(epoch: 1, iters: 48800, time: 0.124, data: 0.001) G_GAN: 2.813 G_L1: 4.690 D_real: 0.233 D_fake: 0.754 
+(epoch: 1, iters: 48900, time: 0.035, data: 0.001) G_GAN: 1.622 G_L1: 4.573 D_real: 0.447 D_fake: 0.825 
+(epoch: 1, iters: 49000, time: 0.038, data: 0.002) G_GAN: 1.933 G_L1: 4.366 D_real: 0.365 D_fake: 0.388 
+(epoch: 1, iters: 49100, time: 0.034, data: 0.003) G_GAN: 2.263 G_L1: 5.214 D_real: 0.748 D_fake: 0.079 
+(epoch: 1, iters: 49200, time: 0.134, data: 0.002) G_GAN: 2.020 G_L1: 5.609 D_real: 0.364 D_fake: 0.444 
+(epoch: 1, iters: 49300, time: 0.037, data: 0.001) G_GAN: 2.298 G_L1: 3.486 D_real: 0.398 D_fake: 0.351 
+(epoch: 1, iters: 49400, time: 0.040, data: 0.002) G_GAN: 1.273 G_L1: 4.162 D_real: 0.723 D_fake: 0.239 
+(epoch: 1, iters: 49500, time: 0.032, data: 0.001) G_GAN: 2.696 G_L1: 6.116 D_real: 0.915 D_fake: 0.074 
+(epoch: 1, iters: 49600, time: 0.135, data: 0.002) G_GAN: 2.671 G_L1: 7.554 D_real: 0.196 D_fake: 0.259 
+(epoch: 1, iters: 49700, time: 0.032, data: 0.002) G_GAN: 2.114 G_L1: 6.039 D_real: 0.384 D_fake: 0.538 
+(epoch: 1, iters: 49800, time: 0.034, data: 0.002) G_GAN: 3.018 G_L1: 6.973 D_real: 0.010 D_fake: 0.185 
+(epoch: 1, iters: 49900, time: 0.030, data: 0.004) G_GAN: 2.170 G_L1: 4.322 D_real: 0.251 D_fake: 0.288 
+(epoch: 1, iters: 50000, time: 0.222, data: 0.007) G_GAN: 3.766 G_L1: 6.264 D_real: 0.004 D_fake: 0.070 
+saving the latest model (epoch 1, total_iters 50000)
+(epoch: 1, iters: 50100, time: 0.042, data: 0.002) G_GAN: 1.969 G_L1: 4.092 D_real: 0.977 D_fake: 0.166 
+(epoch: 1, iters: 50200, time: 0.054, data: 0.002) G_GAN: 2.338 G_L1: 3.924 D_real: 0.776 D_fake: 0.256 
+(epoch: 1, iters: 50300, time: 0.036, data: 0.001) G_GAN: 3.361 G_L1: 7.647 D_real: 0.064 D_fake: 0.123 
+(epoch: 1, iters: 50400, time: 0.123, data: 0.001) G_GAN: 1.607 G_L1: 4.561 D_real: 0.804 D_fake: 0.218 
+(epoch: 1, iters: 50500, time: 0.050, data: 0.002) G_GAN: 2.593 G_L1: 5.484 D_real: 0.051 D_fake: 0.393 
+(epoch: 1, iters: 50600, time: 0.039, data: 0.001) G_GAN: 2.202 G_L1: 4.348 D_real: 0.389 D_fake: 0.453 
+(epoch: 1, iters: 50700, time: 0.038, data: 0.001) G_GAN: 2.769 G_L1: 5.623 D_real: 0.282 D_fake: 0.225 
+(epoch: 1, iters: 50800, time: 0.121, data: 0.001) G_GAN: 1.800 G_L1: 5.119 D_real: 0.291 D_fake: 0.208 
+(epoch: 1, iters: 50900, time: 0.030, data: 0.000) G_GAN: 2.069 G_L1: 4.996 D_real: 0.130 D_fake: 0.343 
+(epoch: 1, iters: 51000, time: 0.036, data: 0.002) G_GAN: 2.148 G_L1: 3.892 D_real: 0.090 D_fake: 0.508 
+(epoch: 1, iters: 51100, time: 0.037, data: 0.002) G_GAN: 2.864 G_L1: 3.375 D_real: 0.855 D_fake: 0.045 
+(epoch: 1, iters: 51200, time: 0.122, data: 0.002) G_GAN: 1.514 G_L1: 4.924 D_real: 0.362 D_fake: 0.396 
+(epoch: 1, iters: 51300, time: 0.034, data: 0.001) G_GAN: 2.433 G_L1: 5.094 D_real: 0.275 D_fake: 0.284 
+(epoch: 1, iters: 51400, time: 0.028, data: 0.003) G_GAN: 2.799 G_L1: 5.066 D_real: 0.004 D_fake: 0.519 
+(epoch: 1, iters: 51500, time: 0.038, data: 0.002) G_GAN: 3.189 G_L1: 5.347 D_real: 0.121 D_fake: 0.260 
+(epoch: 1, iters: 51600, time: 0.116, data: 0.004) G_GAN: 1.846 G_L1: 3.744 D_real: 0.291 D_fake: 0.477 
+(epoch: 1, iters: 51700, time: 0.042, data: 0.001) G_GAN: 2.126 G_L1: 5.377 D_real: 0.941 D_fake: 0.121 
+(epoch: 1, iters: 51800, time: 0.044, data: 0.001) G_GAN: 2.503 G_L1: 4.292 D_real: 0.714 D_fake: 0.051 
+(epoch: 1, iters: 51900, time: 0.038, data: 0.001) G_GAN: 1.435 G_L1: 4.939 D_real: 0.759 D_fake: 0.154 
+(epoch: 1, iters: 52000, time: 0.210, data: 0.001) G_GAN: 2.793 G_L1: 5.803 D_real: 0.005 D_fake: 0.219 
+(epoch: 1, iters: 52100, time: 0.037, data: 0.002) G_GAN: 2.403 G_L1: 6.061 D_real: 0.032 D_fake: 0.443 
+(epoch: 1, iters: 52200, time: 0.029, data: 0.001) G_GAN: 2.673 G_L1: 6.498 D_real: 0.097 D_fake: 0.141 
+(epoch: 1, iters: 52300, time: 0.033, data: 0.002) G_GAN: 3.593 G_L1: 7.576 D_real: 0.418 D_fake: 0.086 
+(epoch: 1, iters: 52400, time: 0.122, data: 0.001) G_GAN: 2.277 G_L1: 4.945 D_real: 0.834 D_fake: 0.108 
+(epoch: 1, iters: 52500, time: 0.036, data: 0.001) G_GAN: 1.933 G_L1: 7.134 D_real: 0.074 D_fake: 0.660 
+(epoch: 1, iters: 52600, time: 0.037, data: 0.002) G_GAN: 3.183 G_L1: 6.096 D_real: 0.002 D_fake: 1.104 
+(epoch: 1, iters: 52700, time: 0.035, data: 0.003) G_GAN: 3.910 G_L1: 11.335 D_real: 0.315 D_fake: 0.495 
+(epoch: 1, iters: 52800, time: 0.124, data: 0.002) G_GAN: 1.080 G_L1: 4.329 D_real: 0.806 D_fake: 0.280 
+(epoch: 1, iters: 52900, time: 0.028, data: 0.001) G_GAN: 3.022 G_L1: 5.400 D_real: 0.022 D_fake: 0.350 
+(epoch: 1, iters: 53000, time: 0.034, data: 0.001) G_GAN: 2.489 G_L1: 7.167 D_real: 0.003 D_fake: 0.467 
+(epoch: 1, iters: 53100, time: 0.036, data: 0.002) G_GAN: 1.646 G_L1: 5.214 D_real: 0.338 D_fake: 0.374 
+(epoch: 1, iters: 53200, time: 0.130, data: 0.002) G_GAN: 2.650 G_L1: 5.828 D_real: 0.314 D_fake: 0.121 
+(epoch: 1, iters: 53300, time: 0.039, data: 0.001) G_GAN: 2.575 G_L1: 5.694 D_real: 0.004 D_fake: 0.642 
+(epoch: 1, iters: 53400, time: 0.034, data: 0.002) G_GAN: 2.545 G_L1: 6.068 D_real: 0.040 D_fake: 0.746 
+(epoch: 1, iters: 53500, time: 0.039, data: 0.002) G_GAN: 1.314 G_L1: 4.180 D_real: 1.853 D_fake: 0.091 
+(epoch: 1, iters: 53600, time: 0.132, data: 0.002) G_GAN: 1.714 G_L1: 4.552 D_real: 0.493 D_fake: 0.109 
+(epoch: 1, iters: 53700, time: 0.029, data: 0.001) G_GAN: 3.557 G_L1: 6.301 D_real: 0.084 D_fake: 0.163 
+(epoch: 1, iters: 53800, time: 0.032, data: 0.003) G_GAN: 1.914 G_L1: 4.549 D_real: 0.510 D_fake: 0.179 
+(epoch: 1, iters: 53900, time: 0.039, data: 0.002) G_GAN: 1.747 G_L1: 4.365 D_real: 0.331 D_fake: 0.203 
+(epoch: 1, iters: 54000, time: 0.211, data: 0.001) G_GAN: 2.881 G_L1: 7.911 D_real: 0.184 D_fake: 0.084 
+(epoch: 1, iters: 54100, time: 0.043, data: 0.001) G_GAN: 2.615 G_L1: 4.727 D_real: 0.403 D_fake: 0.650 
+(epoch: 1, iters: 54200, time: 0.028, data: 0.012) G_GAN: 2.886 G_L1: 4.578 D_real: 0.048 D_fake: 0.235 
+(epoch: 1, iters: 54300, time: 0.036, data: 0.002) G_GAN: 3.386 G_L1: 6.426 D_real: 0.819 D_fake: 0.821 
+(epoch: 1, iters: 54400, time: 0.124, data: 0.002) G_GAN: 1.865 G_L1: 3.630 D_real: 0.900 D_fake: 0.135 
+(epoch: 1, iters: 54500, time: 0.038, data: 0.001) G_GAN: 1.685 G_L1: 3.995 D_real: 0.481 D_fake: 0.309 
+(epoch: 1, iters: 54600, time: 0.047, data: 0.002) G_GAN: 2.336 G_L1: 5.766 D_real: 0.016 D_fake: 0.514 
+(epoch: 1, iters: 54700, time: 0.041, data: 0.002) G_GAN: 3.197 G_L1: 4.550 D_real: 0.338 D_fake: 0.105 
+(epoch: 1, iters: 54800, time: 0.136, data: 0.001) G_GAN: 2.312 G_L1: 5.239 D_real: 0.311 D_fake: 0.160 
+(epoch: 1, iters: 54900, time: 0.034, data: 0.001) G_GAN: 2.447 G_L1: 5.383 D_real: 0.059 D_fake: 0.634 
+(epoch: 1, iters: 55000, time: 0.034, data: 0.002) G_GAN: 2.670 G_L1: 4.000 D_real: 0.235 D_fake: 0.616 
+saving the latest model (epoch 1, total_iters 55000)
+(epoch: 1, iters: 55100, time: 0.039, data: 0.002) G_GAN: 1.878 G_L1: 4.302 D_real: 1.007 D_fake: 0.228 
+(epoch: 1, iters: 55200, time: 0.121, data: 0.002) G_GAN: 1.946 G_L1: 4.773 D_real: 0.464 D_fake: 0.294 
+(epoch: 1, iters: 55300, time: 0.034, data: 0.001) G_GAN: 2.558 G_L1: 9.813 D_real: 0.422 D_fake: 0.077 
+(epoch: 1, iters: 55400, time: 0.035, data: 0.001) G_GAN: 2.065 G_L1: 5.691 D_real: 0.671 D_fake: 0.092 
+(epoch: 1, iters: 55500, time: 0.037, data: 0.007) G_GAN: 2.366 G_L1: 5.689 D_real: 0.296 D_fake: 0.230 
+(epoch: 1, iters: 55600, time: 0.127, data: 0.002) G_GAN: 2.381 G_L1: 5.414 D_real: 0.389 D_fake: 0.129 
+(epoch: 1, iters: 55700, time: 0.033, data: 0.003) G_GAN: 1.752 G_L1: 5.037 D_real: 0.495 D_fake: 0.196 
+(epoch: 1, iters: 55800, time: 0.032, data: 0.002) G_GAN: 1.872 G_L1: 5.820 D_real: 0.258 D_fake: 0.269 
+(epoch: 1, iters: 55900, time: 0.029, data: 0.002) G_GAN: 3.270 G_L1: 6.428 D_real: 0.025 D_fake: 0.653 
+(epoch: 1, iters: 56000, time: 0.208, data: 0.001) G_GAN: 2.662 G_L1: 4.814 D_real: 0.104 D_fake: 0.361 
+(epoch: 1, iters: 56100, time: 0.030, data: 0.002) G_GAN: 2.132 G_L1: 3.606 D_real: 0.419 D_fake: 0.191 
+(epoch: 1, iters: 56200, time: 0.036, data: 0.002) G_GAN: 2.548 G_L1: 4.603 D_real: 0.200 D_fake: 0.323 
+(epoch: 1, iters: 56300, time: 0.035, data: 0.002) G_GAN: 1.562 G_L1: 4.840 D_real: 0.467 D_fake: 0.244 
+(epoch: 1, iters: 56400, time: 0.128, data: 0.002) G_GAN: 2.219 G_L1: 5.374 D_real: 0.557 D_fake: 0.205 
+(epoch: 1, iters: 56500, time: 0.036, data: 0.001) G_GAN: 1.313 G_L1: 3.903 D_real: 0.600 D_fake: 0.218 
+(epoch: 1, iters: 56600, time: 0.030, data: 0.001) G_GAN: 1.969 G_L1: 4.327 D_real: 0.443 D_fake: 0.280 
+(epoch: 1, iters: 56700, time: 0.038, data: 0.002) G_GAN: 2.854 G_L1: 6.291 D_real: 0.146 D_fake: 0.240 
+(epoch: 1, iters: 56800, time: 0.139, data: 0.002) G_GAN: 2.022 G_L1: 5.398 D_real: 0.375 D_fake: 0.205 
+(epoch: 1, iters: 56900, time: 0.046, data: 0.002) G_GAN: 2.360 G_L1: 5.951 D_real: 0.003 D_fake: 0.712 
+(epoch: 1, iters: 57000, time: 0.030, data: 0.002) G_GAN: 2.429 G_L1: 5.171 D_real: 0.874 D_fake: 0.094 
+(epoch: 1, iters: 57100, time: 0.050, data: 0.001) G_GAN: 1.735 G_L1: 4.104 D_real: 0.840 D_fake: 0.138 
+(epoch: 1, iters: 57200, time: 0.158, data: 0.002) G_GAN: 2.721 G_L1: 3.906 D_real: 0.090 D_fake: 0.672 
+(epoch: 1, iters: 57300, time: 0.036, data: 0.005) G_GAN: 2.681 G_L1: 4.005 D_real: 0.082 D_fake: 0.819 
+(epoch: 1, iters: 57400, time: 0.038, data: 0.001) G_GAN: 2.270 G_L1: 5.617 D_real: 0.394 D_fake: 0.488 
+(epoch: 1, iters: 57500, time: 0.033, data: 0.002) G_GAN: 2.068 G_L1: 5.797 D_real: 0.578 D_fake: 0.250 
+Traceback (most recent call last):
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/util/connection.py", line 95, in create_connection
+    raise err
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/connectionpool.py", line 398, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/connection.py", line 239, in request
+    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/http/client.py", line 1256, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/http/client.py", line 1302, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/http/client.py", line 1251, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/http/client.py", line 1011, in _send_output
+    self.send(msg)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/http/client.py", line 951, in send
+    self.connect()
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/connection.py", line 205, in connect
+    conn = self._new_conn()
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7fddc59d4040>: Failed to establish a new connection: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/requests/adapters.py", line 489, in send
+    resp = conn.urlopen(
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    retries = retries.increment(
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=8097): Max retries exceeded with url: /events (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fddc59d4040>: Failed to establish a new connection: [Errno 111] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/visdom/__init__.py", line 362, in _send
+    r = requests.post(
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+(epoch: 1, iters: 57600, time: 0.137, data: 0.130) G_GAN: 1.754 G_L1: 5.571 D_real: 0.680 D_fake: 0.218 
+(epoch: 1, iters: 57700, time: 0.047, data: 0.001) G_GAN: 1.312 G_L1: 4.757 D_real: 1.113 D_fake: 0.332 
+(epoch: 1, iters: 57800, time: 0.057, data: 0.002) G_GAN: 1.160 G_L1: 5.540 D_real: 1.541 D_fake: 0.190 
+(epoch: 1, iters: 57900, time: 0.058, data: 0.002) G_GAN: 2.587 G_L1: 6.081 D_real: 0.346 D_fake: 0.188 
+(epoch: 1, iters: 58000, time: 0.196, data: 0.001) G_GAN: 1.837 G_L1: 3.692 D_real: 0.458 D_fake: 0.277 
+(epoch: 1, iters: 58100, time: 0.033, data: 0.000) G_GAN: 2.168 G_L1: 5.820 D_real: 0.171 D_fake: 0.475 
+End of epoch 1 / 200 	 Time Taken: 2006 sec
+learning rate 0.0002000 -> 0.0002000
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/u00606/anaconda3/envs/pytorch-CycleGAN-and-pix2pix/lib/python3.8/site-packages/requests/adapters.py", line 565, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=8097): Max retries exceeded with url: /events (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fddc59d4040>: Failed to establish a new connection: [Errno 111] Connection refused'))
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 189247 ON v101 CANCELLED AT 2023-03-02T19:45:20 ***
+slurmstepd: error: *** STEP 189247.0 ON v101 CANCELLED AT 2023-03-02T19:45:20 ***
