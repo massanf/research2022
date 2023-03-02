@@ -8,7 +8,7 @@
 __pycache__
 *.gif
 *.pickle
-**/data
+/data/
 *.npy
 *.rar
 *.ckpt
