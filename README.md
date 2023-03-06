@@ -10,7 +10,7 @@
 ```
 
 ## データの配置
-`research2022/data/ヴォリューム名/電圧/(4桁の数字).img`となるように階層を作り、X線ファイル(`.dmg`)を保存してください。(例: `research2022/data/phantom1/120/0000.img`, `research2022/data/phantom1/120/0001.img`, ...)
+`research2022/data/ヴォリューム名/電圧/(4桁の数字).img`となるように階層を作り、X線ファイル(`.img`)を保存してください。(例: `research2022/data/phantom1/120/0000.img`, `research2022/data/phantom1/120/0001.img`, ...)
 
 ## 実行ステップ1
 以下のコマンドを実行してください。ヴォリューム名と電圧は置き換えてください。
