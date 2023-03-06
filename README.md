@@ -27,6 +27,9 @@
 ! conda activate pix2pix
 ```
 
+## 学習済みモデルのダウンロード
+(こちら)[https://drive.google.com/drive/u/0/folders/1r3whStdwbfe_p_WKfh4b6VEhCguCgLJ2]から2つのファイルをダウンロードし、`research2022/pix2pix/checkpoints/ctfbp_pix2pix/`の下に配置してください.
+
 ## 実行ステップ2
 ```sh
 ! python test.py --dataroot ./datasets/ctfbp --name ctfbp_pix2pix --model pix2pix --direction BtoA
