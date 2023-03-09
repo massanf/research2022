@@ -23,8 +23,8 @@
 次に、以下のコマンドを実行してください。
 ```sh
 ! cd pix2pix
-! conda create --name pix2pix -f environment.yml
-! conda activate pix2pix
+! conda env create --file environment.yml
+! conda activate pytorch-CycleGAN-and-pix2pix
 ```
 
 ## 学習済みモデルのダウンロード
