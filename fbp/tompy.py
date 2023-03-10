@@ -16,6 +16,7 @@ from cupyx.scipy.fft import fftfreq
 # import imageio.v2 as imageio
 # import matplotlib.pyplot as plt
 # from PIL import Image
+# from tqdm.notebook import tqdm
 from tqdm.notebook import tqdm
 from scipy.interpolate import interp1d
 

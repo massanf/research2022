@@ -15,8 +15,8 @@ from skopt import gp_minimize
 from perlin_noise import PerlinNoise
 import hashlib
 
-# from tqdm import tqdm
-from tqdm.notebook import tqdm
+from tqdm import tqdm
+# from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
 
 # import imageio.v2 as imageio

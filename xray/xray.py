@@ -2,10 +2,11 @@ import numpy as np
 import cupy as cp
 import pathlib
 import imageio.v2 as imageio
-from tqdm import tqdm_notebook as tqdm
+# from tqdm import tqdm_notebook as tqdm
+from tqdm import tqdm
 import imageio.v3 as imageio
 from PIL import Image
-import cv2
+import cv2, sys
 
 here = pathlib.Path(__file__).parent.parent.resolve()
 
@@ -71,10 +72,12 @@ class xrayset:
         self.raw_data = [None] * sheets
         # self.raw_data = []
         # for i in [0, 110, 220, 330]:
-        for i in tqdm(range(0, sheets)):
+        tqdm_range = tqdm(range(0, sheets), file=sys.stdout, desc="Loading Xray")
+        for i in tqdm_range:
             self.load(i, sample)
+            tqdm_range.clear()
         self.img = self.raw_data
-        print(self.output_height, self.output_width)
+        # print(self.output_height, self.output_width)
         for i in range(0, len(self.img)):
             self.img[i] = cp.array(
                 cv2.resize(
@@ -100,7 +103,7 @@ class xrayset:
             elif px < 60:
                 return -2 * (px - 40) + 40
 
-        for c in tqdm(range(0, 61)):
+        for c in tqdm(range(0, 61), desc="Color adjust"):
             imgs[cp.all(imgs < c)] = filter(c)
 
         # for idx, px in enumerate(tqdm(imgs)):
