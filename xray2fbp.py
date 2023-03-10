@@ -7,19 +7,28 @@ import cv2
 import cupy as cp
 import numpy as np
 import os, sys
+import argparse
 
 # from tqdm.notebook import tqdm
 from tqdm import tqdm
 
-importlib.reload(xray)
+parser = argparse.ArgumentParser()
+parser.add_argument('--volname', type=str)           # positional argument
+parser.add_argument('--voltage', type=int)           # positional argument
+parser.add_argument('--num_views', type=int)      # option that takes a value
+parser.add_argument('--use_range_lower', type=int, default=0)
+parser.add_argument('--use_range_upper', type=int, default=1024)
+parser.add_argument('--spacing', type=int, default=8)
 
-volname = sys.argv[1]
-numsheets = int(sys.argv[2])
-voltage = int(sys.argv[3])
+args = parser.parse_args()
+
+volname = args.volname
+numsheets = args.num_views
+voltage = args.voltage
 
 # which fbp to use
-use_range = [0, 1024]
-spacing = 8
+use_range = [args.use_range_lower, args.use_range_upper]
+spacing = args.spacing
 
 # load xrays
 xrayset = xray.xrayset(
@@ -80,5 +89,5 @@ for idx, img in enumerate(tqdm(imgs, file=sys.stdout, desc="Saving")):
     # imageio.imsave("test.png", im_AB)
     path_AB = os.path.join(img_fold_AB, f"{volname}_{idx:02d}.jpg")
     if not cv2.imwrite("./" + path_AB, im_AB):
-        print("NO!")
+        print(f"Image save failed. Please double make sure {img_fold_AB} exists.")
         sys.exit(0)

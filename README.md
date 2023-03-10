@@ -5,7 +5,7 @@
 ```sh
 ! git clone git@github.com:trombiano1/research2022.git
 ! cd research2022
-! conda create --name xrayproduction --file xrayproduction.txt
+! conda env create --name xrayproduction --file xrayproduction.txt
 ! conda activate xrayproduction
 ```
 
@@ -32,7 +32,7 @@
 
 ## 実行ステップ2
 ```sh
-! python test.py --dataroot ./datasets/ctfbp --name ctfbp_pix2pix --model pix2pix --direction BtoA
+! python test.py --dataroot ./datasets/ctfbp --name ctfbp_pix2pix --model pix2pix --direction BtoA --num_test 128
 ```
 
 結果は`research2022/pix2pix/results/images`に保存されます。
