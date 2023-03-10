@@ -15,9 +15,9 @@
 ## 実行ステップ1
 以下のコマンドを実行してください。ヴォリューム名と電圧は置き換えてください。
 ```sh
-! python xray2fbp.py ヴォリューム名 枚数 電圧
+! python xray2fbp.py --volname ヴォリューム名 --voltage 電圧 --num_sheets 枚数 --use_range_lower 下限 --use_range_upper 上限 --spacing 間隔
 ```
-(例: `! python xray2fbp.py phantom1 450 120`)
+(例: `! python xray2fbp.py --volname phantom1 --voltage 120 --num_sheets 450 --use_range_lower 0 --use_range_upper 1024 --spacing 8`)
 
 ## 環境構築2
 次に、以下のコマンドを実行してください。
@@ -28,11 +28,15 @@
 ```
 
 ## 学習済みモデルのダウンロード
-(こちら)[https://drive.google.com/drive/u/0/folders/1r3whStdwbfe_p_WKfh4b6VEhCguCgLJ2]から2つのファイルをダウンロードし、`research2022/pix2pix/checkpoints/ctfbp_pix2pix/`の下に配置してください.
+[こちら](https://drive.google.com/drive/u/0/folders/1r3whStdwbfe_p_WKfh4b6VEhCguCgLJ2)から2つのファイルをダウンロードし、`research2022/pix2pix/checkpoints/ctfbp_pix2pix/`の下に配置してください.
 
 ## 実行ステップ2
 ```sh
-! python test.py --dataroot ./datasets/ctfbp --name ctfbp_pix2pix --model pix2pix --direction BtoA --num_test 128
+! python test.py --dataroot ./datasets/ctfbp --name ctfbp_pix2pix --model pix2pix --direction BtoA --num_test 枚数
 ```
+枚数は`xray2fbp.py`実行時に指定した
 
+(`use_range_upper` - `use_range_lower`) / `spacing`
+
+以下です。
 結果は`research2022/pix2pix/results/images`に保存されます。
