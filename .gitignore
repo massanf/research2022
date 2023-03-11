@@ -15,3 +15,5 @@ __pycache__
 out.txt
 nohup.out
 log_*.txt
+*5*.pth
+*0*.pth
