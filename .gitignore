@@ -15,3 +15,9 @@ __pycache__
 out.txt
 nohup.out
 log_*.txt
+*.out
+*5*.pth
+*0*.pth
+latest_net_D.pth
+latest_net_G.pth
+loss_log.txt
