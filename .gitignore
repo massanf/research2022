@@ -17,3 +17,4 @@ nohup.out
 log_*.txt
 *5*.pth
 *0*.pth
+loss_log.txt
