@@ -1,4 +1,0 @@
-(epoch: 35, iters: 37524, time: 0.058, data: 0.001) G_GAN: 4.407 G_L1: 5.229 D_real: 0.055 D_fake: 0.083 
-(epoch: 35, iters: 37624, time: 0.104, data: 0.001) G_GAN: 3.562 G_L1: 6.513 D_real: 0.000 D_fake: 0.117 
-(epoch: 35, iters: 37724, time: 0.058, data: 0.001) G_GAN: 3.985 G_L1: 5.488 D_real: 0.063 D_fake: 0.614 
-(epoch: 35, iters: 37824, time: 0.057, data: 0.001) G_GAN: 6.679 G_L1: 4.430 D_real: 0.640 D_fake: 0.041 
