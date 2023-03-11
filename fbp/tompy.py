@@ -4,13 +4,17 @@ from __future__ import division
 import cv2
 import pathlib
 
-import cupy as cp
-from cupyx.scipy.ndimage import affine_transform
+# import cupy as cp
+import numpy as cp
+# from cupyx.scipy.ndimage import affine_transform
+from scipy.ndimage import affine_transform
 
 # from cupy import resize
 import imageio.v2 as imageio
-from cupyx.scipy.fftpack import fft, ifft
-from cupyx.scipy.fft import fftfreq
+# from cupyx.scipy.fftpack import fft, ifft
+from scipy.fftpack import fft, ifft
+# from cupyx.scipy.fft import fftfreq
+from scipy.fft import fftfreq
 
 # import numpy as np
 # import imageio.v2 as imageio
@@ -22,7 +26,8 @@ from scipy.interpolate import interp1d
 
 # from gui import imagename
 # from skimage.transform import rotate
-from cupyx.scipy.ndimage import rotate
+# from cupyx.scipy.ndimage import rotate
+from scipy.ndimage import rotate
 from xray import xray
 
 here = pathlib.Path(__file__).parent.resolve()
@@ -123,7 +128,7 @@ class fbpset:
             sheet_number (int): sheet number (0 to 1024)
         """
         sinogram = self.create_sino(sheet_number)
-        sinogram = cp.array(cv2.resize(cp.asnumpy(sinogram), (self.height, self.width)))
+        sinogram = cp.array(cv2.resize(sinogram, (self.height, self.width)))
         # sinogram = affine_transform(sinogram, )
         sinogram = cp.array(sinogram)
 

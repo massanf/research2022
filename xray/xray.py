@@ -1,5 +1,6 @@
 import numpy as np
-import cupy as cp
+# import cupy as cp
+import numpy as cp
 import pathlib
 import imageio.v2 as imageio
 # from tqdm import tqdm_notebook as tqdm
@@ -81,7 +82,7 @@ class xrayset:
         for i in range(0, len(self.img)):
             self.img[i] = cp.array(
                 cv2.resize(
-                    cp.asnumpy(self.img[i]).astype("float64"),
+                    self.img[i].astype("float64"),
                     (self.output_height + 2 * 0, self.output_width + 2 * 0),
                 )
             )
@@ -93,18 +94,21 @@ class xrayset:
             self.img[i] = self.img[i].astype("uint8")
 
         # cut out black
-        imgs = cp.stack(self.img)
-        oldshape = cp.shape(imgs)
-        imgs = cp.ravel(imgs)
+        # imgs = cp.stack(self.img)
+        oldshape = cp.shape(self.img)
+        imgs = cp.ravel(self.img)
 
         def filter(px):
             if px < 40:
                 return -px
-            elif px < 60:
+            elif px < 61:
                 return -2 * (px - 40) + 40
+            else:
+                return 0
 
         for c in tqdm(range(0, 61), desc="Color adjust"):
-            imgs[cp.all(imgs < c)] = filter(c)
+            # imgs[cp.all(imgs < c)] = filter(c)
+            imgs[imgs < c] = filter(c)
 
         # for idx, px in enumerate(tqdm(imgs)):
         #     if px < 40:
@@ -116,7 +120,8 @@ class xrayset:
         # add border
         imgs = [
             cv2.copyMakeBorder(
-                cp.asnumpy(img),
+                # cp.asnumpy(img),
+                img,
                 margin,
                 margin,
                 margin,
@@ -127,7 +132,8 @@ class xrayset:
             for img in imgs
         ]
         self.img = [
-            cp.array(cv2.resize(cp.asnumpy(img), (height, height))) for img in imgs
+            # cp.array(cv2.resize(cp.asnumpy(img), (height, height))) for img in imgs
+            cp.array(cv2.resize(img, (height, height))) for img in imgs
         ]
 
         # histogram match

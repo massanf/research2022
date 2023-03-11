@@ -1,10 +1,9 @@
 import fbp.tompy as fbp
-import cupy as cp
+import numpy as cp
 import importlib
 from xray import xray
 import imageio.v2 as imageio
 import cv2
-import cupy as cp
 import numpy as np
 import os, sys
 import argparse
@@ -82,10 +81,10 @@ for idx, img in enumerate(tqdm(imgs, file=sys.stdout, desc="Saving")):
         cropstarty: cropstarty + cropheight,
         cropstartx: cropstartx + cropwidth
     ]
-    cropped = cp.array(cv2.resize(cp.asnumpy(cropped), (512, 512)))
+    cropped = cp.array(cv2.resize(cropped, (512, 512)))
     cropped = adjust(cropped, 1.0, 100)
     black = cp.full(cp.shape(cropped), 0)
-    im_AB = cp.asnumpy(cp.concatenate([black, cropped], 1)).astype("uint8")
+    im_AB = cp.concatenate([black, cropped], 1).astype("uint8")
     # imageio.imsave("test.png", im_AB)
     path_AB = os.path.join(img_fold_AB, f"{volname}_{idx:02d}.jpg")
     if not cv2.imwrite("./" + path_AB, im_AB):
