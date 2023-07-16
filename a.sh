@@ -1,7 +1,3 @@
-#!/bin/bash
+#!/bin/bash -eu
 
-while :
-do
-	tail -1 slurm-189121.out
-    sleep 1
-done
+watch -n1 -d 'tail -1 slurm-189121.out'
