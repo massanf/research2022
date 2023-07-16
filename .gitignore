@@ -16,3 +16,4 @@ out.txt
 nohup.out
 log_*.txt
 *.pth
+password_config*

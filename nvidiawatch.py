@@ -1,5 +1,6 @@
 import paramiko
 from scp import SCPClient
+from password_config import *
 
 
 def createSSHClient(server, port, user, password):
@@ -10,5 +11,5 @@ def createSSHClient(server, port, user, password):
     return client
 
 
-ssh = createSSHClient("192.168.193.104", "", "mfujita", "piano38125")
+ssh = createSSHClient(server_ip, server_port, username, password)
 scp = SCPClient(ssh.get_transport())
